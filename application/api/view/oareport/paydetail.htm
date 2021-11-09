@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <title>全景医学医学-工资单明细</title>
+    <meta name="keywords" content="全景医学医学-工资单明细">
+    <meta name="description" content="全景医学医学-工资单明细">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__HOME__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__HOME__/css/animate.min.css" rel="stylesheet">
+    <script src="__HOME__/js/datePicker.js" charset="utf-8"></script>
+
+</head>
+
+<body class="gray-bg" style="background-color: #fff">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-sm-12" style="padding-left: 0; padding-right: 0;">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="border-style: none;">
+                        <div class="row">
+
+                                <div class="form-group" style="text-align: center;">
+                                    <label class="col-sm-1 control-label" style="float: none; width: none !important;">薪资日期：</label>
+                                    
+
+                                    <!-- <input id="demo1"> -->
+                                    <input id="demo1" value="{$year}-{if condition='$mouth <= 10'}0{else/}{/if}{$mouth-1}" style="border: 0px;width: 60px;" onfocus="this.blur();"/><span><i class="fa fa-chevron-down"></i></span>
+                                    
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row row-content">
+            {if condition="$Result eq ''"}
+            <div class="col-sm-6" style="background: #fff;">
+                <p class="text-center" style="font-size:100px;">
+                    <i class="fa fa-sign-in big-icon"></i>
+                </p>
+                <p style="text-align:center;letter-spacing: 0.1em;">您当前赞无工资记录</p>
+            </div>
+            {else/}
+            <div class="col-sm-12" style="padding-left: 0; padding-right: 0;">
+                <div class="ibox float-e-margins">
+                    
+                    <div class="ibox-content" style="border-style: none;">
+    
+                                
+                        <div class="table-responsive" style="border: 0px;">
+                            <table class="table">
+                                <tbody>
+                                    {volist name="Result" id="vo"}
+                                        <tr>
+                                            <td>应发薪资</td>
+                                            <td><span style="float: right;">{$vo.IITBase}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>税前应发</td>
+                                            <td><span style="float: right;">{$vo.ESBase}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>个人所得税</td>
+                                            <td><span style="float: right;">{$vo.IIT}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>税后实发</td>
+                                            <td><span style="float: right;">{$vo.NetIncome}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>备注</td>
+                                            <td><span style="float: right;"></span></td>
+                                        </tr>
+                                    {/volist}
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {/if}
+        </div>
+
+    </div>
+   
+<script src="__HOME__/js/jquery-1.10.1.min.js"></script>  
+<script>
+
+    var calendar = new datePicker();
+    calendar.init({
+        'trigger': '#demo1', /*按钮选择器，用于触发弹出插件*/
+        'type': 'ym',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+        'minDate':'1900-1-1',/*最小日期*/
+        'maxDate':'2100-12-31',/*最大日期*/
+        'onSubmit':function(){
+            $.ajax({
+                url:'/api/oareport/toDateGetPayInfos',
+                data:{empCode:{$empCode},date:calendar.value},
+                type:'POST',
+                dataType:'json',
+                success:function(data){
+                    console.log(data)
+                    if(data[0] == '['){
+                        $('.row-content').html('');
+                        $('.row-content').append(
+                            '<div class="col-sm-6" style="background: #fff;">'+
+                                '<p class="text-center" style="font-size:100px;">'+
+                                    '<i class="fa fa-sign-in big-icon"></i>'+
+                                '</p>'+
+                                '<p style="text-align:center;letter-spacing: 0.1em;">您当前赞无工资记录</p>'+
+                            '</div>'
+                        );
+                    }else{
+                        $('.row-content').html('');
+                        $('.row-content').append(
+                            '<div class="col-sm-12" style="padding-left: 0; padding-right: 0;">'+
+                                '<div class="ibox float-e-margins">'+
+                                    '<div class="ibox-content" style="border-style: none;">'+
+                                        '<div class="table-responsive" style="border: 0px;">'+
+                                            '<table class="table">  '+
+                                                '<tbody>'+
+                                                    '<tr>'+
+                                                        '<td>应发薪资</td>'+
+                                                        '<td><span style="float: right;">'+data[0].IITBase+'</span></td>'+
+                                                    '</tr>'+
+                                                    '<tr>'+
+                                                        '<td>税前应发</td>'+
+                                                        '<td><span style="float: right;">'+data[0].ESBase+'</span></td>'+
+                                                    '</tr>'+
+                                                    '<tr>'+
+                                                        '<td>个人所得税</td>'+
+                                                        '<td><span style="float: right;">'+data[0].IIT+'</span></td>'+
+                                                    '</tr>'+
+                                                    '<tr>'+
+                                                        '<td>税后实发</td>'+
+                                                        '<td><span style="float: right;">'+data[0].NetIncome+'</span></td>'+
+                                                    '</tr>'+
+                                                    '<tr>'+
+                                                        '<td>备注</td>'+
+                                                        '<td><span style="float: right;"></span></td>'+
+                                                    '</tr>'+
+                                                '</tbody>'+
+                                            '</table>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'
+                        );
+                    }
+                    
+                }
+            });
+        }
+        
+    });
+
+</script>  
+    
+</body>
+</html>

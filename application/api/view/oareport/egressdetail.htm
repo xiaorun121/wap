@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <title>全景医学医学-公出明细</title>
+    <meta name="keywords" content="全景医学医学-公出明细">
+    <meta name="description" content="全景医学医学-公出明细">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__HOME__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__HOME__/css/animate.min.css" rel="stylesheet">
+    <script src="__HOME__/js/datePicker.js" charset="utf-8"></script>
+    <style type="text/css">
+        .alert-info{  
+            color: #2f2d2d;  
+            background-color: #fff;
+            border-color: #f3f3f3;
+            border-left: 2px solid #f1d404;
+            height: 7rem;
+        }
+        .alert-warning{
+            color: #2f2d2d;    
+            background-color: #fff;
+            border-color: #f3f3f3;
+            border-left: 2px solid #04f16e;
+            height: 7rem;
+        }
+        .alert span{font-size: 1.5rem;font-weight: bold;}
+    </style>
+
+</head>
+
+<body class="gray-bg" style="background-color: #fff">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-sm-12" style="padding-left: 0; padding-right: 0;">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="border-style: none;">
+                        <div class="row">
+
+                                <div class="form-group" style="text-align: center;">
+                                    <label class="col-sm-1 control-label" style="float: none; width: none !important;">公出日期：</label>
+                                    
+                                    <!-- <input id="demo1"> -->
+                                    <input id="demo1" value="{$year}-{$mouth}" style="border: 0px;width: 60px;" onfocus="this.blur();"/><span><i class="fa fa-chevron-down"></i></span>
+                                    
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row row-content">
+            {if condition="$Result eq ''"}
+                <div class="col-sm-6" style="background: #fff;">
+                    <p class="text-center" style="font-size:100px;">
+                        <i class="fa fa-sign-in big-icon"></i>
+                    </p>
+                    <p style="text-align:center;letter-spacing: 0.1em;">当前日期赞无公出记录</p>
+                </div>
+            {else/}
+            <div class="col-sm-12" style="padding-left: 0; padding-right: 0;">
+                <div class="ibox float-e-margins">
+                    
+                    <div class="ibox-content" id="ibox-work">
+
+                        {volist name="arrLeaveList" id="vo" mod="2"}
+
+                            <div class="alert alert-{eq name="mod" value="1"}info{else/}warning{/eq}">
+                                <p>{$vo.BusiTripStartDate} - {$vo.BusiTripEndDate}</p>
+                                <p><span>{$vo.BusiTripType}</span><span style="float: right;">{$vo.BusiTripRecordValue} 小时</span></p>
+                            </div>
+
+                        {/volist}
+
+                    </div>
+                </div>
+            </div>
+            {/if}
+        </div>    
+    </div>
+   
+<script src="__HOME__/js/jquery-1.10.1.min.js"></script>  
+<script>
+
+    var calendar = new datePicker();
+    calendar.init({
+        'trigger': '#demo1', /*按钮选择器，用于触发弹出插件*/
+        'type': 'ym',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+        'minDate':'1900-1-1',/*最小日期*/
+        'maxDate':'2100-12-31',/*最大日期*/
+        'onSubmit':function(){
+            $.ajax({
+                url:'/api/oareport/toDateGetEgressInfos',
+                data:{empCode:{$empCode},applyDate:calendar.value},
+                type:'POST',
+                dataType:'json',
+                success:function(data){
+                    if(data.status == 'success'){
+                        $('#ibox-work').append('');
+                        $('.row-content').html('');
+                        $('.row-content').append('<div class="col-sm-12" style="padding-left: 0; padding-right: 0;">'+
+                                                    '<div class="ibox float-e-margins">'+
+                                                        '<div class="ibox-content" id="ibox-work">');
+                        var i;
+                        for(i = 0 ; i < data.info.length; i++){
+                            ([i]%2==0) ? a="alert-warning" : a="alert-info";
+                            $('#ibox-work').append('<div class="alert '+ a +'">'+
+                                                        '<p>'+ data.info[i].BusiTripStartDate +' - '+data.info[i].BusiTripEndDate+'</p>'+
+                                                        '<p><span>'+ data.info[i].BusiTripType+'</span><span style="float: right;">'+data.info[i].BusiTripRecordValue+' 小时</span></p>'+
+                                                    '</div>');
+                        }
+                        $('.row-content').append('</div>'+
+                                        '</div>'+
+                                    '</div>');
+
+                    }else{
+                        $('.row-content').html('');
+                        $('.row-content').append(
+                            '<div class="col-sm-6" background: #fff;>'+
+                                '<p class="text-center" style="font-size:100px;">'+
+                                    '<i class="fa fa-sign-in big-icon"></i>'+
+                                '</p>'+
+                                '<p style="text-align:center;letter-spacing: 0.1em;">当前日期赞无公出记录</p>'+
+                            '</div>'
+                        );
+                    }
+                }
+            });
+        }
+        
+    });
+
+</script>  
+    
+</body>
+</html>

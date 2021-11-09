@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>全景医学影像诊断中心</title>
+
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <style type="text/css">
+        .nav-second-level a{
+            color: #e60404;
+            font-weight: bold;
+            font-family: 微软雅黑;
+            font-size: 15px;
+        }
+        .nav>li.active{border-left: none;background: none;}
+        .navbar-default .nav>li>a:focus, .navbar-default .nav>li>a:hover {background-color: #efe9e9;}
+
+    </style>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="height: auto;color: black">
+    <div id="wrapper" style="    background-color: #fff;">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation" style="width: 699px;background: none;">
+            <div class="nav-close"><i class="fa fa-times-circle"></i></div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu" style="font-size: 15px;font-family: 微软雅黑;">
+                    <li class="nav-header" style="background-color: #3f76c6;background: #3f76c6;">
+                        <div class="dropdown profile-element">
+                            <span><img alt="image" src="__REPORT__/image/logo_w.png" width="180px" style="vertical-align: none;    border-radius: none;" /></span>
+                        </div>
+                    </li>
+                    <li style="margin-top: 24px;margin-bottom: 10px;">
+                        <!-- <a href="#" style="color: #f7f7f7;    background-color: #16dde4;"> -->
+                        <a href="#" style="color: black;    background-color: #16dde4;">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">单项项目</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <div class="row" style="    font-size: 16px;">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-content">
+                                            <table class="table table-list">
+                                                <thead>
+                                                    <tr>
+                                                        <th>编码</th>
+                                                        <th>项目名称</th>
+                                                        <th>科室</th>
+                                                        <th>价格</th>
+                                                        <th width="60px;">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        header("Content-type:text/html;charset=utf-8");
+                                                        $serverName = "192.168.22.153";
+
+                                                        $uid = "sa";
+                                                        $pwd = "Admin123";
+                                                        $db  = "HEMS"; 
+                                                         
+                                                        $serverName = "192.168.22.153"; //serverName\instanceName
+                                                        $connectionInfo = array( "Database"=>"HEMS", "UID"=>"sa", "PWD"=>"Admin123");
+                                                        $conn = sqlsrv_connect( $serverName, $connectionInfo);
+
+                                                        $querys ="select * from dbo.VW_NB_SFXM";
+
+                                                        $results = sqlsrv_query($conn, $querys);
+                                                        while($rows = sqlsrv_fetch_array($results)){
+
+                                                            $id = $rows['ID'];    
+                                                            $name = iconv("GBK","UTF-8",$rows['NAME']);    
+                                                            $keshi = iconv("GBK","UTF-8",$rows['Expr1']); 
+                                                            $price = floatval($rows['DJ']);   
+
+                                                            echo        '<tr>';
+                                                            echo                '<td>'.$id.'</td>';
+                                                            echo                '<td>'.$name.'</td>';
+                                                            echo                '<td>'.$keshi.'</td>';
+                                                            echo                '<td>'.$price.'</td>';
+                                                            echo                "<td><a class='J_menuItem' onclick='addItems(\"".$id."\",\"".$name."\",\"".$keshi."\",\"".$price."\")'>添加</a></td>";     
+                                                            echo        '</tr>';
+                                                        }
+                                                    
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" style="color: black;    background-color: #e4bf16;">
+                            <i class="fa fa fa-bar-chart-o"></i>
+                            <span class="nav-label">套餐</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <div class="row" style="    font-size: 16px;">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-content">
+                                            <table class="table table-list">
+                                                <thead>
+                                                    <tr>
+                                                        <th>编号</th>
+                                                        <th>套餐名称</th>
+                                                        <th>收费金额</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        header("Content-type:text/html;charset=utf-8");
+                                                        $serverName = "192.168.22.153";
+
+                                                        $uid = "sa";
+                                                        $pwd = "Admin123";
+                                                        $db  = "HEMS"; 
+                                                         
+                                                        $serverName = "192.168.22.153"; //serverName\instanceName
+                                                        $connectionInfo = array( "Database"=>"HEMS", "UID"=>"sa", "PWD"=>"Admin123");
+                                                        $conn = sqlsrv_connect( $serverName, $connectionInfo);
+
+                                                        $query ="select distinct ID,NAME,SFJE from dbo.VW_NB_TJTC";
+
+                                                        $result = sqlsrv_query($conn, $query);
+                                                        while($row = sqlsrv_fetch_array($result)){
+
+                                                            $id   = $row['ID'];    
+                                                            $name = iconv("GBK","UTF-8",$row['NAME']);    
+                                                            $sfje = floatval($row['SFJE']); 
+
+                                                            echo        '<tr>';
+                                                            echo                '<td>'.$id.'</td>';
+                                                            echo                '<td>'.$name.'</td>';
+                                                            echo                '<td>'.$sfje.'</td>';
+                                                            echo                "<td><a class='J_menuItem' onclick='showTC($id)'>添加</a></td>";     
+                                                            echo        '</tr>';
+                                                        }
+                                                    
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+
+                    <li style="bottom: 4px;position: absolute;border: 1px solid #FEF;margin-left: 8px;width: 687px;">
+
+                        <div class="form-group navbar-form-custom" style="width: 687px;height: 0px;margin-bottom: 0px;">
+                            <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search" style="background: #3c763d;font-weight: bold;color: #fff;font-size: 16px;">
+                        </div>
+
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        
+
+        <!--左侧导航结束-->
+        <div id="page-wrapper" class="gray-bg dashbard-1" style="background: #fff;margin: 0 0 0 700px;">
+
+            <div class="row J_mainContent" id="content-main">
+                <div class="wrapper wrapper-content animated fadeInRight">
+
+                    <div class="row" style="    font-size: 16px;">
+                        <div class="col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content">
+
+                                    <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                                        <thead>
+                                        <tr>
+                                            <th>编码</th>
+                                            <th>项目名称</th>
+                                            <th>金额</th>
+                                            <th class="keshi">科室</th>
+                                            <th class="caozuo">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="ibox-content">
+                                        
+                                        
+                                        </tbody>
+                                        <tbody id="ibox-content2">
+                                        
+                                        
+                                        </tbody>
+                                        
+                                    </table>
+                                    <table>
+                                        <tbody>
+                                            <tr class="infos">
+                                                <td id="pager_list_1_right" align="right" colspan="5" >
+                                                    <div dir="ltr" style="text-align:left;" class="ui-paging-info" id="iboxSum"></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+
+    </div>
+    <script type="text/javascript">
+        function del(id){
+            $('#con'+id).remove();
+
+            var totalRow = 0;
+            var totalLength = 0; 
+            $('#ibox-content tr').each(function() { 
+                    $(this).find('td:eq(2)').each(function(){ 
+                        totalRow += parseFloat($(this).text()); 
+                    }); 
+            }); 
+
+            var totalLength = $('#ibox-content tr').length;  
+
+            if(totalLength == 0 && totalRow == 0){
+
+                $('#iboxSum').html('');
+
+            }else{
+
+                $('#iboxSum').html('共：<span style="color:red">'+ totalLength + '</span>&nbsp;项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '&nbsp;&nbsp;&nbsp;金额：<span style="color:red" id="price">'+ totalRow + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;折扣率：<input type="text" value="100" id="zkl" style="width:40px;color:red;"/> % &nbsp;<button onclick="OnButton()">点击</button> 折扣金额：<span id="zkPrice" style="color:red;">' + totalRow + '</span>');
+                
+            }  
+  
+        }
+
+        function delTc(id){
+            $('#conTc'+id).remove();
+
+            var totalRow = 0;
+            var totalLength = 0; 
+            $('#ibox-content2 tr').each(function() { 
+                    $(this).find('td:eq(2)').each(function(){ 
+                        totalRow += parseFloat($(this).text()); 
+                    }); 
+            }); 
+
+            var totalLength = $('#ibox-content2 tr').length;  
+
+            if(totalLength == 0 && totalRow == 0){
+
+                $('#iboxSum').html('');
+
+            }else{
+
+                $('#iboxSum').html('共：<span style="color:red">'+ totalLength + '</span>&nbsp;项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '&nbsp;&nbsp;&nbsp;金额：<span style="color:red" id="price">'+ totalRow + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;折扣率：<input type="text" value="100" id="zkl" style="width:40px;color:red;"/> % &nbsp;<button onclick="OnButton()">点击</button> 折扣金额：<span id="zkPrice" style="color:red;">' + totalRow + '</span>');
+
+            }  
+  
+        }
+
+
+
+        function OnButton(){
+            var zkl = $('#zkl').val();
+            var zkl = Number(zkl / 100);
+            var price = $('#price').html();
+            var zkPrice = price * zkl;
+            $('#zkPrice').html(zkPrice);
+        }    
+
+    </script>
+    <script src="__HOME__/js/jquery-1.10.1.min.js"></script>  
+
+    <script src="__REPORT__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__REPORT__/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="__REPORT__/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="__REPORT__/js/layer.min.js"></script>
+    <script src="__REPORT__/js/hplus.min.js?v=4.1.0"></script>
+
+    <script type="text/javascript">
+        function addItems(id,name,keshi,price){
+            var id    = id;
+            var name  = name;
+            var keshi = keshi;
+            var price = price;
+
+
+
+            var li = document.getElementsByTagName('li');
+
+        　　　if(li[1].className=='active'){
+
+                if($('#ibox-content2').children().length != 0){
+
+                    $('#ibox-content2').append('<tr id="conTc'+id+'">'+
+                        '<td>'+id+'</td>'+
+                        '<td>'+name+'</td>'+
+                        '<td>'+price+'</td>'+
+                        '<td onclick="delTc(\''+id+'\')" style="color:red;font-weight: bold;font-family: 微软雅黑;font-size: 15px;">删除</td>'+
+                        
+                    '</tr>');
+
+                    var totalRow = 0;
+                    var totalLength = 0; 
+                    $('#ibox-content2 tr').each(function() { 
+                        $(this).find('td:eq(2)').each(function(){ 
+                            totalRow += parseFloat($(this).text()); 
+                        }); 
+                    }); 
+
+                    var totalLength = $('#ibox-content2 tr').length;  
+     
+                    $('#iboxSum').html('共：<span style="color:red">'+ totalLength + '</span>&nbsp;项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '&nbsp;&nbsp;&nbsp;金额：<span style="color:red" id="price">'+ totalRow + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;折扣率：<input type="text" value="100" id="zkl" style="width:40px;color:red;"/> % &nbsp;<button onclick="OnButton()">点击</button> 折扣金额：<span id="zkPrice" style="color:red;">' + totalRow + '</span>');
+
+                }else{
+
+                    $('#ibox-content2').html('');
+                    $('.keshi').css('display','table-cell');
+                    $('.caozuo').css('display','table-cell');
+                    $('.infos').css('display','table-cell');
+
+                    $('#ibox-content').append('<tr id="con'+id+'">'+
+                                '<td>'+id+'</td>'+
+                                '<td>'+name+'</td>'+
+                                '<td>'+price+'</td>'+
+                                '<td>'+keshi+'</td>'+
+                                '<td onclick="del(\''+id+'\')" style="color:red;font-weight: bold;font-family: 微软雅黑;font-size: 15px;">删除</td>'+
+                                
+                            '</tr>');
+
+                    var totalRow = 0;
+                    var totalLength = 0; 
+                    $('#ibox-content tr').each(function() { 
+                            $(this).find('td:eq(2)').each(function(){ 
+                            totalRow += parseFloat($(this).text()); 
+                            }); 
+                    }); 
+
+                    var totalLength = $('#ibox-content tr').length;  
+     
+                    $('#iboxSum').html('共：<span style="color:red">'+ totalLength + '</span>&nbsp;项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '&nbsp;&nbsp;&nbsp;金额：<span style="color:red" id="price">'+ totalRow + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;折扣率：<input type="text" value="100" id="zkl" style="width:40px;color:red;"/> % &nbsp;<button onclick="OnButton()">点击</button> 折扣金额：<span id="zkPrice" style="color:red;">' + totalRow + '</span>'); 
+
+                }
+            }
+
+        }
+
+    </script>
+
+
+    <script type="text/javascript">
+        function showTC(id){
+            var id = id;
+
+            $('#ibox-content').html('');
+            $('.infos').css('display','table-cell');
+
+            $.ajax({
+
+                url:'{:url("showTc")}',
+                data:{id:id},
+                type: 'POST',
+                dataType: 'json',
+                ContentType:'application/json',
+                success:function(data){
+                    if(data.status == 'success'){
+                        $('.keshi').css('display','none');
+
+                        var html = '';
+
+                        for(var i = 0 ; i < data.info.length; i++){
+
+                            html +=     '<tr id="conTc'+data.info[i].SFXM_ID+'">';
+                            html +=                    '<td>' + data.info[i].SFXM_ID + '</td>';
+                            html +=                    '<td>' + data.info[i].SFXM_NAME + '</td>';
+                            html +=                    '<td>' + parseFloat(data.info[i].DJ) + '</td>';    
+                            html +=                    '<td onclick="delTc(\''+ data.info[i].SFXM_ID +'\')" style="color:red;font-weight: bold;font-family: 微软雅黑;font-size: 15px;">删除</td>';    
+                            html +=     '</tr>';
+                            
+
+                            $('#ibox-content2').html(html); 
+                        }
+
+                        var totalLength = 0; 
+                        var totalRow = 0; 
+                        $('#ibox-content2 tr').each(function() { 
+                                $(this).find('td:eq(2)').each(function(){ 
+                                    totalRow += parseFloat($(this).text()); 
+                                }); 
+                        }); 
+                        var je = parseFloat(data.info[0].JE);
+                        var sfje = parseFloat(data.info[0].SFJE);
+                        var name = data.info[0].NAME;
+
+                        var zklje = sfje / totalRow;
+
+                        var zkl = (Math.round(zklje*100)/100) * 100;
+
+                        var totalLength = $('#ibox-content2 tr').length;  
+
+
+                        $('#iboxSum').html('<span style="color:red">'+ name +'</span>&nbsp;&nbsp;&nbsp;共：<span style="color:red">'+ totalLength + '</span>&nbsp;项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '&nbsp;&nbsp;&nbsp;总金额：<span style="color:red" id="price">'+je+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收费金额： <span style="color:red">'+sfje+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;折扣率：<span style="color:red;">'+zkl+'%</span>');
+                        
+                                      
+                    }
+                },
+                error: function (info) {
+                　　　alert(2222)
+                } 
+
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#top-search").keyup(function(){
+
+                console.log($(this).val());
+
+                $(".table-list tbody tr").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+        })
+    </script>
+</body>
+
+</html>

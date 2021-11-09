@@ -1,0 +1,469 @@
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="apple-mobile-web-app-title" content="">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
+      <meta name="format-detection" content="telephone=no">
+      <meta http-equiv="x-rim-auto-match" content="none">
+
+
+      <title>健康调研问卷</title>
+      
+      <link href="__INDEX__/css/style.a1176454c221a083e224.css" rel="stylesheet">
+      
+      <script src="__INDEX__/js/jquery-1.10.2.js"></script>
+      <script src="__INDEX__/js/iscroll.js"></script>
+      <script src="__INDEX__/js/mdate.js"></script>
+      <script src="__INDEX__/js/mdates.js"></script>
+
+      <link href="http://shwap.uvclinic.cn:7439/public/static/home/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+      <style type="text/css">
+          .am-list-item {
+            position: relative;
+            display: flex;
+            padding-left: 15px;
+            min-height: 44px;
+            background-color: #fff;
+            vertical-align: middle;
+            overflow: hidden;
+            transition: background-color 200ms;
+            align-items: center;
+            /* list左图片显示*/
+          }
+
+          .am-list-item.am-list-item-top .am-list-line .am-list-arrow {
+            margin-top: 2px;
+          }
+          .am-list-item.am-list-item-middle .am-list-line {
+            align-items: center;
+          }
+
+          .am-list-item .am-input-control input {
+            color: #000;
+            font-size: 17px;
+            appearance: none;
+            width: 100%;
+            padding: 2px 0;
+            border: 0;
+            background-color: transparent;
+            line-height: 1;
+            box-sizing: border-box;
+          }
+          .am-list-item .am-list-line {
+              position: relative;
+              display: flex;
+              flex: 1;
+              align-self: stretch;
+              padding-right: 15px;
+              overflow: hidden;
+          }
+          .am-list-item .am-input-control {
+              font-size: 17px;
+              flex: 1;
+          }
+          .am-list-item .am-list-line .am-list-arrow {
+              display: block;
+              width: 15px;
+              height: 15px;
+              margin-left: 8px;
+              background-image: url('__INDEX__/images/right.png');
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: 50% 50%;
+          }
+      </style>
+</head>
+
+<body style="">
+    <div id="a" style="width: 120px;height: 45px;background-color: rgb(166, 195, 195);position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;font-size: 15px;border-radius: 3px;"></div>
+    <div id="app" class="index">
+      <div style="height: 100%;">
+        <div class="questionView">
+          <div>
+            <div class="homeTitle">您已完成体检问卷调查！医生将根据您的身体状况，制定或调整体检项目组合方案。</div>
+            <div class="homeRoot">
+              <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                <div class="childTitle">您的姓名<span class="redIcon">*</span></div>
+                <div class="am-list-item am-input-item am-list-item-middle LoginInput-margin LoginInput-clear">
+                  <div class="am-list-line">
+                    <div class="am-input-control">
+                      <input placeholder="" id="name" type="text" value="{$info.name}">
+                    </div>
+                    <div class="am-input-clear"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                <div class="childTitle">出生日期<span class="redIcon">*</span></div>
+                <div>
+                  <div class="am-list-item am-list-item-middle">
+                    <div class="am-list-line">
+                      <div class="am-list-content">
+                        <img src="__INDEX__/images/icon_date.png" style="right: 6px; bottom: 10px; width: 20px; height: auto;" id="dateShowBtn">
+                      </div>
+                      <!-- <div class="am-list-extra" id="dateSelectorOne">1993-12-04</div> -->
+                      {if $info.dateSelectorOne_data_year}
+                          <input class="am-list-extra" type="text" id="dateSelectorOne" placeholder="选择出生日期" value="{$info.dateSelectorOne_data_year}-{$info.dateSelectorOne_data_month}-{$info.dateSelectorOne_data_day}" data-year="{$info.dateSelectorOne_data_year}" data-month="{$info.dateSelectorOne_data_month}" data-day="{$info.dateSelectorOne_data_day}" onfocus="this.blur()">
+                      {else/}
+                          <input class="am-list-extra" type="text" id="dateSelectorOne" placeholder="选择出生日期" onfocus="this.blur()">
+                      {/if}
+                    </div>
+                    <div class="am-list-ripple" style="display: none;"></div>
+                  </div>
+                </div></div>
+                <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                  <div class="childTitle">身高(cm)<span class="redIcon">*</span></div>
+                  <div class="am-list-item am-input-item am-list-item-middle LoginInput-margin LoginInput-clear">
+                    <div class="am-list-line">
+                      <div class="am-input-control">
+                        <input placeholder="" id="height" type="tel" value="{$info.height}"></div>
+                        <div class="am-input-clear"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                    <div class="childTitle">体重(kg)<span class="redIcon">*</span></div>
+                    <div class="am-list-item am-input-item am-list-item-middle LoginInput-margin LoginInput-clear">
+                      <div class="am-list-line">
+                        <div class="am-input-control">
+                          <input placeholder="" type="tel" id="weight" value="{$info.weight}">
+                        </div>
+                        <div class="am-input-clear"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                    <div class="childTitle">身份证号码<span class="redIcon">*</span></div>
+                    <div class="am-list-item am-input-item am-list-item-middle LoginInput-margin LoginInput-clear">
+                      <div class="am-list-line">
+                        <div class="am-input-control">
+                          <input placeholder="" type="text" id="IDcard" value="{$info.IDcard}">
+                        </div>
+                        <div class="am-input-clear"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                    <div class="childTitle">您的性别<span class="redIcon">*</span></div>
+                    <div class="contentView">
+                      <img src="__INDEX__/images/rb_man{if condition='$info.sex eq "男"'}_sel{/if}.png" class="icon sex" id="0" {if condition='$info.sex eq "男"'}check="sex"{else/}check="no"{/if}>
+                      <div class="content">男</div>
+                      <img src="__INDEX__/images/rb_woman{if condition='$info.sex eq "女"'}_sel{/if}.png" class="icon sex" id="1" {if condition='$info.sex eq "女"'}check="sex"{else/}check="no"{/if}>
+                      <div class="content">女</div>
+                    </div>
+                  </div>
+                  <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                    <div class="childTitle">结婚情况<span class="redIcon">*</span></div>
+                    <div class="contentView">
+                      <img src="__INDEX__/images/rb_married{if condition='$info.marry eq "已婚"'}_sel{/if}.png" class="icon marry" id="2" {if condition='$info.marry eq "已婚"'}check="marry"{else/}check="no"{/if}>
+                      <div class="content">已婚</div>
+                      <img src="__INDEX__/images/rb_unmarried{if condition='$info.marry eq "未婚"'}_sel{/if}.png" class="icon marry" id="3" {if condition='$info.marry eq "未婚"'}check="marry"{else/}check="no"{/if}>
+                      <div class="content">未婚</div>
+                    </div>
+                  </div>
+                  <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                    <div class="childTitle">生育情况<span class="redIcon">*</span></div>
+                    <div class="contentView">
+                      <img src="__INDEX__/images/rb_birth{if condition='$info.birth eq "已生育"'}_sel{/if}.png" class="icon birth" id="4" {if condition='$info.birth eq "已生育"'}check="birth"{else/}check="no"{/if}>
+                      <div class="content">已生育</div>
+                      <img src="__INDEX__/images/rb_nullipara{if condition='$info.birth eq "未生育"'}_sel{/if}.png" class="icon birth" id="5" {if condition='$info.birth eq "未生育"'}check="birth"{else/}check="no"{/if}>
+                      <div class="content">未生育</div>
+                    </div>
+                  </div>
+                  <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                    <div class="childTitle">体检中心<span class="redIcon">*</span></div>
+                    <div>
+                      <div class="am-list-item am-list-item-middle row">
+                        <div class="am-list-line col-sm-12 ">
+                          <div class="am-list-extra" style="margin-left: -12px;flex-basis: 100%;">
+                              <select class="form-control m-b" name="center" id="center" style="border: #ffffff;">
+
+                                  {volist name="center" id="vo"}
+                                      <option value="{$vo.name}" {if condition='$info.center eq $vo.name'}selected{/if}>{$vo.name}</option>
+                                  {/volist}
+                                  
+                              </select>
+                          </div>
+
+                          <div class="am-list-arrow am-list-arrow-vertical"  ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                    <div class="childTitle">预计体检日期</div>
+                    <div>
+                      <div class="am-list-item am-list-item-middle">
+                        <div class="am-list-line">
+                          <div class="am-list-content">
+                            <img src="__INDEX__/images/icon_date.png" style="right: 6px; bottom: 10px; width: 20px; height: auto;" id="dateShowBtnTwo">
+                          </div>
+                          {if $info.dateSelectorTwo_data_year}
+                              <input class="am-list-extra" type="" id="dateSelectorTwo" placeholder="选择预计体检日期" value="{$info.dateSelectorTwo_data_year}-{$info.dateSelectorTwo_data_month}-{$info.dateSelectorTwo_data_day}" data-year="{$info.dateSelectorTwo_data_year}" data-month="{$info.dateSelectorTwo_data_month}" data-day="{$info.dateSelectorTwo_data_day}" onfocus="this.blur()">
+                          {else/}
+                              <input class="am-list-extra" type="" id="dateSelectorTwo" placeholder="选择预计体检日期" onfocus="this.blur()">
+                          {/if}    
+                          <!-- <div class="am-list-extra">2019-12-06</div> -->
+                        </div>
+                        <div class="am-list-ripple" style="display: none;"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="border-bottom: 1px solid rgb(229, 229, 229);">
+                    <div class="childTitle">单位名称</div>
+                    <div class="am-list-item am-input-item am-list-item-middle LoginInput-margin LoginInput-clear">
+                      <div class="am-list-line">
+                        <div class="am-input-control">
+                          <input placeholder="" type="text" id="company" value="{$info.company}">
+                        </div>
+                        <div class="am-input-clear"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="btnGo">继续</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src="__INDEX__/js/jquery-1.10.2.js"></script>
+        <script type="text/javascript">
+            $('.btnGo').click(function(){
+
+                var name = $('#name').val();     // 性名 *
+                if(name == ''){
+                    $('#a').html('请填写性名');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }
+
+                var dateSelectorOne_data_year  = $('#dateSelectorOne').attr('data-year');   // 出生日期  *
+                var dateSelectorOne_data_month = $('#dateSelectorOne').attr('data-month');   
+                var dateSelectorOne_data_day   = $('#dateSelectorOne').attr('data-day');   
+                if(dateSelectorOne_data_year == undefined){
+                    $('#a').html('请选择日期');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }
+
+
+                var height = $('#height').val();     // 身高  *
+                if(height == ''){  
+                    $('#a').html('请填写身高');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }
+
+                var weight = $('#weight').val();    // 体重
+                if(weight == ''){  
+                    $('#a').html('请填写体重');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }
+
+                var IDcard = $('#IDcard').val();    // 体重
+                if(IDcard == ''){  
+                    $('#a').html('请填写身份证号');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }else if(!(/^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$/.test(IDcard))){
+                    $('#a').html('身份证号码有误');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }
+
+                var sexCheck = $('.sex').attr('check');    //请选择性别   *
+                if(sexCheck == undefined){
+                    $('#a').html('请选择性别');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }else if(sexCheck == 'sex'){
+                    var sex = '男';
+                }else{
+                    var sex = '女';
+                }
+
+                var marryCheck = $('.marry').attr('check');   //请选择婚姻情况  *
+                if(marryCheck == undefined){
+                    $('#a').html('请选择婚姻情况');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }else if(marryCheck == 'marry'){
+                    var marry = '已婚';
+                }else{
+                    var marry = '未婚';
+                }
+
+                var birthCheck = $('.birth').attr('check');   //请选择生育情况  *
+                if(birthCheck == undefined){
+                    $('#a').html('请选择生育情况');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }else if(birthCheck == 'birth'){
+                    var birth = '已生育';
+                }else{
+                    var birth = '未生育';
+                }
+
+                var dateSelectorTwo_data_year = $('#dateSelectorTwo').attr('data-year');   // 出生日期  *
+                var dateSelectorTwo_data_month = $('#dateSelectorTwo').attr('data-month');   
+                var dateSelectorTwo_data_day = $('#dateSelectorTwo').attr('data-day');   
+                if(dateSelectorTwo == undefined){
+                    $('#a').html('请选择日期');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 1500);
+                    return false;
+                }
+
+                var center = $('#center').val();     // 体检中心
+
+                var company = $('#company').val();     // 单位名称
+
+
+                $.ajax({
+                    url:"/addQuestionnaire",
+                    data:{name:name,dateSelectorOne_data_year:dateSelectorOne_data_year,dateSelectorOne_data_month:dateSelectorOne_data_month,dateSelectorOne_data_day:dateSelectorOne_data_day,height:height,weight:weight,sex:sex,marry:marry,birth:birth,dateSelectorTwo_data_year:dateSelectorTwo_data_year,dateSelectorTwo_data_month:dateSelectorTwo_data_month,dateSelectorTwo_data_day:dateSelectorTwo_data_day,center:center,company:company,IDcard:IDcard,id:1,tel:{$tel}},
+                    dataType:'json',
+                    type:'POST',
+                    success:function(data){
+                        if(data.status == 'success'){
+                            window.location.href = "/questionnaire?id=1&tel={$tel}";
+                        }
+                    }
+                })
+
+
+                // window.location.href = '/questionnaire?id='+1;
+            })
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                $('.icon').click(function(){
+                    var index = $(".contentView img").index(this);
+                    if(index == 0){
+
+                        $('#0').attr('src','__INDEX__/images/rb_man_sel.png');
+                        $('#0').attr('check','sex');
+                        $('#1').attr('src','__INDEX__/images/rb_woman.png');
+                        $('#1').attr('check','no');
+
+                    }else if(index == 1){
+
+                        $('#0').attr('src','__INDEX__/images/rb_man.png');
+                        $('#0').attr('check','no');
+                        $('#1').attr('src','__INDEX__/images/rb_woman_sel.png');
+                        $('#1').attr('check','sex');
+
+                    }else if(index == 2){
+
+                        $('#2').attr('src','__INDEX__/images/rb_married_sel.png');
+                        $('#2').attr('check','marry');
+                        $('#3').attr('src','__INDEX__/images/rb_unmarried.png');
+                        $('#3').attr('check','no');
+
+                    }else if(index == 3){
+
+                        $('#2').attr('src','__INDEX__/images/rb_married.png');
+                        $('#2').attr('check','no');
+                        $('#3').attr('src','__INDEX__/images/rb_unmarried_sel.png');
+                        $('#3').attr('check','marry');
+
+                    }else if(index == 4){
+
+                        $('#4').attr('src','__INDEX__/images/rb_birth_sel.png');
+                        $('#4').attr('check','birth');
+                        $('#5').attr('src','__INDEX__/images/rb_nullipara.png');
+                        $('#5').attr('check','no');
+
+                    }else if(index == 5){
+
+                        $('#4').attr('src','__INDEX__/images/rb_birth.png');
+                        $('#4').attr('check','no');
+                        $('#5').attr('src','__INDEX__/images/rb_nullipara_sel.png');
+                        $('#5').attr('check','birth');
+
+                    }
+                })
+            })
+        </script>
+        <script type="text/javascript">
+          new Mdates("dateSelectorOne");
+          new Mdate("dateSelectorTwo");
+
+          new Mdates("dateShowBtn", {
+              acceptId: "dateSelectorOne",
+              beginYear: (new Date().getFullYear()+1)-100,
+              beginMonth: new Date().getMonth()+1,
+              beginDay: new Date().getDate(),
+              endYear: new Date().getFullYear(),
+              endMonth: new Date().getMonth()+1,
+              endDay: new Date().getDate(),
+              format: "-",
+          });
+
+          new Mdate("dateShowBtnTwo", {
+              acceptId: "dateSelectorTwo",
+              beginYear: new Date().getFullYear(),
+              beginMonth: new Date().getMonth()+1,
+              beginDay: new Date().getDate()+1,
+              endYear: new Date().getFullYear()+5,
+              endMonth: new Date().getMonth()+1,
+              endDay: new Date().getDate(),
+              format: "-",
+          })
+
+        </script>    
+</body>
+</html>

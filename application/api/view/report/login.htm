@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>手机登录获取影像报告</title>
+	<link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<link href="__HOME__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+	<link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+	<link href="__HOME__/css/animate.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <div class="ibox-tools">
+                            <div class="head" style="text-align: center;margin:10% 0;">
+								<img src="__API__/static/images/logo.png" alt="" style="width: 80%;">
+							</div>
+                        </div>
+                    </div>
+                    <div class="ibox-content" style="border-style: none;">
+                        <div class="row">
+                            <div class="col-sm-8 ">
+                                <div class="form-group">
+	                                <label class="col-sm-3 control-label">手机号：</label>
+	                                <div class="col-sm-8">
+	                                    <input id="tel" name="tel" minlength="2" type="tel" class="form-control" placeholder="请输入您的手机号" aria-required="true">
+	                                </div>
+	                            </div>
+
+                                <div class="form-group">
+                                	<label class="col-sm-3 control-label">验证码：</label>
+	                                <div class="col-sm-12">
+	                                    <div class="input-group">
+	                                        <input type="text" class="form-control" name="smsCode" id="smsCode"> 
+	                                        	<span class="input-group-btn"> 
+	                                        		<button type="button" class="btn btn-primary" id="getSmsCode">获取验证码</button> 
+	                                    		</span>
+	                                    </div>
+	                                </div>
+	                            </div>
+
+	                            <div class="form-group">
+	                                <label class="col-sm-3 control-label">选择中心：</label>
+
+	                                <div class="col-sm-8">
+	                                    <select class="form-control m-b" name="center" id="center">
+	                                        <option value="02101">上海全景中心</option>
+	                                        <option value="057101">杭州全景中心</option>
+	                                        <option value="02001">广州全景中心</option>
+	                                        <option value="02301">重庆全景中心</option>
+	                                    </select>
+	                                </div>
+	                            </div>
+	                           <!--  <div class="form-group">
+	                                <div class="col-sm-8 col-sm-offset-3">
+	                                    <div class="checkbox">
+	                                        <label>
+	                                            <input type="checkbox" class="checkbox" id="agree" name="agree"> 我已经认真阅读并同意《H+使用协议》
+	                                        </label>
+	                                    </div>
+	                                </div>
+	                            </div> -->
+                                <div class="form-group">
+	                                <div class="col-sm-4 col-sm-offset-3">
+	                                    <button class="btn btn-primary" type="submit" id="getReport">获取报告</button>
+	                                </div>
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span class="help-block m-b-none" style="text-align: center;color: red;font-size: 15px;"><i class="fa fa-info-circle" id="error" style="display: none;"></i> </span>
+</body>
+
+<script type='text/javascript' src='__API__/static/js/jquery.min.js'></script>
+<script type="text/javascript">
+
+	$(function(){
+
+		/*
+		*  获取验证码
+		*/
+		$('#getSmsCode').click(function(){
+			var tel = $('#tel').val();
+            var partten       = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
+
+            if(tel == ''){
+            	$('#error').css('display','block');
+                document.getElementById('error').innerHTML = '请填写手机号'; 
+                return false;
+            }else if(!partten.test(tel)){
+            	$('#error').css('display','block');
+                document.getElementById('error').innerHTML = '手机号格式不正确'; 
+                return false;
+            }else{
+            	$('#error').css('display','none');
+                document.getElementById('error').innerHTML = '';
+            }
+
+            $.ajax({
+            	url:"{:url('smsCode')}",
+            	type:'POST',
+            	dataType:'json',
+            	data:{'tel':tel},
+            	success:function(data){
+            		if(data.msg == 200){
+            			$('#error').css('display','block');
+                		document.getElementById('error').innerHTML = data.info;
+                		var timeNum = 60;
+						timers = setInterval(function(){
+							if(timeNum > 0){
+							  timeNum --;
+							  $('#getSmsCode').html('重新发送(' +　timeNum + 's)');
+							  $('#getSmsCode').attr('disabled', "disabled");
+							}else if(timeNum === 0){
+							  clearInterval(timers);
+							  $('#getSmsCode').html('获取验证码');
+							  $('#getSmsCode').removeAttr('disabled');
+							}
+						},1000) 
+            		}else{
+            			$('#error').css('display','block');
+                		document.getElementById('error').innerHTML = '验证码发送失败！请稍后重试！';
+            		}
+            	}
+            })
+		})
+
+
+		/*
+		*  获取报告
+		*/
+		$('#getReport').click(function(){
+			var tel = $('#tel').val();
+			// var tel = 18017828484;
+			var smsCode = $('#smsCode').val();
+			var center = $('#center').val();
+            var partten       = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
+
+            // window.location.href = "{:url('showlist')}?tel="+tel+"&HospCode="+center;
+
+            if(tel == ''){
+            	$('#error').css('display','block');
+                document.getElementById('error').innerHTML = '请填写手机号'; 
+                return false;
+            }else if(!partten.test(tel)){
+            	$('#error').css('display','block');
+                document.getElementById('error').innerHTML = '手机号格式不正确'; 
+                return false;
+            }else{
+            	$('#error').css('display','none');
+                document.getElementById('error').innerHTML = '';
+            }
+
+            if(smsCode == ''){
+            	$('#error').css('display','block');
+                document.getElementById('error').innerHTML = '验证码必须填写'; 
+                return false;
+            }else{
+            	$('#error').css('display','none');
+                document.getElementById('error').innerHTML = '';
+            }
+
+            /*
+			*  验证码校验
+			*/
+            $.ajax({
+            	type: "POST",
+            	url:"{:url('smsValid')}",
+            	data: {"code":smsCode,'tel':tel,'center':center},
+            	dataType:'json',
+            	success:function(data){
+
+            		if(data.code == 1){
+            			$('.help-block').css('display','none');
+            			$('#error').css('display','none');
+		                // document.getElementById('error').innerHTML = data.info; 
+		                window.location.href = "{:url('showlist')}?tel="+tel+"&HospCode="+center;
+            		}else{
+            			$('#error').css('display','block');
+		                document.getElementById('error').innerHTML = '验证码验证失败，请重新获取验证码'; 
+		                return false;
+            		}
+            	}
+            })
+
+		})
+
+		// $('.btn').click(function(){
+			// $.ajax({
+			// 	url:'http://192.168.200.10:27495/api/v1/schedule/GetAccnosByKeyword',
+			// 	type : "POST",
+	  //           contentType: "application/json;charset=utf-8",
+	  //           data : JSON.stringify({'Keyword':"18017828484","OrderCreateDt":"" ,"OrderEndDt": "","HospCode": "02101"}),
+	  //           dataType : "json",
+			// 	success:function(data){
+			// 		console.log(data);
+			// 	}
+			// });
+		// })
+		// SHDX181122041
+
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: "http://192.168.200.10:27495/api/v1/schedule/GetAccnosByKeyword",
+		// 	// contentType: "application/json", //必须有
+		// 	dataType: "json", //表示返回值类型，不必须
+		// 	data: { 'Keyword': '18017828484', 'OrderCreateDt': '', 'OrderEndDt': '', 'HospCode': '02101' },  //相当于 //data: "{'username':'admin', 'password':'123456'}",
+		// 	success: function (jsonResult) {
+		// 		alert("=="+JSON.stringify(jsonResult));
+		// 	},
+		// 	error:function(data){
+		// 		console.log(data);
+		// 	}
+
+
+		// });
+
+
+		/*
+		*	通过A号查询报告列表
+		*/
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: "http://192.168.200.10:27495/api/v1/schedule/GetReportInfoByAccessionNumbertIDs",
+		// 	// contentType: "application/json", //必须有
+		// 	dataType: "json", //表示返回值类型，不必须
+		// 	data: {"QueryModel":"2","AppID": ["SHPETCT180516077"] ,"AppType": "","HospCode": "02101"},  //相当于 //data: "{'username':'admin', 'password':'123456'}",
+		// 	success: function (jsonResult) {
+		// 		alert("=="+JSON.stringify(jsonResult));
+		// 	},
+		// 	error:function(){
+		// 		console.log(22222);
+		// 	}
+		// });
+
+		// SHPETCT180516077     54d01cad-8f49-4ef7-8f82-188953608b83
+
+		/*
+		* 报告信息查询
+		*/
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: "http://192.168.200.10:27495/api/v1/schedule/GetReportByReportID",
+		// 	// contentType: "application/json", //必须有
+		// 	dataType: "json", //表示返回值类型，不必须
+		// 	data: {"reportID":"54d01cad-8f49-4ef7-8f82-188953608b83","HospCode": "02101","AppType": ""},  //相当于 //data: "{'username':'admin', 'password':'123456'}",
+		// 	success: function (jsonResult) {
+		// 		alert("=="+JSON.stringify(jsonResult));
+		// 	},
+		// 	error:function(){
+		// 		console.log(33333);
+		// 	}
+		// });
+
+	})
+</script>
+</html>

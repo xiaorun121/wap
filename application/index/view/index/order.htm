@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>我的预约_{$config.title}</title>
+
+{include file="public:header" /}
+{include file="public:public" /}
+<script type="text/javascript" src="__HOME__/js/isLogin.js"></script>
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>我的预约</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+<script type="text/javascript">
+      $(function(){
+            var token = getToken('token');
+            var rows  = 100;
+            var page  = 1;
+
+            var values = ['token','rows','page','timestamp'];
+            var datas  = {
+                  'token':token,
+                  'rows':rows,
+                  'page':page,
+                  'timestamp':timestamp
+            };
+            var sign  = doSign(values,datas);
+
+            $.ajax({
+                  url:'/app/physucalOrder/list',
+                  data:{sign:sign,token:token,rows:rows,page:page,key:key,timestamp:timestamp},
+                  type:'POST',
+                  dataType:'json',
+                  success:function(data){
+                        if(data.success == true){
+                              
+                              if(data.rows.length > 0){
+                                    var dataRows = data.rows;
+                                    console.log(dataRows.length);
+                                    var html = '';
+                                    for(var i = 0; i < dataRows.length ; i++){
+                                          if(dataRows[i].state == 1) {
+                                                status1 = "on";
+                                          }else{
+                                                status1 = "";
+                                          }
+
+                                          if(dataRows[i].state == 2) {
+                                                status2 ? "on" : "";
+                                          }else{
+                                                status2 = "";
+                                          }
+
+                                          if(dataRows[i].state == 3) {
+                                                status3 = "on";
+                                          }else{
+                                                status3 = "";
+                                          }
+
+                                          if(dataRows[i].state == 4) {
+                                                status4 = "on";
+                                                seeOrder = "<a href='/index/index/report?id="+ dataRows[i].id +"'>查看报告</a>";
+                                          }else{
+                                                status4 = "";
+                                                seeOrder = "";
+                                          }
+
+                                          if(dataRows[i].state == 5) {
+                                                status5 = "on";
+                                          }else{
+                                                status5 = "";
+                                          }
+
+                                          html += '<li class="yuyue-list-li">'+
+                                                      '<h3>'+ dataRows[i].physucalName +'</h3>'+
+                                                      '<dl>'+
+                                                           '<dt>'+
+                                                                  '<h4>预约编号</h4>'+
+                                                                  '<p>'+dataRows[i].appointmentNo+'</p>'+
+                                                            '</dt>'+
+                                                            '<dd>'+
+                                                                  '<h4>体检时间</h4>'+
+                                                                  '<p>'+dataRows[i].appointmentDate.substr(0,10)+'<br><span>'+dataRows[i].appointmentHour+'</span></p>'+ 
+                                                            '</dd>'+
+                                                      '</dl>'+
+                                                      '<div class="yuyue-list-1">'+
+                                                            '<span></span>'+
+                                                            '<ul>'+
+                                                                  '<li class='+status1+'>'+
+                                                                        '<h5></h5>'+
+                                                                        '<p>已预约</p>'+
+                                                                  '</li>'+
+                                                                  '<li class='+status2+'>'+
+                                                                        '<h5></h5>'+
+                                                                        '<p>已登记</p>'+
+                                                                  '</li>'+
+                                                                  '<li class='+status3+'>'+
+                                                                        '<h5></h5>'+
+                                                                        '<p>已检查</p>'+
+                                                                  '</li>'+
+                                                                  '<li class='+status4+'>'+
+                                                                        '<h5></h5>'+
+                                                                        '<p>已报告</p>'+
+                                                                  '</li>'+
+                                                                  '<li class='+status5+'>'+
+                                                                        '<h5></h5>'+
+                                                                        '<p>已取消</p>'+
+                                                                  '</li>'+
+                                                            '</ul>'+
+                                                      '</div>'+
+                                                      '<div class="seeOrder" id="seeOrder">'+ seeOrder +'</div>'+
+                                                '</li>';
+                                                
+                                    }     
+                              }else{
+                                    // 暂无预约信息
+                                    $('.Wbaogao').css('display','block');
+                              }
+                              $('#yuyue_lists').append(html); 
+                        }else{
+                              $('.Wbaogao').css('display','block');
+                        }
+                  }
+            })
+      })
+
+</script>
+
+<div class="yuyue-list">
+      <ul id="yuyue_lists">
+           
+      </ul>
+</div>
+
+<div class="Wbaogao">
+      <img src="__HOME__/images/Wbaogao-bg.png" width="100%">
+      <p>当前没有预约~</p>
+</div>
+
+<!--公共底部-->
+
+{include file="public:footer" /}
+
+<!--引用js开始-->
+<!--引用js结束-->
+</div>
+<!--全局结束--> 
+
+</body>
+</html>

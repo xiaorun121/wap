@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_advanced.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:16 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>业务系统</title>
+
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+
+    <link href="__ADMIN__/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+    <link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="ibox-title" style="border-style: none">
+                        <h2 style="font-weight: bold;">业务系统</h2>
+                    </div>
+                    <div class="ibox-content">
+                        <form role="form" class="form-inline" action="{:url('aSaveBusinessInfos')}" method="post" onsubmit="return verify()">
+                            <div class="form-group" style="width: 260px;">
+                                <input type="text" name="company" placeholder="请输入公司名称" value="{$name}" id="exampleInputEmail2"  readonly="true" class="form-control" style="width: 260px;">
+                            </div>
+                            <div class="form-group" style="width: 100px;">
+                                <input type="text" name="xh" placeholder="请输入序号" value="{$xh}" id="exampleInputEmail2"  readonly="true" class="form-control" style="width: 100px;">
+                            </div>
+                            <div class="form-group" style="width: 100px;display: none;">
+                                <input type="text" name="gh" placeholder="请输入序号" value="{$gh}" id="exampleInputEmail2"  readonly="true" class="form-control" style="width: 100px;">
+                            </div>
+                            <p></p>
+                            <div class="form-group" id="data_5">
+                                <label class="font-noraml" style="font-size: 18px;font-weight: bold;">日期选择</label><p></p>
+                                <!-- <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="start" id="start" value="<?php echo date('yy-m-d',time()); ?>" />
+                                    <span class="input-group-addon">到</span>
+                                    <input type="text" class="input-sm form-control" name="end" id="end" value="<?php echo date('yy-m-d',time()); ?>" />
+                                    <span class="input-group-addon" style="color: #fff;background-color: #13c7c7;" id="addDateInfo">添加</span>
+                                </div> -->
+                                <div class=" input-group" id="datepicker">
+                                    <!-- <input type="text" class="input-sm form-control" name="start" id="start" style="display: none" value="<?php echo date('yy-m-d',time()); ?>" /> -->
+                                    <span id="start" style="display: none;"><?php echo date('Y-m-d',time()); ?></span>
+                                    <div id="test1"></div>
+                                    <span class="input-group-addon">到</span>
+                                    <span id="end" style="display: none;"><?php echo date('Y-m-d',time()); ?></span>
+                                    <div id="test2"></div>
+                                    
+                                </div>
+                                <span class="input-group-addon" style="color: #fff;background-color: #13c7c7;height: 32px;float: right;bottom: 0px;width: 63px;top: 0px;position: relative;margin-top: 293px;margin-left: 10px;cursor: pointer;" id="addDateInfo">添加</span>
+                                <p></p>
+                                <div style="border-top: 1px solid #13c7c7;"></div>
+                                <div class="info" style="margin-top: 10px;">
+
+                                </div>
+                                <button class="btn btn-white" type="submit" style="background-color: #0080ef;color: #ccc;">保存</button>
+                                
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+<script src="__ADMIN__/js/laydate.js"></script>
+<script type="text/javascript">
+    $(function(){
+        laydate.render({
+          elem: '#test1',
+          position: 'static',
+          change: function(value, date){ //监听日期被切换
+            lay('#start').html(value);
+          }
+        });
+
+        laydate.render({
+          elem: '#test2',
+          position: 'static',
+          change: function(value, date){ //监听日期被切换
+            lay('#end').html(value);
+          }
+        });
+    })
+</script>
+<script type="text/javascript">
+    function verify(){
+        var bdates = $('#bdates').val();
+        if(bdates == '' || bdates == null){
+            alert('请先添加数据');
+            return false;
+        }    
+        var bnums = $('#bnums').val();   
+        if(bnums == '' || bnums == null){
+            alert('请输入人数');
+            return false;
+        }  
+    }
+
+    function GetNumberOfDays(date1,date2){    //获得天数
+        //date1：开始日期，date2结束日期
+        var a1 = Date.parse(new Date(date1));
+        var a2 = Date.parse(new Date(date2));
+        var day = parseInt((a2-a1)/ (1000 * 60 * 60 * 24));//核心：时间戳相减，然后除以天数
+        return day;
+    };
+
+    function getWeeked(date){      // 获取周几
+        var dt = new Date(date.split("-")[0], date.split("-")[1]-1,date = date.split("-")[2]);
+        var weekDay = ["星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        return weekDay[dt.getDay()];
+    }
+
+    function addOneDate(date,num){
+        var d=new Date(date);
+        d.setDate(d.getDate()+num);
+        var m=d.getMonth()+1 > 9 ? d.getMonth()+1 : '0'+(d.getMonth()+1);
+        return d.getFullYear()+'-'+m+'-'+ (d.getDate() > 9 ? d.getDate() : '0'+(d.getDate() ));
+    }
+
+    function delRemove(i){
+        $('#del'+i).remove();
+    }
+
+    $(function(){
+        $('#addDateInfo').click(function () {
+            var start = $('#start').html();
+            var end = $('#end').html();
+            var bdates = $('#bdates').val();
+            var len = $(".info").find(".form-group").length;
+            if(len == 0){
+                var len = 1;
+            }
+            
+            var b=GetNumberOfDays(start,end);
+            var coun = ($('.info .form-group').length) / 2;
+
+            if(coun >=0 && (b + 1) != coun){
+                // $('.info').html('');
+                for(var i=0; i<=b; i++){
+                    var toAddData = addOneDate(start,i);
+                    var toBeforeAddData = $(".info").find(".form-group").eq(i).find('#bdates').val();
+                    if(toAddData != toBeforeAddData){
+                        $('.info').append('<div class="form-group" id="del'+len+''+i+'">\n' +
+                        '                                        <input type="text" name="bdates[]" placeholder="" value="'+ addOneDate(start,i) +'" id="bdates"  class="form-control" readonly="true" style="text-align: center;width: 276px;">\n' +
+                        '                                        <input type="text" name="bweeks[]" placeholder="" value="'+ getWeeked(addOneDate(start,i)) +'"  class="form-control" readonly="true" style="text-align: center;width: 130px;">\n' +
+                        '                                        <input type="text" name="bi_num[]" placeholder="请输入人数" id="bnums" class="form-control" style="text-align: center;width: 176px;">\n' +
+                        '<a href="#" class="btn btn-white" style="color: #ccc;background-color: #ef2b2b;margin-bottom: 0px" onclick="delRemove('+len+''+i+')">移除</a>'+
+                        '                                    </div>\n' +
+                        
+                        '                                    <p></p>');
+                    }
+                    
+                }
+            }
+            $('#count').val(b+1);
+        })
+    })
+</script>
+
+<script src="__ADMIN__/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+<script src="__ADMIN__/js/plugins/cropper/cropper.min.js"></script>
+<script src="__ADMIN__/js/demo/form-advanced-demo.min.js"></script>
+
+</body>
+</html>

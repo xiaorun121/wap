@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>帮助患者</title>
+    <meta name="keywords" content="帮助患者">
+    <meta name="description" content="帮助患者">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__REPORT__/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <style type="text/css">
+		 
+
+
+		/*.radio input[type=radio]:checked {
+		    background-color: red;
+		    background-clip: content-box;
+		    padding: .2em;
+            width: 1.3em;
+            height: 1.3em;
+		}*/
+
+
+		
+
+		.radio input[type=radio]{
+			margin-left: 0;
+			position: relative;
+			/*clip: rect(0, 0, 0, 0);*/
+			background-color: #333;
+			/*background-clip: content-box;*/
+			padding: .2em;
+			content: "\a0";
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 18px;
+			width: 1em;
+			height: 1em;
+			margin-right: .4em;
+			border-radius: 50%;
+			/*border: 1px solid #333;*/
+			text-indent: .15em;
+			line-height: 1;
+
+		}
+		input:checked { 
+            background-color: #01cd78;
+            border: 1px solid #01cd78;
+            width: 1.3em;
+            height: 1.3em;
+        }
+
+        .btn-w-m{
+            min-width: 40px;
+            margin-left: 10px;
+            border: 1px solid #e7eaec;
+        }
+	</style>
+
+</head>	
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight" style="padding: 0;">
+        
+        <!-- <div class="row">
+            <div class="col-sm-12" style="padding-right: 0">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>选择中心</h5>
+                    </div>
+                    <div class="ibox-content" style="padding: 7px 8px 20px;"> 
+  
+                            <button class="btn btn-primary" type="submit" style="margin-right: 7px;">上海全景中心</button>
+                            <button class="btn btn-white" type="submit" style="margin-right: 7px;">杭州全景中心</button>
+                            <button class="btn btn-white" type="submit" style="margin-right: 7px;">广州全景中心</button>
+                            <button class="btn btn-white" type="submit" style="margin-right: 7px;">重庆全景中心</button>
+                            <button class="btn btn-white" type="submit" style="margin-right: 7px;">天津全景中心</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-sm-12" style="padding-right: 0">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>选择项目</h5>
+                    </div>
+                    <div class="ibox-content" id="project" style="padding: 7px 8px;"> 
+  
+                            <span class="btn btn-w-m btn-primary" type="submit" onclick="getProject()" style="margin-right: 7px;">PET/CT</span>
+                            <span class="btn btn-w-m btn-white" type="submit" onclick="getProject()" style="margin-right: 7px;">PET/MR</span>
+                            <span class="btn btn-w-m btn-white" type="submit" onclick="getProject()" style="margin-right: 7px;">3.0MRI</span>
+                            <span class="btn btn-w-m btn-white" type="submit" onclick="getProject()" style="margin-right: 7px;">1.5MRI</span>
+                            <span class="btn btn-w-m btn-white" type="submit" onclick="getProject()" style="margin-right: 7px;">FLASH双源CT</span>
+                            <span class="btn btn-w-m btn-white" type="submit" onclick="getProject()" style="margin-right: 7px;">16排CT</span>
+                            <span class="btn btn-w-m btn-white" type="submit" onclick="getProject()" style="margin-right: 7px;">磁控胶囊胃镜</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function getProject(){
+                $('#project').on('click', 'span', function(e){
+                    $('#project span').removeClass('btn-primary');
+                    $('#project span').removeClass('btn-white');
+                    $(e.target).addClass('btn-primary');
+                });
+            }
+        </script>
+
+        <div class="row">
+            <div class="col-sm-12" style="padding-right: 0">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>选择部位</h5>
+                    </div>
+                    <div class="ibox-content" id="buwei" style="padding: 7px 8px;"> 
+  
+                            <span class="btn  btn-w-m btn-primary" type="submit" onclick="getBuwei()" style="margin-right: 7px;">全身</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">头部</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">颈部</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">头颈部</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">胸部</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">上腹部</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">下腹部</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">脊椎</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">上肢关节</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">下肢关节</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">四肢关节</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">血管</span>
+                            <span class="btn  btn-w-m btn-white" type="submit" onclick="getBuwei()" style="margin-right: 7px;">神经</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function getBuwei(){
+                $('#buwei').on('click', 'span', function(e){
+                    $('#buwei span').removeClass('btn-primary');
+                    $('#buwei span').removeClass('btn-white');
+                    $(e.target).addClass('btn-primary');
+                });
+            }
+        </script>
+
+        <div class="row">
+            <div class="col-sm-12" style="padding-right: 0">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>扫描技术</h5>
+                    </div>
+                    <div class="ibox-content" id="jishu" style="padding: 7px 8px;"> 
+  
+                            <span class="btn btn-w-m btn-primary" type="submit" onclick="getJishu()" style="margin-right: 7px;">增强</span>
+                            <span class="btn btn-w-m btn-white" type="submit" onclick="getJishu()" style="margin-right: 7px;">平扫</span>
+                            <span class="btn btn-w-m btn-white" type="submit" onclick="getJishu()" style="margin-right: 7px;">普美显</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function getJishu(){
+                $('#jishu').on('click', 'span', function(e){
+                    $('#jishu span').removeClass('btn-primary');
+                    $('#jishu span').removeClass('btn-white');
+                    $(e.target).addClass('btn-primary');
+                });
+            }
+        </script>
+
+        <div class="row">
+            <div class="col-sm-12" style="padding-right: 0">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>希望检查日期</h5>
+                    </div>
+                    <div class="ibox-content" style="padding: 7px 8px"> 
+  
+                            <div class="form-group" id="data_1">
+	                            <div class="input-group date">
+	                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+	                                <input type="text" class="form-control" disabled="disabled" value="<?php echo date('Y-m-d'); ?>">
+	                            </div>
+                                <p style="color: red;">注：点击以上日期图标选择检查日期</p>
+                        	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12" style="margin-left: 15px;max-width: 93%;">
+                <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>希望检查时间</h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th><span style="margin-left: 50px;">徐汇中心</span><span style="margin-left: 100px;">虹口中心</span></th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="text-nowrap" id="checkOne">
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-primary">00:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">01:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">00:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">01:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">02:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">03:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">02:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">03:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">04:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">05:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">04:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">05:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">06:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">07:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">06:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">07:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">08:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">09:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">08:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">09:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">10:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">11:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">10:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">11:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">12:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">13:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">12:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">13:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">14:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">15:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">14:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">15:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">16:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">17:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">16:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">17:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">18:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">19:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">18:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">19:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">20:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">21:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">20:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">21:00</span><br>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">22:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">23:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">22:00</span>
+                                            <span onclick="getCheckOne()" type="button" class="btn btn-w-m btn-white">23:00</span>
+                                        </th>
+                                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <script type="text/javascript">
+                            function getCheckOne(){
+                                $('#checkOne').on('click', 'span', function(e){
+                                    $('#checkOne span').removeClass('btn-primary');
+                                    $('#checkOne span').removeClass('btn-white');
+                                    $(e.target).addClass('btn-primary');
+                                });
+                            }
+
+                            
+                        </script>
+
+                </div>
+            </div>
+            <div class="ibox-content" style="padding: 7px 25px 20px;    font-size: 1.5rem;"> 
+
+                <div class="form-group">
+                    <label >检查人：</label>
+                    <input type="text" name="name" placeholder="请输入检查人姓名" class="form-control" style="width:80%">
+                </div>
+
+                <div class="form-group">
+                    <label >联系方式：</label>
+                    <input type="tel" name="tel" placeholder="请输入联系方式" class="form-control" style="width: 80%;">
+                </div>
+
+                <div>
+                    <button class="btn btn-sm btn-primary pull-center m-t-n-xs" type="submit"><strong>提交</strong>
+                    </button>
+                    
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+    <script src="__REPORT__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__REPORT__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__REPORT__/js/plugins/iCheck/icheck.min.js"></script>
+
+    <script src="__REPORT__/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+    <script src="__REPORT__/js/plugins/cropper/cropper.min.js"></script>
+    
+    <script src="__REPORT__/js/demo/form-advanced-demo.min.js"></script>
+    <script>
+        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
+    </script>
+</body>
+
+
+</html>

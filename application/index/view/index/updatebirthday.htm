@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>生日修改_{$config.title}</title>
+
+{include file="public:header" /}
+<script type="text/javascript" src="__HOME__/js/isLogin.js"></script>
+{include file="public:public" /}
+<!-- 时间选择插件 -->
+<link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+
+
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top" style="padding-bottom: 36px;">
+      <h2 style="margin-top: 0px;">修改生日</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+<script type="text/javascript">
+      var token = getToken('token');
+
+      var values = ["token", "timestamp"];
+      var datas = {
+          "token": token,
+          "timestamp": timestamp,
+      };
+      var sign  = doSign(values, datas);
+</script>
+
+<div class="xinxiwanshan" style="display: block;">
+      <script src="__HOME__/js/lCalendar.js"></script>
+      <link rel="stylesheet" href="__HOME__/css/lCalendar.css">
+      <p>生日
+           <input type="data" readonly="" id="birthday" name="birthday" placeholder="请选择您的生日" data-lcalendar="1900-01-1,2018-12-31" /> 
+      </p> 
+      <script type="text/javascript">
+            // 生日
+            var calendar = new lCalendar();
+            calendar.init({
+              'trigger': '#birthday',
+              'type': 'date'
+            });
+
+            $(function(){
+                  $.ajax({
+                        url:'/app/accoutInfo/getInfo',
+                        data:{sign:sign,token:token},
+                        type:'POST',
+                        dataType:'json',
+                        success:function(data){
+                          if(data.success == true){
+                              if(data.info['birthday']){
+                                  document.getElementById('birthday').value = data.info['birthday'];
+                              }
+                          }
+                        }
+                  })
+
+                  $('#Gname-sub').click(function(){
+                        var birthday = $('#birthday').val();
+                        var value = ["birthday", "token", "timestamp"];
+                        var data = {
+                            "birthday":birthday,
+                            "token": token,
+                            "timestamp": timestamp,
+                        };
+                        var signs  = doSign(value, data);
+
+                        $.ajax({
+                              url:'/app/accoutInfo/baseInfo',
+                              data:{birthday:birthday,realName:'',sex:'',marrige:'',cardNo:'',health:'',sign:signs,token:token,key:key,timestamp:timestamp},
+                              type:'POST',
+                              dataType:'json',
+                              success:function(data){
+                                    if(data.success == true){
+                                          layer.msg('生日修改成功', {
+                                               icon: 1,
+                                               time: 3000
+                                          }, function(){
+                                               window.location.href ='/index/index/pdata';
+                                          });
+                                    }
+                              }
+                        })
+                  })
+            })
+      </script>
+      <input type="submit" value="保存" id="Gname-sub" />
+</div>
+
+<!--公共底部-->
+</div>
+<!--全局结束--> 
+<script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+<script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+</body>
+</html>

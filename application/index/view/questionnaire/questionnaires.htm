@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="apple-mobile-web-app-title" content="">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
+      <meta name="format-detection" content="telephone=no">
+      <meta http-equiv="x-rim-auto-match" content="none">
+
+      <title>健康调研问卷</title>
+      <link href="__INDEX__/css/style.a1176454c221a083e224.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app" class="index">
+      <div style="height: 100%;">
+        <div class="questionView">
+          <div class="finishedView">
+            <img class="finishedImg" src="__INDEX__/images/img_written.svg">
+            <div class="content1">您已完成体检问卷调查！</div>
+            <div class="content2">非常感谢您的信任与配合！我们将妥善保管好您的个人信息，医生也将根据您的健康情况为您定制专属健康检测方案，并于2个工作日内与您联系。</div>
+            <button class="homeBtn" >我的调查问卷</button>
+            <div class="content2" style="text-align: center; font-size: 12px; color: rgb(153, 153, 153);">全景医学影像中心，依托科研级的尖端设备、大师级的影像专家、纳米级的精密技术、五星级的客户体验、医疗级的健康检测，竭力为您提供更加便捷、舒适、温馨的健康检测服务。让健康更贴近，看见你，更懂你！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="__INDEX__/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $('.homeBtn').click(function(){
+            window.location.href = '/questionnaire?id=0&tel='+{$tel};
+        })
+    </script>
+</body>
+</html>

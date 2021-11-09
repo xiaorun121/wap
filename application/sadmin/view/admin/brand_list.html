@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商标列表</title>
+    <meta name="keywords" content="商标列表">
+    <meta name="description" content="商标列表">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.min.css" rel="stylesheet">
+    <link href="__ADMIN__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__ADMIN__/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN__/js/ajaxfileupload.js"></script>
+    <link href="__ADMIN__/css/admin.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="{if condition="input('tab',1) eq 1"}active{/if}"><a data-toggle="tab" href="#tab-1" aria-expanded="true">商标列表</a></li>
+                        <li class="{if condition="input('tab',1) eq 2"}active{/if}"><a data-toggle="tab" href="#tab-2" aria-expanded="false">添加商标列表</a></li>
+                        <li id="showtab" class="{if condition="input('tab',1) eq 3"}active{/if}"><a data-toggle="tab" href="#tab-3" style="{if condition="input('tab',1) neq 3"}display:none{/if}" aria-expanded="false">编辑商标列表</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane {if condition="input('tab',1) eq 1"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('saveBannerSort')}" data-type="ajax">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th width="3%">ID</th>
+                                                    <th width="10%">名称</th>
+                                                    <th width="8%">商标分类</th>
+                                                    <th width="4%">价格</th>
+                                                    <th width="8%">商标编号</th>
+                                                    <th width="8%">注册号</th>
+                                                    <th width="8%">展示图片</th>
+                                                    <th width="8%">效果图片</th>
+                                                    <th width="8%">注册证书</th>
+                                                    <th width="3%">状态</th>
+                                                    <th width="10%">专用期限</th>
+                                                    <th width="8%">创建时间</th>
+                                                    <th width="8%">作者</th>
+                                                    <th width="10%">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {volist name="info" id="vo"}
+                                                    <tr>
+                                                        <td>{$vo.id}</td>
+                                                        <td>{$vo.title}</td>
+                                                        <td>{$vo.classify}</td>
+                                                        <td>{$vo.price}</td>
+                                                        <td>{$vo.brand_number}</td>
+                                                        <td>{$vo.register_id}</td>
+                                                        <td><img src="__UPLOADS__/{$vo.img}" alt="{$vo.title}" width="100"></td>
+                                                        <td><img src="__UPLOADS__/{$vo.effect}" alt="{$vo.title}" width="100"></td>
+                                                        <td><img src="__UPLOADS__/{$vo.certificate}" alt="{$vo.title}" width="100"></td>
+                                                        <td>{:ImgStatus($vo.display)}</td>
+                                                        <td>{$vo.start} / {$vo.end}</td>
+                                                        <td>{:date('Y-m-d H:i:s',$vo.create_time)}</td>
+                                                        <td>{$vo.author}</td>
+                                                        <td>
+                                                            <a href="{:url('brand_list',['id'=>$vo.id, 'tab'=>3])}" title="编辑"><i class="fa fa-edit text-navy"></i></a>&nbsp;&nbsp;
+                                                            <a name="delete" href="{:url('deleteBrandList',['id'=>$vo.id])}" title="删除"><i class="fa fa-trash-o text-navy"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {/volist}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>{$page}</div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane {if condition="input('tab',1) eq 2"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('addBrandList')}" data-type="ajax">
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">名称：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='title' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">分类：</label>
+                                        <div class="col-sm-7">
+                                            <select class="form-control m-b" name="classify">
+                                                {volist name="classifyInfo" id="vo"}
+                                                    <option value="{$vo.name}">{$vo.name}</option>
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">价格：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='price' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">商标编号：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='brand_number' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">注册号：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='register_id' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group" id="data_5">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">专用期限</label>
+                                        <div class="input-daterange input-group col-sm-6" id="datepicker" style="padding-left: 15px;">
+                                            <input type="text" class=" form-control" name="start" value="">
+                                            <span class="input-group-addon">到</span>
+                                            <input type="text" class=" form-control" name="end" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">类似群组：</label>
+                                        <div class="col-sm-7">
+                                            <textarea name="likeness" rows="3" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">注册范围：</label>
+                                        <div class="col-sm-7">
+                                            <textarea name="range" rows="3" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">展示图：</label>
+                                        <div class="col-sm-7">
+                                            <div id="file-pretty">
+                                                <input id="file_path" name="file" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path" type="text" name='img' class="form-control input-large" value="">
+                                                </div>
+                                                <!-- <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 图片尺寸建议：640*360px</span> -->
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path').click(function(){
+                                                        $("#file_path").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path", 'change', function(){
+                                                        var filepath = $("input[name='file']").val();
+                                                        var arr = filepath.split('.');
+                                                        var ext = arr[arr.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(ext)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'file' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path').val(data);
+                                                                   $('#info_path').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">效果展示：</label>
+                                        <div class="col-sm-7">
+                                            <div id="file-pretty">
+                                                <input id="file_path1" name="file" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path1" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path1" type="text" name='effect' class="form-control input-large" value="">
+                                                </div>
+                                                <!-- <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 图片尺寸建议：640*360px</span> -->
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path1').click(function(){
+                                                        $("#file_path1").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path1", 'change', function(){
+                                                        var filepath = $("input[name='file']").val();
+                                                        var arr = filepath.split('.');
+                                                        var ext = arr[arr.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(ext)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'file' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path1',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path1').val(data);
+                                                                   $('#info_path1').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path1').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">注册证书：</label>
+                                        <div class="col-sm-7">
+                                            <div id="file-pretty">
+                                                <input id="file_path2" name="file" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path2" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path2" type="text" name='certificate' class="form-control input-large" value="">
+                                                </div>
+                                                <!-- <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 图片尺寸建议：640*360px</span> -->
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path2').click(function(){
+                                                        $("#file_path2").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path2", 'change', function(){
+                                                        var filepath = $("input[name='file']").val();
+                                                        var arr = filepath.split('.');
+                                                        var ext = arr[arr.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(ext)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'file' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path2',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path2').val(data);
+                                                                   $('#info_path2').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path2').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">显示？隐藏：</label>
+                                        <div class="col-sm-7">
+                                            <div class="radio i-checks">
+                                                <label><input type="radio" value="1" name="display" checked><i></i> 显示</label>
+                                                <label><input type="radio" value="0" name="display"><i></i> 隐藏</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">商标描述：</label>
+                                        <div class="col-sm-7">
+                                            <textarea name="description" rows="3" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <button class="btn btn-primary" type="submit">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane {if condition="input('tab',1) eq 3"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('editBrandList')}" data-type="ajax">
+                                    <input type="hidden" name="id" value="{$infoEdit.id}">
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">名称：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='title' class="form-control" value="{$infoEdit.title}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">分类：</label>
+
+                                        <div class="col-sm-7">
+                                            <select class="form-control m-b" name="classify">
+                                                {volist name="classifyInfo" id="vo"}
+                                                    <option value="{$vo.name}" {if condition="$vo.name eq $infoEdit.classify"}selected{/if}>{$vo.name}</option>
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">价格：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='price' class="form-control" value="{$infoEdit.price}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">商标编号：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='brand_number' class="form-control" value="{$infoEdit.brand_number}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">注册号：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='register_id' class="form-control" value="{$infoEdit.register_id}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group" id="data_5">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">专用期限</label>
+                                        <div class="input-daterange input-group col-sm-6" id="datepicker" style="padding-left: 15px;">
+                                            <input type="text" class=" form-control" name="start" value="{$infoEdit.start}">
+                                            <span class="input-group-addon">到</span>
+                                            <input type="text" class=" form-control" name="end" value="{$infoEdit.end}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">类似群组：</label>
+                                        <div class="col-sm-7">
+                                            <textarea name="likeness" rows="3" class="form-control">{$infoEdit.likeness}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">注册范围：</label>
+                                        <div class="col-sm-7">
+                                            <textarea name="range" rows="3" class="form-control">{$infoEdit.range}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">图片：</label>
+                                        <div class="col-sm-7">
+                                            <div id="file-pretty">
+                                                <input id="file_path_edit" name="files" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path_edit" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path_edit" type="text" name='img' class="form-control input-large" value="{$infoEdit.img}">
+                                                </div>
+                                                <!-- <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 图片尺寸建议：640*360px</span> -->
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path_edit').click(function(){
+                                                        $("#file_path_edit").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path_edit", 'change', function(){
+                                                        var filepath = $("input[name='files']").val();
+                                                        var arrs = filepath.split('.');
+                                                        var exts = arrs[arrs.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(exts)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'files' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path_edit',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path_edit').val(data);
+                                                                   $('#info_path_edit').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path_edit').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">效果展示：</label>
+                                        <div class="col-sm-7">
+                                            <div id="file-pretty">
+                                                <input id="file_path_edit" name="files" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path_edit" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path_edit" type="text" name='effect' class="form-control input-large" value="{$infoEdit.effect}">
+                                                </div>
+                                                <!-- <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 图片尺寸建议：640*360px</span> -->
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path_edit').click(function(){
+                                                        $("#file_path_edit").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path_edit", 'change', function(){
+                                                        var filepath = $("input[name='files']").val();
+                                                        var arrs = filepath.split('.');
+                                                        var exts = arrs[arrs.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(exts)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'files' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path_edit',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path_edit').val(data);
+                                                                   $('#info_path_edit').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path_edit').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">注册证书：</label>
+                                        <div class="col-sm-7">
+                                            <div id="file-pretty">
+                                                <input id="file_path_edit" name="files" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path_edit" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path_edit" type="text" name='certificate' class="form-control input-large" value="{$infoEdit.certificate}">
+                                                </div>
+                                                <!-- <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 图片尺寸建议：640*360px</span> -->
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path_edit').click(function(){
+                                                        $("#file_path_edit").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path_edit", 'change', function(){
+                                                        var filepath = $("input[name='files']").val();
+                                                        var arrs = filepath.split('.');
+                                                        var exts = arrs[arrs.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(exts)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'files' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path_edit',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path_edit').val(data);
+                                                                   $('#info_path_edit').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path_edit').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">显示？隐藏：</label>
+                                        <div class="col-sm-7">
+                                            <div class="radio i-checks">
+                                                <label><input type="radio" value="1" name="display" {if condition="$infoEdit.display eq 1"}checked{/if}><i></i> 显示</label>
+                                                <label><input type="radio" value="0" name="display" {if condition="$infoEdit.display eq 0"}checked{/if}><i></i> 隐藏</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">商标描述：</label>
+                                        <div class="col-sm-7">
+                                            <textarea name="description" rows="3" class="form-control">{$infoEdit.description}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <button class="btn btn-primary" type="submit">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__ADMIN__/js/content.min.js?v=1.0.0"></script>
+    <script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="__ADMIN__/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+    <script src="__ADMIN__/js/layer_hplus.js"></script>
+    <script src="__ADMIN__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__ADMIN__/js/plugins/cropper/cropper.min.js"></script>
+    <script src="__ADMIN__/js/demo/form-advanced-demo.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/laydate/laydate.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>权限管理</title>
+    <meta name="keywords" content="权限管理">
+    <meta name="description" content="权限管理">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.min.css" rel="stylesheet">
+    <link href="__ADMIN__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN__/js/ajaxfileupload.js"></script>
+    <link href="__ADMIN__/css/admin.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="{if condition="input('tab',1) eq 1"}active{/if}"><a data-toggle="tab" href="#tab-1" aria-expanded="true">权限列表</a></li>
+                        <li class="{if condition="input('tab',1) eq 2"}active{/if}"><a data-toggle="tab" href="#tab-2" aria-expanded="false">添加权限</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane {if condition="input('tab',1) eq 1"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('index')}" data-type="ajax">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>权限ID</th>
+                                                    <th>权限结构</th>
+                                                    <th>名称</th>
+                                                    <th>排序</th>
+                                                    <th>类型</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {volist name="nodeInfo" id="vo"}
+                                                    <tr>
+                                                        <td>{$vo.id}</td>
+                                                        <td style="text-indent: {$vo['level']*30}px">{$vo.title}</td>
+                                                        <td>{$vo.name}</td>
+                                                        <td>{$vo.sort}</td>
+                                                        <td>{:level($vo.level)}</td>
+                                                        <td>
+                                                            <a href="{:url('nodeDelete',['id'=>$vo.id])}" title="删除" name="delete"><i class="fa fa-times-circle"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {/volist}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane {if condition="input('tab',1) eq 2"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('addNode')}" data-type="ajax">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">名称</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name='title' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">英文名称</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name='name' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">状态</label>
+                                        <div class="col-sm-10">
+                                            <div class="radio i-checks">
+                                                <label><input type="radio" value="1" name="status" checked><i></i> 是</label>
+                                                <label><input type="radio" value="0" name="status"><i></i> 否</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">类型</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control m-b" name="level">
+                                                <option value="1" >≡ 项目 ≡</option>
+                                                <option value="2" >≡ 模块 ≡</option>
+                                                <option value="3" >≡ 操作 ≡</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">父节点</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control m-b" name="pid">
+                                                <option value="0" selected>≡ 作为顶级分类 ≡</option>
+                                                {volist name="nodeList" id="vo"}
+                                                    {if condition="$vo.level eq 1"}
+                                                        <option value="{$vo.id}">{$vo.title}</option>
+                                                    {else/}
+                                                        <option value="{$vo.id}">&nbsp;&nbsp;&nbsp;{$vo.title}</option>
+                                                    {/if}
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">排序</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name='sort' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <button class="btn btn-primary" type="submit">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__ADMIN__/js/content.min.js?v=1.0.0"></script>
+    <script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+    <script src="__ADMIN__/js/layer_hplus.js"></script>
+    <script src="__ADMIN__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__ADMIN__/js/plugins/cropper/cropper.min.js"></script>
+    <script src="__ADMIN__/js/demo/form-advanced-demo.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/laydate/laydate.js"></script>
+</body>
+
+</html>

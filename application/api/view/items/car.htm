@@ -1,0 +1,672 @@
+<?php
+require_once "/jssdk.php"; 
+$appid = 'wx26129ac2ec7ab5f7'; 
+$APPSECRET = '96a175ff816fb972b4f201e1d01e1c58'; 
+$jssdk = new JSSDK($appid, $APPSECRET); 
+$signPackage = $jssdk->GetSignPackage();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>套餐定制系统套餐合计</title>
+    <meta name="keywords" content="套餐定制系统">
+    <meta name="description" content="套餐定制系统">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__REPORT__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <style type="text/css">
+        /* 定义keyframe动画，命名为blink */
+
+        @keyframes blink{
+          0%{opacity: 1;}
+          50%{opacity: 1;}
+          50.01%{opacity: 0;} /* 注意这里定义50.01%立刻透明度为０，可以设置闪烁效果 */
+          100%{opacity: 0;} 
+        }
+
+        /* 添加兼容性前缀 */
+
+        @-webkit-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-moz-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-ms-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-o-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* 定义blink类*/
+        .blink{
+            animation: blink .75s linear infinite;  
+            /* 其它浏览器兼容性前缀 */
+            -webkit-animation: blink .75s linear infinite;
+            -moz-animation: blink .75s linear infinite;
+            -ms-animation: blink .75s linear infinite;
+            -o-animation: blink .75s linear infinite;
+            color: #dd4814;
+        }
+        .dj{
+            margin-left: 36px;margin-top: -17px !important;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg" style="background: #fff">
+    <div class="pf" style="border: 1px solid #00aff0;width: 7%;text-align: center;position: fixed;top: 40%;margin-top: -67px;z-index: 999;margin-left: 5px;">
+        <a data-toggle="modal" href="#modal-forms"><label><i class="fa fa-star-o" style="color: #23c6c8;font-size: 2rem;"></i></label>  
+        <label>收</label>
+        <label>藏</label></a>
+    </div>
+
+    <div class="pf" style="border: 1px solid #00aff0;width: 7%;text-align: center;position: fixed;top: 50%;margin-top: -20px;z-index: 999;margin-left: 5px;">
+        <a data-toggle="modal" href="#modal-form"><label><i class="fa fa-share-square-o" style="color: #23c6c8;font-size: 2rem;"></i></label>   
+        <label>分</label>
+        <label>享</label></a>
+    </div>
+
+
+    <div id="a" style="width: 120px;height: 50px;background-color: #23c6c8;position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;    font-size: 16px;">清空合计成功</div>
+    <div class="wrapper wrapper-content  animated fadeInRight blog " style="padding: 0px;">
+        <div class="row">
+            
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="border-width:1px">
+                        <h3 style="color: red">*注： <small style="font-size: 1.2rem">点击收藏按钮、填写收藏名、确认、即可保存当前的套餐数据，方便下次直接使用</small></h3>
+
+                    </div>
+                    <div class="ibox-title" style="border-width:1px">
+                        <h3 style="color: red">*注： <small style="font-size: 1.2rem">给客户分享当前套餐之前，点击分享按钮，填写相关的信息，确认之后，分享给客户，客户可以看到填写的相关信息</small></h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-bottom: 100px;">
+            <div class="col-lg-12">
+                {volist name="info_yx" id="vo" key="k"}
+                    <div class="ibox" id="del_{$vo.id}" style="margin-bottom: -14px;">
+                        <div class="ibox-content" >
+                            <div class="small m-b-xs" id="dj" style="margin-left: 12px">
+                                <h3 style="width: 80%;">{$vo.name}</h3>
+                                <h4></h4>
+                                <h4></h4>
+                                单价：<input type="text" name="dj[]" value="{if $vo.yx_update_je}{$vo.yx_update_je}{else/}{$vo.je}{/if}" id="yxdj{$k}" oninput="getyxjc_sum('{$vo.name}','{$k}')">
+                                <a  onclick="delItems({$vo.id})" style="float: right;width: 52px;height: 30px;background: red;border: 0px;color: #fff;font-family: 宋体;text-align: center;line-height: 30px;">删除</a>
+                            </div>
+                        </div>
+                    </div>
+                {/volist}
+                
+            </div>
+            <div class="col-lg-12">
+                {volist name="info" id="vo"}
+                    <div class="ibox" id="del_{$vo.id}" style="margin-bottom: -14px;">
+                        <div class="ibox-content" >
+                            <div class="small m-b-xs" id="dj" style="margin-left: 12px">
+                                <h3 style="width: 80%;">{$vo.name}</h3>
+                                <h4></h4>
+                                <h4></h4>
+                                单价：<h4 style="color: red;" class="dj">{$vo.je}</h4>
+                                <a  onclick="delItems({$vo.id})" style="float: right;width: 52px;height: 30px;background: red;border: 0px;color: #fff;font-family: 宋体;text-align: center;line-height: 30px;margin-top: -48px;">删除</a>
+                            </div>
+                        </div>
+                    </div>
+                {/volist}
+                
+            </div>
+        </div>
+    </div>
+
+    {if $info}
+        <div class="gzwy_zixun" style="position: fixed;width: 100%;bottom: 0;z-index: 9999;font-size: 18px;font-family: 微软雅黑;color: #333;background: #fff;text-align: left;height: 60px;line-height: 36px;    border-top: 1px solid #ccc;    margin-top: -40px;margin-bottom: 38px;border-bottom: 0px;">
+            <span style="color: #333; vertical-align: -webkit-baseline-middle;float: left;margin-left: 15px;margin-top: 6px;">总计：<span style="color: red;" > <span style="color: red;" id="zjts">{$count}</span>条</span></span>&nbsp;
+            <span  style="color: #333; vertical-align: -webkit-baseline-middle;">总金额：<span style="color: red;" >¥ <span style="color: red;" id="zjje">{$sum}</span></span></span>&nbsp;
+            
+            <span class="blink"  style="color: #fff; vertical-align: -webkit-baseline-middle;border: 1px solid red;background: red;" onclick="delAll()">清空数据</span>
+            <p style="background: #fff;width: 101%;margin-left: -1px;height: 65px;">
+                <span style="color: #333; vertical-align: -webkit-baseline-middle;float: left;margin-left: 15px;margin-top: 6px;">折扣：<select name="zk" id="zk">
+                    <option value="100">请选择</option>
+                    <option value="10">1折</option>
+                    <option value="20">2折</option>
+                    <option value="30">3折</option>
+                    <option value="40">4折</option>
+                    <option value="50">5折</option>
+                    <option value="60">6折</option>
+                    <option value="70">7折</option>
+                    <option value="80">8折</option>
+                    <option value="90">9折</option>
+                </select>&nbsp;
+            <span id="zkj-model" style="color: #333;" >折扣价：<span style="color: red;" >¥ <span style="color: red;" id="zkje"></span></span></span>&nbsp;
+            </p>
+            <input type="hidden" name="zkl" id="zkl" >
+            <input type="hidden" name="share_num" id="share_num" >
+        </div>
+    {/if}
+
+    <script src="__REPORT__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__REPORT__/js/bootstrap.min.js?v=3.3.6"></script>
+    <div id="modal-form" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="width: 26rem;margin: 10rem auto;">
+                <div class="modal-body" style="background-clip: padding-box;background-color: #FFF;border: 1px solid rgba(0,0,0,0);border-radius: 4px;box-shadow: 0 1px 3px rgba(0,0,0,.3);outline: 0 none;">
+                    <div class="row">
+                        <div class="col-sm-12 " style="width: 100%;padding-left: 0;">
+                            <form role="form" onclick="return false;">
+                                <div class="form-group">
+                                    <label style="margin-top: .6rem;">性名：</label>
+                                    <input type="text" name="name" id="name" placeholder="请输入性名" class="form-control" required="" aria-required="true" style="width: 72%;float: right;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="margin-top: .6rem;">性别：</label>
+                                    <div class="col-sm-7" style="width: 80%;float: right;">
+                                        <div class="radio i-checks">
+                                            <label><input type="radio" value="1" name="sex" id="sex" checked><i></i> 男</label>
+                                            <label><input type="radio" value="0" name="sex" id="sex"><i></i> 女</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label style="margin-top: .6rem;">婚姻：</label>
+                                    <div class="col-sm-7" style="width: 84%;float: right;margin-top: -30px;">
+                                        <div class="radio i-checks">
+                                            <label><input type="radio" value="1" name="Marriage" checked><i></i> 未婚</label>
+                                            <label><input type="radio" value="0" name="Marriage"><i></i> 已婚</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="margin-top: .6rem;">单位：</label>
+                                    <input type="text" name="company" id="company" placeholder="请输入单位" class="form-control" style="width: 72%;float: right;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="margin-top: .6rem;">套餐：</label>
+                                    <input type="text" name="package" id="package" placeholder="请输入套餐" class="form-control" style="width: 72%;float: right;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="margin-top: .6rem;">预约人：</label>
+                                    <input type="text" name="yuyueman" id="yuyueman" placeholder="请输入预约人" class="form-control" style="width: 72%;float: right;">
+                                </div>
+                                <div class="form-group">
+                                    <label style="margin-top: .6rem;">金额：</label>
+                                    <div class="col-sm-7" style="width: 84%;float: right;margin-top: -30px;">
+                                        <div class="radio i-checks">
+                                            <label><input type="radio" value="1" name="money" checked><i></i> 显示</label>
+                                            <label><input type="radio" value="0" name="money"><i></i> 隐藏</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-left: 90px;margin-top: 30px;">
+                                    <button class="btn btn-sm btn-primary pull-left m-t-n-xs" id="returnShare" type="submit"><strong>确定</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            $('#returnShare').click(function(){
+                var name = $('#name').val();
+                if(name == ''){
+                    $('#a').html('姓名必须填写');
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                        }
+                    , 2000);
+                    return false;
+                }
+                var sex = $("input[name='sex']:checked").val();
+                var Marriage = $("input[name='Marriage']:checked").val();
+                var company = $('#company').val();
+                var package = $('#package').val();
+                var yuyueman = $('#yuyueman').val();
+                var money = $("input[name='money']:checked").val();
+
+                var share_num = document.getElementById("share_num").value;
+
+                if(share_num == ''){
+                    var share_num = {$shareNum};
+                }else{
+                    var share_num = document.getElementById("share_num").value;
+                }
+
+                $.ajax({
+                    url:'{:url('saveShareInfo')}',
+                    data:{name:name,sex:sex,Marriage:Marriage,company:company,package:package,yuyueman:yuyueman,money:money,share_num:share_num},
+                    type:'POST',
+                    dataType:'json',
+                    success:function(data){
+                        if(data.status == 'success'){
+                            $('#a').html('信息保存成功');
+                            document.getElementById("a").style.display="block";
+                            setTimeout(
+                                function(){
+                                    document.getElementById("a").style.display="none";
+                                    window.location.href='{:url('car')}';
+                                }
+                            , 1500);
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+
+
+
+    <div id="modal-forms" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="width: 26rem;margin: 15rem auto;">
+                <div class="modal-body" style="background-clip: padding-box;background-color: #FFF;border: 1px solid rgba(0,0,0,0);border-radius: 4px;box-shadow: 0 1px 3px rgba(0,0,0,.3);outline: 0 none;">
+                    <div class="row">
+                        <div class="col-sm-6 " style="width: 100%">
+                            <form role="form" onclick="return false;">
+                                <div class="form-group">
+                                    <label style="margin-top: .6rem;">收藏名：</label>
+                                    <input type="text" name="name" id="scm" placeholder="请输入收藏名" class="form-control" required="" aria-required="true" style="width: 72%;float: right;">
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-left m-t-n-xs" id="returnSC" type="submit"><strong>确定</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            $('#returnSC').click(function(){
+                var scm = $('#scm').val();
+                if(scm == ''){
+                    $('#a').html('收藏名必须填写');
+                    return false;
+                }
+
+                $.ajax({
+                    url:'{:url('checkScm')}',
+                    data:{scm:scm},
+                    type:'POST',
+                    dataType:'json',
+                    success:function(data){
+                        if(data.status == 'success'){
+                            $('#a').html('该收藏名存在');
+                            document.getElementById("a").style.display="block";
+                            setTimeout(
+                                function(){
+                                    document.getElementById("a").style.display="none";
+                                }
+                            , 2000);
+                        }else{
+                            $.ajax({
+                                url:'{:url('getScm')}',
+                                data:{scm:scm},
+                                type:'POST',
+                                dataType:'json',
+                                success:function(datas){
+                                    if(datas.status == 'success'){
+                                        $('#a').html('添加成功');
+                                        document.getElementById("a").style.display="block";
+                                        setTimeout(
+                                            function(){
+                                                document.getElementById("a").style.display="none";
+                                                window.location.href='{:url('car')}';
+                                            }
+                                        , 1500);
+                                        }
+                                    }
+                            });
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+
+
+    <script src="__REPORT__/js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
+    </script>
+
+    <script type="text/javascript">
+
+        function delItems(id){
+            $('#del_'+id).remove();
+            $('select').prop('selectedIndex', 0);
+
+            $.ajax({
+                url:'{:url("delSoft")}',
+                data:{id:id},
+                type:'POST',
+                dataType:'json',
+                success:function(data){
+                    if(data.code == 200){
+
+                        var totalRow = 0; 
+                        // var totalLength = 0;
+                        $('.ibox #dj').each(function() { 
+                                $(this).find('h4:eq(2)').each(function(){ 
+                                    totalRow += parseFloat($(this).text()); 
+                                }); 
+                        }); 
+
+                        var totalLength = $('.ibox').length; 
+
+                        if(totalRow == 0){
+                            $('.gzwy_zixun').css('display','none');
+                            window.location.href = '{:url('show')}';
+                        }else{
+                            $('#zjje').html(totalRow.toFixed(2));
+                            $('#zkje').html(totalRow.toFixed(2));
+                            $('#zjts').html(totalLength);
+                            $('#share_num').val(data.share_num);
+                            window.location.reload();
+                        }
+                        
+                    }
+                }
+            })
+        }
+
+        function delAll(){
+            $('.row').css('display','none');
+            $('.gzwy_zixun').css('display','none');
+            $('.pf').css('display','none');
+            $.ajax({
+                url:'{:url("delAll")}',
+                type:'POST',
+                success:function(){
+                    document.getElementById("a").style.display="block";
+                    setTimeout(
+                        function(){
+                            document.getElementById("a").style.display="none";
+                            window.location.href = '{:url('show')}';
+                        }
+                    , 2000);
+                }
+            })
+        }
+
+
+
+        $('input[name="checkall"]').on("click",function(){
+            if($(this).is(':checked')){
+                $('input[name="checkbox" ]').each(function(){
+                    $(this).prop("checked",true);
+                });
+
+                var totalRow = 0; 
+                $('.ibox #dj').each(function() { 
+                        $(this).find('h4:eq(2)').each(function(){ 
+                            totalRow += parseFloat($(this).text()); 
+                        }); 
+                }); 
+                $('#zjje').html(totalRow);
+
+            }else{
+                $('input[name="checkbox" ]').each(function(){
+                    $(this).prop("checked",false);
+                });
+                $('#zjje').html('0');
+            }
+        });
+
+        function getyxjc_sum(name,id){
+
+            // var update_je = $(this).val();    // 修改后的金额
+
+            console.log(id);
+            console.log(name);
+            var yxdj = $('#yxdj'+id).val();
+            console.log(yxdj);
+
+            $.ajax({
+                url:'{:url('updateYxdj')}',
+                data:{name:name,yxdj:yxdj},
+                type:'POST',
+                dataType:'json',
+            })
+
+
+            var yxjc_sums =0;
+            
+            $("input[name='dj[]']").each(function(){
+                yxjc_sums+= parseInt($(this).val());
+                
+            })
+
+            // alert(yxjc_sums);
+
+            var opt=$("#zk").val();
+            var je = '{$ybjc_sum}';
+            var zkj = (je * (opt / 100)).toFixed(2);
+            $('#zkje').html(Number(zkj) + Number(yxjc_sums));
+
+            $('#zjje').html(Number(je) + Number(yxjc_sums));
+        }
+            
+    </script>
+
+    <!-- 微信分享 -->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script>
+        $(function(){
+            $('#zk').on('change',function(){
+                var opt=$("#zk").val();
+                // var je = $('#zjje').html();
+                // $('#zkj-model').css('display','block');
+
+                var yxjc_sums =0;
+                $("input[name='dj[]']").each(function(){
+                    yxjc_sums+= parseInt($(this).val());
+                })
+
+                var je = '{$ybjc_sum}';
+                var zkj = (je * (opt / 100)).toFixed(2);
+                $('#zkje').html(Number(zkj) + Number(yxjc_sums));
+                $('#zkl').val(opt);
+
+
+                var share_num = document.getElementById("share_num").value;
+
+                    if(share_num == ''){
+                        var share_num = {$shareNum};
+                    }else{
+                        var share_num = document.getElementById("share_num").value;
+                    }
+                $.ajax({
+                    url:'{:url('saveShaerNum')}',
+                    data:{share_num:share_num},
+                    type:'POST',
+                    dataType:'json',
+                    success:function(data){
+                        $('#share_num').val(data.share_num);
+                    }
+
+                });
+
+                wx.config({
+                    debug: false,
+                    appId: '<?php echo $signPackage["appId"];?>',
+                    timestamp: <?php echo $signPackage["timestamp"];?>,
+                    nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+                    signature: '<?php echo $signPackage["signature"];?>',
+                    jsApiList: [
+                      // 所有要调用的 API 都要加到这个列表中
+                      "updateAppMessageShareData",
+                      "updateTimelineShareData",
+                      "onMenuShareTimeline",
+                      "onMenuShareAppMessage"
+                    ]
+                });
+
+                wx.ready(function () {
+                    // 在这里调用 API
+                    /* 分享朋友 */
+                    var zk = document.getElementById("zkl").value;//
+                    
+
+                    wx.onMenuShareAppMessage({ 
+
+
+                        title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                        desc: '全景专注您的健康', // 分享描述
+                        link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk="+zk+"&num="+(share_num-1), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    });
+
+                    wx.updateAppMessageShareData({ 
+                        title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                        desc: '全景专注您的健康', // 分享描述
+                        link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk="+zk+"&num="+(share_num-1), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    });
+                    /* 分享朋友圈 */
+
+                    wx.onMenuShareTimeline({ 
+                        title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                        link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk="+zk+"&num="+(share_num-1), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    });
+
+                    wx.updateTimelineShareData({ 
+                        title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                        link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk="+zk+"&num="+(share_num-1), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    });
+                });
+            });
+
+
+
+            wx.config({
+                debug: false,
+                appId: '<?php echo $signPackage["appId"];?>',
+                timestamp: <?php echo $signPackage["timestamp"];?>,
+                nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+                signature: '<?php echo $signPackage["signature"];?>',
+                jsApiList: [
+                  // 所有要调用的 API 都要加到这个列表中
+                  "updateAppMessageShareData",
+                  "updateTimelineShareData",
+                  "onMenuShareTimeline",
+                  "onMenuShareAppMessage"
+                ]
+            });
+
+            wx.ready(function () {
+                // 在这里调用 API
+                /* 分享朋友 */
+                var share_nums = document.getElementById("share_num").value;
+
+                if(share_nums == ''){
+                    var share_nums = {$shareNum};
+                }else{
+                    var share_nums = document.getElementById("share_num").value;
+                }
+                
+                $.ajax({
+                    url:'{:url('saveShaerNumDefault')}',
+                    data:{share_nums:share_nums},
+                    type:'POST',
+                    dataType:'json',
+                    success:function(data){
+                        $('#share_num').val(data.share_num);
+                    }
+
+                });
+
+                wx.onMenuShareAppMessage({ 
+
+                    title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                    desc: '全景专注您的健康', // 分享描述
+                    link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk=100&num="+share_nums, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                    success: function () {
+                      // 设置成功
+                    }
+                });
+
+                wx.updateAppMessageShareData({ 
+                    title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                    desc: '全景专注您的健康', // 分享描述
+                    link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk=100&num="+share_nums, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                    success: function () {
+                      // 设置成功
+                    }
+                });
+                /* 分享朋友圈 */
+
+                wx.onMenuShareTimeline({ 
+                    title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                    link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk=100&num="+share_nums, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                    success: function () {
+                      // 设置成功
+                    }
+                });
+
+                wx.updateTimelineShareData({ 
+                    title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                    link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk=100&num="+share_nums, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                    success: function () {
+                      // 设置成功
+                    }
+                });
+            });
+        })
+    </script>
+</body>
+
+
+</html>

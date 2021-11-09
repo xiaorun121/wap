@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>业务系统</title>
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__HOME__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__HOME__/css/animate.min.css" rel="stylesheet">
+    <link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp" style="font-size: 16px;">
+    <div id="a" style="width: 55%;height: 60%;position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;font-size: 15px;border-radius: 3px;"><img src="http://shwap.uvclinic.cn:7439/public/qrcode/16049176784976342171.png"><i class="fa fa-close" id="x" onclick="closeQrcode()" style="color: #f74704;font-size: 20px;top: 0;position: absolute;margin-left: -8px;margin-top: -9px;"></i></div>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5 style="font-size: 20px;">业务系统</h5>
+                    <div class="ibox-tools">
+                        <a href="{:url('alogout')}" class="btn btn-primary btn-xs" style="font-size: 16px;">退出</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                        <div class="form-group navbar-form-custom" style="width: 100%;height: 0px;margin-bottom: 0px;">
+                            <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search" style="background: #baecef;font-weight: bold;color: #ed5565;font-size: 20px;">
+                        </div>
+
+                    <div class="project-list">
+
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td class="project-status" >
+                                        <span class="label label-primary" style="font-size: 16px">单位序号
+                                    </td>
+                                    <td class="project-title">
+                                        单位名称
+                                        <br/>
+                                    </td>
+                                    <td class="project-title">
+                                        单位体检记录
+                                        <br/>
+                                    </td>
+                                    <!-- <td class="project-title">
+                                        单位联系人
+                                        <br/>
+                                    </td>
+                                    <td class="project-title">
+                                        单位联系人电话
+                                        <br/>
+                                    </td> -->
+                                    <td class="project-completion">
+                                        业务员
+                                    </td>
+                                    <td class="project-completion" style="text-align: center;">  
+                                        操作
+                                    </td>
+                                </tr>
+                            {volist name="info" id="v" key="k"}
+                                <tr class="pinfo">
+                                    <td class="project-status">
+                                        <span class="label label-primary" style="font-size: 16px">{$v.xh}
+                                    </td>
+                                    <td class="project-title">
+                                        {$v.name}
+                                        <br/>
+                                    </td>
+                                    <td class="project-title">
+                                        {$v.record }
+                                        <br/>
+                                    </td>
+                                    <!-- <td class="project-title">
+                                        {$v.lxrxm}
+                                        <br/>
+                                    </td>
+                                    <td class="project-title">
+                                        {$v.lxrdh1}
+                                        <br/>
+                                    </td> -->
+                                    <td class="project-completion">
+                                        <small>{$v.sales}</small>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 100%;" class="progress-bar"></div>
+                                        </div>
+                                    </td>
+                                    <td class="project-actions" >
+                                        <a href="{:url('business_info/teamlist',['dwmc'=>$v.name])}" target="_blank" class="btn btn-white btn-sm" style="font-size: 16px"><i class="fa fa-folder"></i> 团检 </a>
+                                        <a href="{:url('business_info/ashow',['name'=>$v.name,'gh'=>$gh])}" target="_blank" class="btn btn-white btn-sm" style="font-size: 16px"><i class="fa fa-folder"></i> 查看 </a>
+                                        <a href="{:url('business_info/aadd',['name'=>$v.name,'xh'=>$v.xh,'gh'=>$gh])}" target="_blank" class="btn btn-white btn-sm" style="font-size: 16px"><i class="fa fa-calendar"></i> 增加时间段 </a>
+                                        <a href="#" onclick="getQrcode({$v.xh})" class="btn btn-white btn-sm" style="font-size: 16px"><i class="fa fa fa-qrcode" ></i> 二维码 </a>
+                                        <a href="{:url('order/login',['xh'=>$v.xh])}" class="btn btn-white btn-sm" target="_blank" style="font-size: 16px"><i class="fa fa fa-link" ></i> 链接地址 </a>
+                                    </td>
+                                </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                        <div>{$page}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+<script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+<script type="text/javascript">
+    function getQrcode(xh){
+        $.ajax({
+            url:"{:url('getQrcode')}",
+            data:{xh:xh},
+            type:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.code == 200){
+                    $('#a').html('<img src="'+ data.img +'" width="200px"><i class="fa fa-close" onclick="closeQrcode()" style="color: #f74704;font-size: 20px;top: 0;position: absolute;margin-left: -8px;margin-top: -9px;"></i>');
+                    document.getElementById("a").style.display="block";
+                    document.getElementById("x").style.display="block";
+                }
+            }
+        })
+    }
+
+    function closeQrcode(){
+        $('#a').html('');
+        document.getElementById("a").style.display="none";
+    }
+
+    $(document).ready(function(){
+        $("#top-search").keyup(function(){
+
+
+            $(".project-list tbody .pinfo").hide().filter(":contains('"+($(this).val())+"')").show();
+        });
+    })
+</script>
+</body>
+</html>

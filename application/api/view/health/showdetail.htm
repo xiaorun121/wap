@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>体检报告</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="__SHOW__/css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="__SHOW__/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="__SHOW__/css/index.css"/>
+		<style>
+			 
+
+		</style>
+	</head>
+	<body style="background-color: #fff;">
+		<div class="mui-content"  style="background-color: #fff;">
+			<div style="padding: 10px 10px;" class="nav">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<a class="mui-control-item mui-active" href="#item1">体检结论</a>
+					<a class="mui-control-item" href="#item2">临床检查</a>
+					<a class="mui-control-item" href="#item3">化验项目</a>
+					<a class="mui-control-item" href="#item4">影像检查</a>
+				</div>
+			</div>
+		</div>
+
+		<div id="item1" class="mui-control-content mui-active" style="margin-bottom:50px;">
+			<div class="item">
+				<h3>体检结论</h3>
+				<pre class="summary" style="margin-top: 10px;font-size: 14px;margin-bottom: 10px;color: #8f8f94;" >{$tjjl}</pre>
+			</div>
+			<div class="item">
+				<h3>体检建议</h3>
+				<pre class="summary" style="margin-top: 10px;font-size: 14px;margin-bottom: 10px;color: #8f8f94;" >{$tjjy}</pre>
+			</div>
+		</div>
+
+		<div id="item2" class="mui-control-content" style="margin-bottom:50px;">
+			{volist name="lcjc" id="lc"}
+				<div class="item">
+					<h3>{$lc.itemname}</h3>
+					<ul>
+						{volist name="lc['itemresults']" id="items" }
+							<li class="clearfix"><span class="fl">{$items.nodename}</span><span class="fl"><p class="fontColor">{$items.valuestr} {$items.unit}</p>{if condition="$items.rangestd eq ''"}{else /}<p>参考值：{$items.rangestd}</p>{/if}</span></li>
+						{/volist}
+					</ul>
+					<div class="result">小结：<pre class="summary" style="margin-top: 10px;font-size: 14px;margin-bottom: 10px;color: #8f8f94;" >{$lc.comment}</pre></div>
+					<div class="result">检查医生：{$lc.doctor}</div>
+				</div>
+			{/volist}
+		</div>
+
+		<div id="item3" class="mui-control-content" style="margin-bottom:50px;">
+			{volist name="hyxm" id="hy"}
+				<div class="item">
+					<h3>{$hy.itemname}</h3>
+					<ul>
+						{volist name="hy['itemresults']" id="xm" }
+							<li class="clearfix"><span class="fl">{$xm.nodename}</span><span class="fl"><p class="fontColor">{$xm.valuestr} {$xm.unit}</p>{if condition="$xm.rangestd eq ''"}{else /}<p>参考值：{$xm.rangestd}</p>{/if}</span></li>
+						{/volist}
+					</ul>
+					<div class="result">小结：<pre class="summary" style="margin-top: 10px;font-size: 14px;margin-bottom: 10px;color: #8f8f94;" >{$hy.comment}</pre></div>
+					<div class="result">检查医生：{$hy.doctor}</div>
+				</div>
+			{/volist}
+		</div>
+
+		<div id="item4" class="mui-control-content" style="margin-bottom:50px;">
+			{volist name='yxjc' id='yx'}
+				<li class="mui-table-view-cell" style="margin-bottom: 15px;">
+					<div class="item"> 
+						<h3>{$yx.reportname}</h3>
+						<ul>
+							<li><p><i></i>检查部位</p><p>{$yx.reportname}</p></li>
+							<li class="clearfix"><p><i></i>检查所见</p><pre style="font-size: 14px;margin-bottom: 10px;color: #8f8f94;">{$yx.findings}</pre></li>
+							<li class="clearfix"><p><i></i>检查结论</p><pre style="font-size: 14px;margin-bottom: 10px;color: #8f8f94;">{$yx.conclusion}</pre></li>
+						</ul> 
+						<div class="result">检查医生：{$yx.doctor}</div>
+					</div>
+				</li>
+			{/volist}
+		</div>
+		<div class="footer">
+		    <div class="cloudImage" style="width:100% !important;">查看PDF报告</div>
+		</div>
+		<script src="__SHOW__/js/jquery-2.2.1.js" type="text/javascript"></script>
+		<script src="__SHOW__/js/mui.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$('.cloudImage').click(function(){
+					$.ajax({
+						url:'{:url('getPdf')}',
+						data:{tjbh:'{$tjbh}'},
+						type:'POST',
+						dataType:'json',
+						success:function(data){
+							if(data.code == 200){
+								window.location.href = data.info;
+							}else{
+								alert(data.info);
+							}
+						}
+					})
+					// window.location.href = '{:url('getPdf')}?tjbh={$tjbh}';
+				});
+			})
+		</script>
+	</body>
+</html>

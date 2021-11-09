@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_advanced.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:16 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>业务系统</title>
+
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+
+    <link href="__ADMIN__/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+    <link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="ibox-title" style="border-style: none">
+                        <h5>业务系统</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form role="form" class="form-inline" action="{:url('saveBusinessInfos')}" method="post" onsubmit="return verify()">
+                            <div class="form-group" style="width: 260px;">
+                                <label for="exampleInputEmail2" class="sr-only">公司名称</label>
+                                <input type="text" name="company" placeholder="请输入公司名称" value="{$name}" id="exampleInputEmail2" class="form-control" style="width: 260px;">
+                            </div>
+                            <p></p>
+                            <div class="form-group" id="data_5">
+                                <label class="font-noraml">日期选择</label><p></p>
+
+                                <div class="info">
+                                    {volist name="list" id="v"}
+                                        <div class="form-group" id="del{$v.id}">
+                                            <label class="sr-only">日期</label>
+                                            <input type="text" name="bdates[]" placeholder="" value="{$v.bi_date}" id="bdates" class="form-control" readonly="true" style="text-align: center;width: 276px;">
+                                            <input type="text" name="bweeks[]" placeholder="" value="{$v.bi_week}" class="form-control" readonly="true" style="text-align: center;width: 130px;">
+                                            <input type="text" name="bi_num[]" placeholder="" value="{$v.bi_num}" class="form-control" {if condition="$v.admin_name eq 'admin'"}readonly="true"{/if} style="text-align: center;width: 176px;">
+                                            {if condition="$v.admin_name eq 'admin'"}
+                                                <a href="#" class="btn btn-white" style="color: #ccc;background-color: #12a249;margin-bottom: 0px">由总控操作数据不允许删除</a>
+                                            {else/}
+                                                <a href="#" class="btn btn-white" style="color: #ccc;background-color: #ef2b2b;margin-bottom: 0px" onclick="delBusiness({$v.id})">删除</a>
+                                            {/if}
+                                        </div>
+                                        <p></p>
+                                    {/volist}
+                                </div>
+                                <div>{$page}</div>
+                                <p></p>
+                                <button class="btn btn-white" type="submit" style="background-color: #0080ef;color: #ccc;">更新</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+<script type="text/javascript">
+    function verify(){
+        var bdates = $('#bdates').val();
+        if(bdates == '' || bdates == null){
+            alert('请先添加数据');
+            return false;
+        }       
+    }
+    function delBusiness(id){
+        $.ajax({
+            url:'{:url("delBusiness")}',
+            data:{id:id},
+            type:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.status == 'success'){
+                    alert(data.msg);
+                    $('#del'+id).css('display','none');
+                }
+            }
+        })
+    }
+</script>
+
+<script src="__ADMIN__/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+<script src="__ADMIN__/js/plugins/cropper/cropper.min.js"></script>
+<script src="__ADMIN__/js/demo/form-advanced-demo.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>分类分级查询</title>
+    <meta name="keywords" content="分类分级查询">
+    <meta name="description" content="分类分级查询">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <style type="text/css">
+        /* 定义keyframe动画，命名为blink */
+
+        @keyframes blink{
+          0%{opacity: 1;}
+          50%{opacity: 1;}
+          50.01%{opacity: 0;} /* 注意这里定义50.01%立刻透明度为０，可以设置闪烁效果 */
+          100%{opacity: 0;} 
+        }
+
+        /* 添加兼容性前缀 */
+
+        @-webkit-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-moz-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-ms-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-o-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* 定义blink类*/
+        .blink{
+            animation: blink .75s linear infinite;  
+            /* 其它浏览器兼容性前缀 */
+            -webkit-animation: blink .75s linear infinite;
+            -moz-animation: blink .75s linear infinite;
+            -ms-animation: blink .75s linear infinite;
+            -o-animation: blink .75s linear infinite;
+            color: #dd4814;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+	<div id="a" style="width: 120px;height: 50px;background-color: #23c6c8;position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;    font-size: 16px;">添加合计成功</div>
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="padding: 0px;">
+                        <div class="panel-body">
+                            <div class="panel-group" id="accordion">
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="getClassify('MR-3.0','One','1','1')">MR-3.0<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h5>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse">
+                                    	<div class="ibox-title" style="text-align: center;">
+					                        <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search-One" style="width:100%;font-weight: bold;font-size: 16px;">
+					                    </div>
+                                        <div class="ibox-content One" style="padding: 0px;" id="One">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="getClassify('MR-1.5','Two','2','1')">MR-1.5<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse">
+                                    	<div class="ibox-title" style="text-align: center;">
+					                        <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search-Two" style="width:100%;font-weight: bold;font-size: 16px;">
+					                    </div>
+                                        <div class="ibox-content Two" style="padding: 0px;" id="Two">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" onclick="getClassify('CT-DS','Three','3','1')">CT-DS<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse">
+                                    	<div class="ibox-title" style="text-align: center;">
+					                        <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search-Three" style="width:100%;font-weight: bold;font-size: 16px;">
+					                    </div>
+                                        <div class="ibox-content Three" style="padding: 0px;" id="Three">
+
+					                    </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" onclick="getClassify('CT-16','Four','4','1')">CT-16<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse">
+                                    	<div class="ibox-title" style="text-align: center;">
+					                        <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search-Four" style="width:100%;font-weight: bold;font-size: 16px;">
+					                    </div>
+                                        <div class="ibox-content Four" style="padding: 0px;" id="Four">
+
+					                    </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" onclick="getClassify('DR','Five','5','1')">DR<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseFive" class="panel-collapse collapse">
+                                    	<div class="ibox-title" style="text-align: center;">
+					                        <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search-Five" style="width:100%;font-weight: bold;font-size: 16px;">
+					                    </div>
+                                        <div class="ibox-content Five" style="padding: 0px;" id="Five">
+
+					                    </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" onclick="getClassify('PET-核磁','Six','6','1')">PET-核磁<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseSix" class="panel-collapse collapse">
+                                        <div class="ibox-content Six" style="padding: 0px;" id="Six">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwenty" onclick="getClassify('乳腺钼靶','Twenty','20','1')">乳腺钼靶<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTwenty" class="panel-collapse collapse">
+                                        <div class="ibox-content Twenty" style="padding: 0px;" id="Twenty">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwenty-one" onclick="getClassify('超声科','Twenty-one','21','1')">超声科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTwenty-one" class="panel-collapse collapse">
+                                        <div class="ibox-title" style="text-align: center;">
+                                            <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search-Twenty-one" style="width:100%;font-weight: bold;font-size: 16px;">
+                                        </div>
+                                        <div class="ibox-content Twenty-one" style="padding: 0px;" id="Twenty-one">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwenty-two" onclick="getClassify('磁控胶囊胃镜室','Twenty-two','22','1')">磁控胶囊胃镜室<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTwenty-two" class="panel-collapse collapse">
+                                        <div class="ibox-content Twenty-two" style="padding: 0px;" id="Twenty-two">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" onclick="getClassify('一般检查科室','Seven','7')">一般检查科室<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseSeven" class="panel-collapse collapse">
+                                        <div class="ibox-content Seven" style="padding: 0px;" id="Seven">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseEight" onclick="getClassify('眼科','Eight','8')">眼科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseEight" class="panel-collapse collapse">
+                                        <div class="ibox-content Eight" style="padding: 0px;" id="Eight">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine" onclick="getClassify('耳鼻喉科','Nine','9')">耳鼻喉科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseNine" class="panel-collapse collapse">
+                                        <div class="ibox-content Nine" style="padding: 0px;" id="Nine">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTen" onclick="getClassify('口腔科','Ten','10')">口腔科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTen" class="panel-collapse collapse">
+                                        <div class="ibox-content Ten" style="padding: 0px;" id="Ten">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" onclick="getClassify('内科','Eleven','11')">内科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseEleven" class="panel-collapse collapse">
+                                        <div class="ibox-content Eleven" style="padding: 0px;" id="Eleven">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve" onclick="getClassify('外科','Twelve','12')">外科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTwelve" class="panel-collapse collapse">
+                                        <div class="ibox-content Twelve" style="padding: 0px;" id="Twelve">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThirteen" onclick="getClassify('心电图科','Thirteen','13')">心电图科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseThirteen" class="panel-collapse collapse">
+                                        <div class="ibox-content Thirteen" style="padding: 0px;" id="Thirteen">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFourteen" onclick="getClassify('骨密度科','Fourteen','14')">骨密度科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseFourteen" class="panel-collapse collapse">
+                                        <div class="ibox-content Fourteen" style="padding: 0px;" id="Fourteen">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFifteen" onclick="getClassify('肺功能科室','Fifteen','15')">肺功能科室<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseFifteen" class="panel-collapse collapse">
+                                        <div class="ibox-content Fifteen" style="padding: 0px;" id="Fifteen">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSixteen" onclick="getClassify('动脉硬化检查科室','Sixteen','16')">动脉硬化检查科室<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseSixteen" class="panel-collapse collapse">
+                                        <div class="ibox-content Sixteen" style="padding: 0px;" id="Sixteen">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeventeen" onclick="getClassify('检验科','Seventeen','17')">检验科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseSeventeen" class="panel-collapse collapse">
+                                    	<div class="ibox-title" style="text-align: center;">
+					                        <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search-Seventeen" style="width:100%;font-weight: bold;font-size: 16px;">
+					                    </div>
+                                        <div class="ibox-content Seventeen" style="padding: 0px;" id="Seventeen">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseEighteen" onclick="getClassify('呼吸试验检查科','Eighteen','18')">呼吸试验检查科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseEighteen" class="panel-collapse collapse">
+                                        <div class="ibox-content Eighteen" style="padding: 0px;" id="Eighteen">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseNineteen" onclick="getClassify('妇科','Nineteen','19')">妇科<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseNineteen" class="panel-collapse collapse">
+                                        <div class="ibox-content Nineteen" style="padding: 0px;" id="Nineteen">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwenty-three" onclick="getClassify('收费处','Twenty-three','23')">收费处<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTwenty-three" class="panel-collapse collapse">
+                                    	<div class="ibox-title" style="text-align: center;">
+					                        <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search-Twenty-three" style="width:100%;font-weight: bold;font-size: 16px;">
+					                    </div>
+                                        <div class="ibox-content Twenty-three" style="padding: 0px;" id="Twenty-three">
+
+					                    </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="gzwy_zixun" style="position: fixed;width: 100%;bottom: 0;z-index: 9999;font-size: 18px;font-family: 微软雅黑;color: #fff;background: #00aff0;text-align: center;height: 50px;line-height: 36px;">
+        <a href="{:url('show')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('show_dx')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">项目</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('show_tc')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">套餐</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('car')}" style="color: #fff; vertical-align: -webkit-baseline-middle;"><i class="fa fa-shopping-cart blink" style="color: #f70707;font-size: 3rem;"></i></a>
+    </div>
+    <script src="__REPORT__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__REPORT__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript">
+    	function addItems(id,xid,yx_id){
+            $.ajax({
+                data:{id:id,xid:xid,yx_id:yx_id},
+                url:'{:url('addItems')}',
+                type:'POST',
+                success:function(){
+                    document.getElementById("a").style.display="block";
+                    setTimeout(function(){document.getElementById("a").style.display="none";}, 2000);
+
+                }
+            })
+        }
+
+    	function getClassify(value,id,xid,yx_id){
+
+    		$.ajax({
+    			url:'{:url('getClassify')}',
+    			data:{value:value},
+    			type:'POST',
+    			dataType:'json',
+    			success:function(data){
+    				if(data.status == 'success'){
+    					var html = '';
+    					for (var i = 0; i < data.info.length; i++) {
+
+    						html +=     '<div class="alert" style="border-bottom: 1px #e7eaec solid;font-size: 1.5rem;margin-bottom: 0px;">';
+                            html +=           '<span>'+data.info[i].NAME+'</span><span style="float: right;"> <i class="fa fa-shopping-cart" style="color: #23c6c8;font-size: 2rem;" onclick="addItems(\''+ data.info[i].ID +'\',\''+ (xid + '000' +i) +'\',\'' + (yx_id == 1 ? '1' : '0')+  '\')"></i> </span>';   
+                            html +=     '</div>';
+                            
+
+                            $('#'+id).html(html); 
+    					}
+    				}
+    			}
+    		})
+    	}
+
+    	$(document).ready(function(){
+    		$("#top-search-One").keyup(function(){
+
+                $(".One .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Two").keyup(function(){
+
+                $(".Two .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Three").keyup(function(){
+
+                $(".Three .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Four").keyup(function(){
+
+                $(".Four .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Five").keyup(function(){
+
+                $(".Five .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Six").keyup(function(){
+
+                $(".Six .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Seven").keyup(function(){
+
+                $(".Seven .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Eight").keyup(function(){
+
+                $(".Eight .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Nine").keyup(function(){
+
+                $(".Nine .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Ten").keyup(function(){
+
+                $(".Ten .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Eleven").keyup(function(){
+
+                $(".Eleven .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Twelve").keyup(function(){
+
+                $(".Twelve .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Thirteen").keyup(function(){
+
+                $(".Thirteen .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Fourteen").keyup(function(){
+
+                $(".Fourteen .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Fifteen").keyup(function(){
+
+                $(".Fifteen .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Sixteen").keyup(function(){
+
+                $(".Sixteen .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Seventeen").keyup(function(){
+
+                $(".Seventeen .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Eighteen").keyup(function(){
+
+                $(".Eighteen .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Nineteen").keyup(function(){
+
+                $(".Nineteen .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Twenty").keyup(function(){
+
+                $(".Twenty .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Twenty-one").keyup(function(){
+
+                $(".Twenty-one .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Twenty-two").keyup(function(){
+
+                $(".Twenty-two .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+
+            $("#top-search-Twenty-three").keyup(function(){
+
+                $(".Twenty-three .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+        })
+    </script>
+
+</body>
+</html>						                             

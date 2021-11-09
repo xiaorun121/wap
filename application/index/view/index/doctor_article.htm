@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>{$docInfo.title}_{$config.title}</title> 
+{include file="public:header" /}
+<script type="text/javascript" src="__HOME__/js/public.js"></script>
+
+</head>
+
+<body>
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>专家介绍</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+
+<div class="doctor1">
+      <h3><img src="__HOME__/images/doctor-tx.png"></h3>
+      <h4>{$docInfo.title}</h4>
+      <h5><span>{$docInfo.doc_job_one}</span><span>{$docInfo.doc_job_two}</span></h5>
+</div>
+
+<div class="doctor2">
+      {$docInfo.content}
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		var id = {$docInfo.id};
+		$.ajax({
+            url:"{:url('index/click')}",
+            data:{id:id},
+            type:'post',
+            dataType:'json',
+        })
+	})
+</script>
+
+<!--公共底部-->
+</div>
+<!--全局结束--> 
+
+</body>
+</html>

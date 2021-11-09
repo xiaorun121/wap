@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/contacts.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:21 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>个检人数限制维护</title>
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__HOME__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__HOME__/css/animate.min.css" rel="stylesheet">
+    <link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <style type="text/css">
+    	.gohome{
+    		display: none;
+    	}
+        .layui-input, .layui-textarea {
+            display: block;
+            width: 100%;
+            padding-left: 10px;
+        }
+        .layui-input, .layui-select, .layui-textarea {
+            height: 38px;
+            line-height: 1.3;
+            line-height: 38px\9;
+            border-width: 1px;
+            border-style: solid;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+<script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+
+<script type="text/javascript">
+
+    function getColor(){
+        var color = ['#ff0000','#c1c1c1','#818181','#7167e3','#FFC0CB','#FF69B4','#87CEFA','#00BFFF','#00FFFF','#00FF7F','#FF6347','#FF0000'];
+        var index = Math.floor((Math.random()*color.length));
+        return color[index];
+    }
+
+    function getBgimg(){
+        var bgimg = ['fa-slideshare','fa-github-alt','fa-reddit','fa-twitter','fa-github','fa-linux','fa-drupal','fa-twitch','fa-optin-monster','fa-tripadvisor','fa-opencart'];
+        //console.log(Math.floor((Math.random()*bgimg.length)))
+        var indexs = Math.floor((Math.random()*bgimg.length));
+        //console.log(bgimg[indexs])
+        return bgimg[indexs];
+    }
+
+
+    $(function(){
+        $('#query').click(function(){
+            $('#info').html('');
+            var cDate = $('#date').val();
+            if(cDate == ""){
+                layer.msg('请选择日期', function(){
+                    //关闭后的操作
+                });
+                return false;
+            }
+            $.ajax({
+                url:'{:url("queryDates")}',
+                data:{cDate:cDate},
+                type:'POST',
+                dataType:'json',
+                success:function(data){
+                    if(data.msg == 'success'){
+                        
+                        for(var i=0; i<=data.info.length; i++){
+                            $('#info').append('<div class="col-sm-2">'+
+                                                '<div class="contact-box" style="'+ ((data.info[i].week == '星期日' ? "background-color: #e0e0e0;" : "")) +'">'+
+                                                        '<div class="col-sm-8">'+
+                                                            '<h3><strong>'+ data.info[i].qdate +'</strong></h3>'+
+                                                            '<p><i class="fa '+ getBgimg() +'"" style="color: '+ getColor() +';font-size:18px"></i> </p>'+
+                                                            '<address>'+
+                                                                '<strong>'+ data.info[i].week +'</strong><br>'+
+                                                                '<p></p>'+
+                                                                '<input type="hidden" name="id[]" value="'+ data.info[i].id +'">'+
+                                                                '<input type="hidden" name="qdate[]" value="'+ data.info[i].qdate +'">'+
+                                                                '<input type="text" maxlength="2" '+ ((data.info[i].week == '星期日' ? " readonly" : "")) +' name="num[]" value="'+ data.info[i].num +'" style="width: 100px;'+ ((data.info[i].num > 0) ? "color:#f00;" : "") + ((data.info[i].week == '星期日' ? "background-color: #e0e0e0;" : "")) +'">'+
+                                                            '</address>'+
+                                                        '</div>'+
+                                                        '<div class="clearfix"></div>'+
+                                                '</div>'+
+                                            '</div>');
+                        }
+                    }
+                    
+                }
+            });
+        })
+    })
+</script>
+    <div class="wrapper wrapper-content animated fadeInRight">
+    	<div class="row">
+            <form action="{:url('saveDates')}" method="post">
+                <div class="col-sm-12" style="margin-bottom: 5px;margin-top: 5px;">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content" style="background-color: #f3f3f4;">
+                            <div class="row">
+                                <div class="form-group">
+                                	<div class="layui-inline">
+        					            <div class="layui-input-inline" style="margin-left: 20%;width: 40%;float: left;">
+        					                <input type="text" class="layui-input" name="querydate" value="{if $qdate}{$qdate}{/if}" id="date" placeholder="yyyy-mm" lay-key="4" autoComplete="off">
+        					            </div>
+                                        <div class="btn btn-sm btn-primary" id="query" style="margin-left: 5px;width: 60px;height: 38px;font-size: 16px;"> 搜索</div>
+        					            <button type="submit" class="btn btn-sm btn-primary" id="submit" style="margin-left: 5px;width: 60px;height: 38px;font-size: 16px;"> 保存</button>
+    					            </div>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" id="info">
+                    {volist name="info" id="vo"}
+                        <div class="col-sm-2">
+                            <div class="contact-box" style="<?php if($vo['week'] == '星期日'){echo 'background-color: #e0e0e0;';}?>">
+                                    <div class="col-sm-8">
+                                        <h3><strong>{$vo.qdate}</strong></h3>
+                                        <p><i class="{$bgimg[mt_rand(0,10)]}" style="color: {$color[mt_rand(0,11)]};font-size:18px"></i> </p>
+                                        <address>
+                                            <strong>{$vo.week}</strong><br>
+                                            <p></p>
+                                            <input type="hidden" name="id[]" value="{$vo.id}">
+                                            <input type="hidden" name="qdate[]" value="{$vo.qdate}">
+                                            <input type="text" name="num[]" maxlength="2" <?php if($vo['week'] == '星期日'){echo ' readonly';}?> value="{$vo.num}" style="width: 100px;{if condition='$vo.num > 0'}color:#f00;{/if}<?php if($vo['week'] == '星期日'){echo 'background-color: #e0e0e0;';}?>">
+                                        </address>
+                                    </div>
+                                    <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    {/volist}
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__ADMIN__/js/content.min.js?v=1.0.0"></script>
+    <script>
+        $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
+    </script>
+    <script src="__ADMIN__/js/laydate.js"></script>
+    <script>
+        //年月选择器
+        laydate.render({
+          elem: '#date'
+          ,type: 'month'
+        });
+
+        
+    </script>
+    <script src="__ADMIN__/js/layer/layer.js"></script>
+</body>
+
+
+</html>

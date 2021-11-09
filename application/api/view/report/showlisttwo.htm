@@ -1,0 +1,246 @@
+<?php
+require_once "/jssdk.php"; 
+$appid = 'wx26129ac2ec7ab5f7'; 
+$APPSECRET = '96a175ff816fb972b4f201e1d01e1c58'; 
+$jssdk = new JSSDK($appid, $APPSECRET); 
+$signPackage = $jssdk->GetSignPackage();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="gbk">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>影像报告</title>
+    <meta name="keywords" content="">
+    <meta name="description" content=""> 
+    <!-- <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta http-equiv="Access-Control-Allow-Methods" content="GET" />
+    <meta http-equiv="Access-Control-Allow-Headers" content="x-requested-with,content-type" /> -->
+
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="__REPORT__/css/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__REPORT__/css/sweetalert.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <?php
+        header("Content-type:text/html;charset=utf-8");
+        $serverName = "192.168.200.10\CSSERVER";
+
+        $uid = "weixin";
+        $pwd = "weixin@2019";
+        $db  = "GCRIS2"; 
+        $uniqueID = $uniqueID;
+         
+        $serverName = "192.168.200.10\CSSERVER"; //serverName\instanceName
+        $connectionInfo = array( "Database"=>"GCRIS2", "UID"=>"weixin", "PWD"=>"weixin@2019");
+        $conn = sqlsrv_connect( $serverName, $connectionInfo);
+
+        $querys ="select * from dbo.v_reportinfo where ProcedureGuid = '".$uniqueID."' ";
+
+        $results = sqlsrv_query($conn, $querys);
+        while($rows = sqlsrv_fetch_array($results)){
+            $localName    = iconv("GBK","UTF-8", $rows['LocalName']);
+            $createTime   = $rows['ExamineDt']->format('Y-m-d H:i:s');
+            $Gender       = iconv("GBK","UTF-8", $rows['Gender']);
+            $age          = iconv("GBK","UTF-8", $rows['age']);
+            $CheckingItem = iconv("GBK","UTF-8", $rows['CheckingItem']);
+            $WYSText      = iconv("GBK","UTF-8", $rows['WYSText']);
+            $WYGText      = iconv("GBK","UTF-8", $rows['WYGText']);
+            $AccNo        = iconv("GBK","UTF-8", $rows['AccNo']);
+    
+    ?>
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row" style="margin-left: 0px;margin-right: 0px;">
+            <div class="ibox-title" style="border-style: none;">
+                <div class="ibox-tools">
+                    <div class="head" style="text-align: center;">
+                        <img src="/public/static/api/static/images/logo.png" alt="" style="width: 80%;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4" style="text-align: center;margin: 0px 0px 8px;">
+                <strong><?php echo $CheckingItem;?> 影像报告</strong>
+            </div>
+
+            <div class="col-sm-4" style="border-bottom: solid 1px #309ED9;border-top: solid 1px #309ED9;">
+                <div class="ibox float-e-margins" style="margin-bottom:0px;">
+                    <div class="ibox-content profile-content" style="padding: 25px 14px 10px;">
+
+                        <p>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：&nbsp;<strong><?php echo $localName;?></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别：&nbsp;<strong><?php echo $Gender;?></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年龄：&nbsp;<strong><?php echo $age;?></strong></p><p>检查日期：&nbsp;<strong><?php echo $createTime;?><p>检查部位：&nbsp;<strong><?php echo $CheckingItem;?></strong></p>
+
+                    </div> 
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="ibox">
+
+                        <?php
+                            header("Content-type:text/html;charset=utf-8");
+                            $serverName = "192.168.200.10\CSSERVER";
+
+                            $uid = "weixin";
+                            $pwd = "weixin@2019";
+                            $db  = "GCRIS2"; 
+                            $uniqueID = $uniqueID;
+                             
+                            $serverName = "192.168.200.10\CSSERVER"; //serverName\instanceName
+                            $connectionInfo = array( "Database"=>"GCRIS2", "UID"=>"weixin", "PWD"=>"weixin@2019");
+                            $conn = sqlsrv_connect( $serverName, $connectionInfo);
+
+                            $querys ="select HealthHistory from dbo.tRegOrder where AccNo = '".$AccNo."' ";
+                            $results = sqlsrv_query($conn, $querys);
+                            while($rows = sqlsrv_fetch_array($results)){
+                                $HealthHistory    = iconv("GBK","UTF-8", $rows['HealthHistory']);
+                            }
+
+                            if(!empty($HealthHistory)){
+                                $HealthHistory = $HealthHistory;
+                            }else{
+                                $HealthHistory = '';
+                            }
+                        ?>
+
+                        <div class="social-feed-box" style="margin-bottom:0px;border: 0px;">
+                            <div class="social-avatar">
+                                <div class="media-body"><h3>病史</h3></div>
+                            </div>
+                            <div class="social-body" style="margin-top: -20px;">
+                                <p><?php echo $HealthHistory; ?></p>
+                            </div>
+                        </div>
+
+                        <div class="social-feed-box" style="margin-bottom:0px;border: 0px;margin-top: -30px;">
+                            <div class="social-avatar">
+                                <div class="media-body"><h3>报告所见</h3></div>
+                            </div>
+                            <div class="social-body" id="wysText" style="margin-top: -20px;">
+                                <p><?php echo $WYSText;?></p>
+                            </div>
+                        </div>
+                        <div class="social-feed-box" style="margin-bottom:0px;border: 0px;margin-top: -30px;">
+                            <div class="social-avatar">
+                                <div class="media-body"><h3>报告结论</h3></div>
+                            </div>
+                            <div class="social-body" id="wygText" style="margin-top: -20px;">
+                                <p><?php echo $WYGText;?></p>
+                            </div>
+                        </div>
+                        <div style="display: none;"><span id="accno" url="<?php echo $AccNo; ?>"></span></div>
+
+                    
+                </div>
+            </div>
+
+            
+
+            <button class="btn btn-primary btn-block m" id="seeImageUrl" url="" onclick="onClickImg()" style="width: 93%;height: 50px;">查看影像报告</button>
+        </div>
+    </div>
+    <script type='text/javascript' src='__API__/static/js/jquery.min.js'></script>
+    <script type="text/javascript">
+        $(function(){
+            var url = $('#accno').attr('url');
+
+            // 获取影像图片
+            $.ajax({
+                url:"{:url('getImageUrl')}",
+                data:{AccNo:url,HospCode:'{$HospCode}'},
+                type:'get',
+                dataType:'json',
+                success:function(data){
+                    if(data.code == 200){
+                        $('#seeImageUrl').attr('url',data.url);
+                    }
+                }
+            });
+            
+        })
+
+        function onClickImg(){
+            var url = $('#seeImageUrl').attr('url');
+            window.open(url);
+        }
+    </script>
+
+    <!-- 微信分享 -->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script>
+        $(function(){
+            wx.config({
+                debug: false,
+                appId: '<?php echo $signPackage["appId"];?>',
+                timestamp: <?php echo $signPackage["timestamp"];?>,
+                nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+                signature: '<?php echo $signPackage["signature"];?>',
+                jsApiList: [
+                  // 所有要调用的 API 都要加到这个列表中
+                  "updateAppMessageShareData",
+                  "updateTimelineShareData",
+                  "onMenuShareTimeline",
+                  "onMenuShareAppMessage"
+                ]
+            });
+
+          wx.ready(function () {
+            // 在这里调用 API
+            /* 分享朋友 */
+
+            wx.onMenuShareAppMessage({ 
+                title: '<?php echo $localName;?>-<?php echo $CheckingItem;?>影像报告（<?php echo $createTime; ?>）', // 分享标题
+                desc: '全景专注您的健康', // 分享描述
+                link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+            });
+
+            wx.updateAppMessageShareData({ 
+                title: '<?php echo $localName;?>-<?php echo $CheckingItem;?>影像报告（<?php echo $createTime; ?>）', // 分享标题
+                desc: '全景专注您的健康', // 分享描述
+                link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+            });
+            /* 分享朋友圈 */
+
+            wx.onMenuShareTimeline({ 
+                title: '<?php echo $localName;?>-<?php echo $CheckingItem;?>影像报告（<?php echo $createTime; ?>）', // 分享标题
+                link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+            });
+
+            wx.updateTimelineShareData({ 
+                title: '<?php echo $localName;?>-<?php echo $CheckingItem;?>影像报告（<?php echo $createTime; ?>）', // 分享标题
+                link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+            });
+          });
+        })
+    </script>
+    <?php } ?>
+</body>
+</html>
+
+

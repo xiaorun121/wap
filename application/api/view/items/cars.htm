@@ -1,0 +1,253 @@
+<?php
+require_once "/jssdk.php"; 
+$appid = 'wx26129ac2ec7ab5f7'; 
+$APPSECRET = '96a175ff816fb972b4f201e1d01e1c58'; 
+$jssdk = new JSSDK($appid, $APPSECRET); 
+$signPackage = $jssdk->GetSignPackage();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>套餐合计</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <style type="text/css">
+        /* 定义keyframe动画，命名为blink */
+
+        @keyframes blink{
+          0%{opacity: 1;}
+          50%{opacity: 1;}
+          50.01%{opacity: 0;} /* 注意这里定义50.01%立刻透明度为０，可以设置闪烁效果 */
+          100%{opacity: 0;} 
+        }
+
+        /* 添加兼容性前缀 */
+
+        @-webkit-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-moz-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-ms-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-o-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* 定义blink类*/
+        .blink{
+            animation: blink .75s linear infinite;  
+            /* 其它浏览器兼容性前缀 */
+            -webkit-animation: blink .75s linear infinite;
+            -moz-animation: blink .75s linear infinite;
+            -ms-animation: blink .75s linear infinite;
+            -o-animation: blink .75s linear infinite;
+            color: #dd4814;
+        }
+        .dj{
+            margin-left: 36px;margin-top: -17px !important;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg" style="background: #fff;">
+
+    
+    <div class="daochu" style="width: 120px;height: 50px;background-color: #23c6c8;position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff; display: none;   font-size: 16px;"><a href="{:url('exportPhpExcel')}?name={$name}&share_num={$num}&count={$count}&sum={$sum}&zkl={$zkl}&zkj={$zkj}" style="color: #f900b6;"><i class="fa fa-star-o" style="color: #f8ac59;font-size: 2rem;"></i>  导出</a></div>
+
+    <div class="wrapper wrapper-content  animated fadeInRight blog " style="padding: 0px;">
+        <div class="row">
+            
+            <div class="col-sm-12" style="margin-bottom: -20px;">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="border-width:1px;border-style: none;">
+                        <h3 style="color: red">*注： <small style="font-size: 1.2rem">当前链接在电脑端打开可以将数据导出到excel</small></h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 " style="margin-bottom: -25px;">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <p>姓名： <strong>{$userinfo.name}</strong>  &nbsp;&nbsp; 性别：  <strong>{if condition="$userinfo.sex eq 1"}男{else/}女{/if}</strong>  &nbsp;&nbsp;   婚否： <strong>{if condition="$userinfo.Marriage eq 1"}未婚{else/}已婚{/if}</strong></p>
+
+                    <p>单位： <strong>{$userinfo.company}</strong></p>
+
+                    <p>套餐： <strong>{$userinfo.package}</strong></p>
+
+                    <p>预约人： <strong>{$userinfo.yuyueman}</strong></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-bottom: 100px;">
+            <div class="col-lg-12">
+                {volist name="info" id="vo"}
+                    <div class="ibox" id="del_{$vo.id}" style="margin-bottom: -14px;">
+                        <div class="ibox-content" >
+                            <div class="small m-b-xs" id="dj">
+                                <h3 style="width: 80%;">{$vo.name}</h3>
+                                <h4 style="color: red;float: right" class="dj">单价：{$vo.je}</h4>
+                            </div>
+                        </div>
+                    </div>
+                {/volist}
+                
+            </div>
+        </div>
+    </div>
+
+    {if $info}
+        <div class="gzwy_zixun" style="position: fixed;width: 100%;bottom: 0;z-index: 9999;font-size: 18px;font-family: 微软雅黑;color: #333;background: #fff;text-align: left;height: 50px;line-height: 36px;    border-top: 1px solid #ccc;    margin-top: -40px;{if condition="$zk eq 100"}{else/}margin-bottom: 38px;{/if}border-bottom: 0px;">
+            <span style="color: #333; vertical-align: -webkit-baseline-middle;float: left;margin-left: 15px;margin-top: 6px;">总计：<span style="color: red;" > <span style="color: red;" id="zjts">{$count}</span>条</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span  style="color: #333; vertical-align: -webkit-baseline-middle;">金&nbsp;&nbsp;&nbsp;额：<span style="color: red;" >¥ <span style="color: red;" id="zjje">{$sum}</span></span></span>&nbsp;&nbsp;
+            {if condition="$zk eq 100"}
+            {else/}
+                <p style="background: #fff;width: 101%;margin-left: -1px;height: 65px;">
+                    <span style="color: #333; vertical-align: -webkit-baseline-middle;float: left;margin-left: 15px;margin-top: 6px;">折扣：
+                        <span style="color: red;">{if condition="$zk eq 10"}1折{/if}
+                        {if condition="$zk eq 20"}2折{/if}
+                        {if condition="$zk eq 30"}3折{/if}
+                        {if condition="$zk eq 40"}4折{/if}
+                        {if condition="$zk eq 50"}5折{/if}
+                        {if condition="$zk eq 60"}6折{/if}
+                        {if condition="$zk eq 70"}7折{/if}
+                        {if condition="$zk eq 80"}8折{/if}
+                        {if condition="$zk eq 90"}9折{/if}
+                        </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                <span  style="color: #333;">折扣价：<span style="color: red;" >¥ <span style="color: red;" id="zkje">{$zkj}</span></span></span>&nbsp;&nbsp;
+                </p>
+            {/if}
+        </div>
+    {/if}
+
+    <script src="__REPORT__/js/jquery.min.js?v=2.1.4"></script>
+    <script type="text/javascript">
+        $(function(){
+            var browser = {
+                versions: function () {
+                    var u = navigator.userAgent, app = navigator.appVersion;
+                    return {   //移动终端浏览器版本信息
+                        trident: u.indexOf('Trident') > -1, //IE内核
+                        presto: u.indexOf('Presto') > -1, //opera内核
+                        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+                        iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                        iPad: u.indexOf('iPad') > -1, //是否iPad
+                        webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+                    };
+                }(),
+                language: (navigator.browserLanguage || navigator.language).toLowerCase()
+            }
+            if (!browser.versions.mobile) {
+                $('.daochu').css('display','block');
+            }
+        });
+    </script>
+
+    <!-- 微信分享 -->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script>
+        $(function(){
+            wx.config({
+                debug: false,
+                appId: '<?php echo $signPackage["appId"];?>',
+                timestamp: <?php echo $signPackage["timestamp"];?>,
+                nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+                signature: '<?php echo $signPackage["signature"];?>',
+                jsApiList: [
+                  // 所有要调用的 API 都要加到这个列表中
+                  "updateAppMessageShareData",
+                  "updateTimelineShareData",
+                  "onMenuShareTimeline",
+                  "onMenuShareAppMessage"
+                ]
+            });
+
+          wx.ready(function () {
+            // 在这里调用 API
+            /* 分享朋友 */
+
+            wx.onMenuShareAppMessage({ 
+                title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                desc: '全景专注您的健康', // 分享描述
+                link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk={$zk}&num={$num}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+            });
+
+            wx.updateAppMessageShareData({ 
+                title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                desc: '全景专注您的健康', // 分享描述
+                link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk={$zk}&num={$num}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+            });
+            /* 分享朋友圈 */
+
+            wx.onMenuShareTimeline({ 
+                title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk={$zk}&num={$num}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+            });
+
+            wx.updateTimelineShareData({ 
+                title: '来自{$xingming}分享给您的健康体检数据', // 分享标题
+                link: "http://pet.uvclinic.cn/api/items/cars?name={$name}&zk={$zk}&num={$num}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://pet.uvclinic.cn/public/static/home/images/64.jpg', // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+            });
+          });
+        })
+    </script>
+</body>
+
+
+</html>

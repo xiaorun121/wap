@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>{$noticeInfo.title}_{$config.title}</title>
+{include file="public:header"/}
+<script type="text/javascript" src="__HOME__/js/public.js"></script>
+
+</head>
+
+<body>
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>注意事项</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+
+<div class="TJxuzhi">
+	<h3>{$noticeInfo.title}</h3>
+      <dl>
+            <dt>适用范围</dt>
+            <dd>{$noticeInfo.content}</dd>
+      </dl>
+</div>
+
+<script type="text/javascript">
+      $(function(){
+            var id = {$noticeInfo.id};
+            $.ajax({
+            url:"{:url('index/click')}",
+            data:{id:id},
+            type:'post',
+            dataType:'json',
+        })
+      })
+</script>
+<!--公共底部-->
+{include file="public:footer"/}
+{include file="public:zixun"/}
+
+
+</div>
+<!--全局结束--> 
+
+</body>
+</html>

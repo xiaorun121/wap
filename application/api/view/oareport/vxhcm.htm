@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>{$Name}-全景医学影像</title>
+
+    <meta name="keywords" content="全景医学影像">
+    <meta name="description" content="全景医学影像">
+
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__HOME__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__HOME__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__HOME__/css/animate.min.css" rel="stylesheet">
+    <link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script type="text/javascript" src="__HOME__/js/iconfont.js"></script>
+    <style>
+        .icon {
+          width: 70%;
+          height: 10rem;
+          vertical-align: -0.15em;
+          fill: currentColor;
+          overflow: hidden;
+        }
+        .tag-list li{text-align: center;width: 50%}
+        .tag-list li a{padding: 5px 17px;margin-right: 6px; border: 0; background: none !important;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <!-- <div class="row">
+            <div class="col-sm-6">
+                <div class="widget navy-bg no-padding" style="background-image: url('__HOME__/img/fj.jpg'); text-align: center; height: 200px;">
+                    <div class="p-m">
+                        {volist name="Result" id="vo"}
+                            <svg class="icon" aria-hidden="true">
+                                {if condition="$vo.Gender eq 'Male'"}
+                                    <use xlink:href='#icon-yonghunan'></use>
+                                {else/}
+                                    <use xlink:href='#icon-yonghunv'></use>
+                                {/if}
+                            </svg>
+                        
+                            <h2 class="m-xs" style="margin-top: 20px;margin-bottom: 20px;">{$vo.Name}</h2>
+
+                            <h3 class="font-bold no-margins">
+                                {$vo.JobName}    &nbsp;&nbsp;&nbsp;   {$vo.OrganizationalName}
+                            </h3>
+                        {/volist}
+                    </div>
+                    
+                </div>
+            </div>
+        </div> -->
+        <div class="row">
+
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content mailbox-content">
+                        <div class="file-manager">
+
+                            <ul class="tag-list" style="padding: 0">
+                                <li>
+                                    <a href="{:URL('oareport/getPayInfos')}?empCode={$empCode}">
+                                        <svg class="icon" aria-hidden="true">
+                                          <use xlink:href="#icon-payments"></use>
+                                        </svg> 
+                                        <p>工资</p>
+                                    </a>
+                                </li>
+                                <!-- <li>
+                                    <a href="{:URL('oareport/getAttendInfos')}?empCode={$empCode}">
+                                        <svg class="icon" aria-hidden="true">
+                                          <use xlink:href="#icon-attend-active"></use>
+                                        </svg>
+                                        <p>考勤</p>
+                                    </a>
+                                </li> -->
+                                <li>
+                                    <a href="{:URL('oareport/getVacationInfos')}?empCode={$empCode}">
+                                        <svg class="icon" aria-hidden="true">
+                                          <use xlink:href="#icon-jiaqiguanli"></use>
+                                        </svg>
+                                        <p>休假</p>
+                                    </a>
+                                </li>
+<!--                                 <li>
+                                    <a href="{:URL('oareport/getWorkInfos')}?empCode={$empCode}">
+                                        <svg class="icon" aria-hidden="true">
+                                          <use xlink:href="#icon-jiaban"></use>
+                                        </svg>
+                                        <P>加班</P>
+                                    </a>
+                                </li> -->
+                                <!-- <li>
+                                    <a href="{:URL('oareport/getEgressInfos')}?empCode={$empCode}">
+                                        <svg class="icon" aria-hidden="true">
+                                          <use xlink:href="#icon-chucharenyuan"></use>
+                                        </svg>
+                                        <p>公出</p>
+                                    </a>
+                                </li> -->
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

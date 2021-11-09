@@ -1,0 +1,238 @@
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="apple-mobile-web-app-title" content="">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
+      <meta name="format-detection" content="telephone=no">
+      <meta http-equiv="x-rim-auto-match" content="none">
+
+
+      <title>全景医学（检测）中心</title>
+      <link href="__INDEX__/css/style.a1176454c221a083e224.css" rel="stylesheet">
+      <style type="text/css">
+        .am-button {
+            display: block;
+            outline: 0 none;
+            -webkit-appearance: none;
+            box-sizing: border-box;
+            padding: 0;
+            text-align: center;
+            font-size: 18px;
+            height: 47px;
+            line-height: 47px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
+            white-space: nowrap;
+            color: #000;
+            background-color: #fff;
+            border: 1PX solid #ddd;
+            border-radius: 5px;
+        }
+        .am-list-item .am-input-control input {
+            color: #000;
+            font-size: 17px;
+            appearance: none;
+            width: 100%;
+            padding: 2px 0;
+            border: 0;
+            background-color: transparent;
+            line-height: 1;
+            box-sizing: border-box;
+        }
+        .am-list-item .am-input-control input::placeholder {
+            color: #bbb;
+            line-height: 1.2;
+        }
+        .am-list-item .am-input-control input:disabled {
+            color: #bbb;
+            background-color: #fff;
+        }
+
+      </style>
+</head>
+
+<body>
+  <div id="a" style="width: 120px;height: 45px;background-color: rgb(166, 195, 195);position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;font-size: 15px;border-radius: 3px;"></div>
+
+    <div id="app" class="index">
+      <div style="height: 100%;">
+        <div style="padding: 40px 30px 0px;">
+          <div style="font-size: 34px; color: rgb(51, 51, 51); letter-spacing: 4px;">登录</div>
+          <div style="border-bottom: 1px solid rgb(229, 229, 229); display: flex; margin-top: 30px; align-items: center;">
+            <div style="margin-right: 15px; font-size: 20px; color: rgb(51, 51, 51);">
+              <span>+86</span>
+              <img src="__INDEX__/images/drop_down.png" style="width: 15px;">
+            </div>
+            <div style="flex: 1 1 0%;"><div class="am-list-item am-input-item am-list-item-middle">
+              <div class="am-list-line"><div class="am-input-control">
+                <input pattern="[0-9]*" placeholder="请输入手机号" maxlength="11" type="text" value="" id="tel">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-bottom: 1px solid rgb(229, 229, 229); display: flex; margin-top: 30px; align-items: center;">
+        <div style="flex: 1 1 0%;">
+          <div class="am-list-item am-input-item am-list-item-middle am-input-focus am-input-android">
+            <div class="am-list-line">
+              <div class="am-input-control">
+                <input pattern="[0-9]*" maxlength="6" placeholder="" type="tel" value="" id="txtCode">
+              </div>
+              <div class="am-input-clear"></div>
+            </div>
+          </div>
+        </div>
+        <button style="color: rgb(23, 176, 249); font-size: 15px; background-color: rgb(255, 255, 255);" id="message">获取验证码</button>
+      </div>
+      <div id="captchaBox" style="margin-top: 25px;"></div>
+      <a role="button" class="am-button" id="okbtn" aria-disabled="false" style="font-size: 15px; color: rgb(255, 255, 255); border-radius: 5px; margin-top: 50px; letter-spacing: -1px; background: rgb(23, 176, 249);">
+        <span>登 录</span>
+      </a>
+      <div style="font-size: 12px; margin-top: 20px; color: rgb(153, 153, 153); line-height: 20px;">温馨提示：未注册的手机号，登录时将自动注册，且代表您已同意<a href="/userProtocol"><span style="color: rgb(23, 176, 249);">《用户注册协议》</span></a></div>
+    </div>
+  </div>
+</div>
+<script src="__INDEX__/js/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+
+        /*
+        *  获取验证码
+        */
+        $('#message').click(function(){
+            var tel = $('#tel').val();
+            var partten       = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
+
+            if(tel == ''){
+                $('#a').html('请填写手机号');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }else if(!partten.test(tel)){
+                $('#a').html('手机号错误');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }
+
+            $.ajax({
+                url:"{:url('smsCode')}",
+                type:'POST',
+                dataType:'json',
+                data:{'tel':tel},
+                success:function(data){
+                    if(data.msg == 200){
+                        $('#a').html(data.info);
+                        document.getElementById("a").style.display="block";
+                        setTimeout(
+                            function(){
+                                document.getElementById("a").style.display="none";
+                            }
+                        , 1500);
+                        var timeNum = 60;
+                        timers = setInterval(function(){
+                            if(timeNum > 0){
+                              timeNum --;
+                              $('#message').html('重新发送(' +　timeNum + 's)');
+                              $('#message').attr('disabled', "disabled");
+                            }else if(timeNum === 0){
+                              clearInterval(timers);
+                              $('#message').html('获取验证码');
+                              $('#message').removeAttr('disabled');
+                            }
+                        },1500) 
+                    }else{
+                        $('#a').html('验证码发送错误');
+                        document.getElementById("a").style.display="block";
+                        setTimeout(
+                            function(){
+                                document.getElementById("a").style.display="none";
+                            }
+                        , 1500);
+                    }
+                }
+            })
+        })
+
+        /*
+        *  获取报告
+        */
+        $('#okbtn').click(function(){
+            var tel = $('#tel').val();
+            var smsCode = $('#txtCode').val();
+            var partten       = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
+
+            if(tel == ''){
+                $('#a').html('请填写手机号');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }else if(!partten.test(tel)){
+                $('#a').html('手机号不正确');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }
+
+            if(smsCode == ''){
+                $('#a').html('验证码必须填写');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }
+
+            /*
+            *  验证码校验
+            */
+            $.ajax({
+                type: "POST",
+                url:"{:url('smsValid')}",
+                data: {"code":smsCode,'tel':tel},
+                dataType:'json',
+                success:function(data){
+
+                    if(data.code == 1){ 
+                        window.location.href = "/questionnaires?tel="+tel;
+                    }else{
+                        $('#a').html('验证码验证失败');
+                        document.getElementById("a").style.display="block";
+                        setTimeout(
+                            function(){
+                                document.getElementById("a").style.display="none";
+                            }
+                        , 1500);
+                        return false;
+                    }
+                }
+            })
+
+        })
+    })
+</script>
+</body>
+</html>

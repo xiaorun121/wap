@@ -1,0 +1,50 @@
+
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>全景医学影像诊断诊断中心</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min9814.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="background: #23c6c8;color: #fff;text-align: center;">
+                        <h5 style="float: none;font-size: 15px;">组合项目<span style="float: right;"> <i class="fa fa-shopping-cart" style="color: #23c6c8;font-size: 2rem;"></i> </span> </h5>
+                    </div>
+                    <div class="ibox-content">
+                        {volist name="result" id="vo"}
+                            <div class="alert" style="border-bottom: 1px #e7eaec solid;font-size: 1.5rem;margin-bottom: 0px;">
+                                <span>{$vo.SFXM_NAME}</span><span style="float: right;font-size: 2rem;color: #23c6c8;"> {$vo.DJ} </span> 
+                            </div>
+                            
+
+                        {/volist}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+</body>
+</html>

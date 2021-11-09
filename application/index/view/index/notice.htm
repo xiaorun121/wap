@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>体检需知列表_{$config.title}</title>
+
+{include file="public:header" /}
+<script type="text/javascript" src="__HOME__/js/public.js"></script>
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>体检须知</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+
+
+<div class="TJxuzhi-list">
+	<ul>  
+            {volist name="notice" id="vo"}     
+                  <li onclick="javascript:window.location.href='{$vo.url}'">
+                        <img src="{$vo.img}">
+                        <h3>{$vo.title}</h3>
+                        <p>{$vo.description}</p>
+                  </li>
+            {/volist}     
+      </ul>
+</div>
+
+
+<!--公共底部-->
+
+{include file="public:footer" /}
+
+{include file="public:zixun" /}
+<!--引用js开始-->
+
+<!--引用js结束-->
+</div>
+<!--全局结束--> 
+
+</body>
+</html>

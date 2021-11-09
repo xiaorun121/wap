@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理</title>
+    <meta name="keywords" content="用户管理">
+    <meta name="description" content="用户管理">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.min.css" rel="stylesheet">
+    <link href="__ADMIN__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN__/js/ajaxfileupload.js"></script>
+    <link href="__ADMIN__/css/admin.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="{if condition="input('tab',1) eq 1"}active{/if}"><a data-toggle="tab" href="#tab-1" aria-expanded="true">用户列表</a></li>
+                        <li class="{if condition="input('tab',1) eq 2"}active{/if}"><a data-toggle="tab" href="#tab-2" aria-expanded="false">添加用户</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane {if condition="input('tab',1) eq 1"}active{/if}">
+                            <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>序号</th>
+                                                    <th>用户名称</th>
+                                                    <th>用户角色</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {volist name="userInfo" id="vo" key="k"}
+                                                    <tr>
+                                                        <td>{$k}</td>
+                                                        <td>{$vo.username}</td>
+                                                        <td>{$vo.status}</td>
+                                                        <td>
+                                                            <a href="{:url('index',['id'=>$vo.id, 'tab'=>3])}" title="配置权限"><i class="fa fa-edit text-navy"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {/volist}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane {if condition="input('tab',1) eq 2"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('addUser')}" data-type="ajax">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">用户名称</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name='username' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">用户密码</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name='password' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">用户角色</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control m-b" name="role_id">
+                                                {volist name="roleInfo" id="vo"}
+                                                    <option value="{$vo.id}" >{$vo.name}</option>
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <input type="hidden" name="pid" value="0">
+                                            <button class="btn btn-primary" type="submit">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__ADMIN__/js/content.min.js?v=1.0.0"></script>
+    <script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+    <script src="__ADMIN__/js/layer_hplus.js"></script>
+    <script src="__ADMIN__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__ADMIN__/js/plugins/cropper/cropper.min.js"></script>
+    <script src="__ADMIN__/js/demo/form-advanced-demo.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/laydate/laydate.js"></script>
+</body>
+
+</html>

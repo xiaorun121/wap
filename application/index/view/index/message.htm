@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>意见反馈_{$config.title}</title>
+
+{include file="public:header" /}
+<script type="text/javascript" src="__HOME__/js/isLogin.js"></script>
+{include file="public:public" /}
+<link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+
+</head>
+
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top" style="padding-bottom: 36px;">
+      <h2 style="margin-top: 0px;">意见反馈</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+<script type="text/javascript">
+      $(function(){
+            var token = getToken('token');
+
+            var values = ["token", "timestamp"];
+            var datas = {
+                "token": token,
+                "timestamp": timestamp,
+            };
+            var sign  = doSign(values, datas);
+
+            $.ajax({
+                  url:'/app/accoutInfo/getInfo',
+                  data:{sign:sign,token:token},
+                  type:'POST',
+                  dataType:'json',
+                  success:function(data){
+                        if(data.success == true){
+                              document.getElementById('realName').value = data.info['realName'];
+                        }
+                  }
+            })
+            
+      })
+</script>
+
+<div class="yijianfankui">
+	<img src="__HOME__/images/yijianfankui-banner.jpg">
+      <textarea cols="" rows="" name="description" id="description" onfocus="javascript:if(this.value=='请在此输入您想说的话...'){this.value='';}">请在此输入您想说的话...</textarea>
+      <input type="text" name="information" id="information" placeholder="手机号码/邮箱（选填方便我们联系您）" onclick="javascript:if(this.value=='手机号码/邮箱（选填方便我们联系您）'){this.value='';}"/>
+      <input type="hidden" name="realname" value="" id="realName" />
+      <input type="submit" value="保存" id="yijianfankui-sub" />
+</div>
+
+<script type="text/javascript">
+      $(function(){
+            $('#yijianfankui-sub').click(function(){
+                  var description = $('#description').val();
+                  if(description == '' || description == '请在此输入您想说的话...'){
+                        layer.msg('描述内容必须填写', {
+                             icon: 2,
+                             time: 3000
+                        }, function(){});
+                        return false;
+                  }
+
+                  var information = $('#information').val();
+                  if(information == ''){
+                        layer.msg('联系方式必须填写', {
+                             icon: 2,
+                             time: 3000
+                        }, function(){});
+                        return false;
+                  }
+                  var realname = $('#realName').val();
+                  $.ajax({
+                        url:"{:url('index/message')}",
+                        data:{description:description,information:information,realname:realname},
+                        type:'POST',
+                        dataType:'json',
+                        success:function(data){
+                              layer.msg('信息提交成功', {
+                                   icon: 1,
+                                   time: 3000
+                              }, function(){
+                                  window.location.href = "{:url('index/center')}";
+                              });
+                        },
+                        error:function(){
+                              layer.msg('信息提交失败', {
+                                   icon: 2,
+                                   time: 3000
+                              }, function(){});
+                        }
+                  })
+            })
+      })
+</script>
+
+<!--公共底部-->
+</div>
+<!--全局结束--> 
+<script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+<script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+<script src="__ADMIN__/js/layer_hplus.js"></script>
+</body>
+</html>

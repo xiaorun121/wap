@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_validate.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>业务系统 - 配置信息</title>
+
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__HOME__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__HOME__/css/animate.min.css" rel="stylesheet">
+    <link href="__HOME__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg" style="background-color: white;">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>配置信息</h5>
+                        
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal m-t" id="commentForm" action="{:url('configs')}" method="post">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">每天规定的总人数：</label>
+                                <div class="col-sm-8">
+                                    <input id="cname" name="sumperson" type="text" class="form-control" value="{$info.sumperson}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">7:30-9:00：</label>
+                                <div class="col-sm-8">
+                                    <input id="cemail" type="text" class="form-control" name="dataTime1" value="{$info.dataTime1}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">9:00-10:30：</label>
+                                <div class="col-sm-8">
+                                    <input id="curl" type="text" class="form-control" name="dataTime2" value="{$info.dataTime2}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">10:30-11:30：</label>
+                                <div class="col-sm-8">
+                                    <input id="curl" type="text" class="form-control" name="dataTime3" value="{$info.dataTime3}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-3">
+                                    <button class="btn btn-primary" type="submit">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__HOME__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__HOME__/js/bootstrap.min.js?v=3.3.6"></script>
+</body>
+</html>

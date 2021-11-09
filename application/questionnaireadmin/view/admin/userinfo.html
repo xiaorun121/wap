@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PETMR</title>
+    <meta name="keywords" content="PETMR">
+    <meta name="description" content="PETMR">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.min.css" rel="stylesheet">
+    <link href="__ADMIN__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN__/js/ajaxfileupload.js"></script>
+    <script src="__ADMIN__/plugins/ueditor/ueditor.config.js"></script>
+    <script src="__ADMIN__/plugins/ueditor/ueditor.all.min.js"></script>
+    <link href="__ADMIN__/css/admin.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-02">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="{if condition="input('tab',1) eq 1"}active{/if}"><a data-toggle="tab" href="#tab-1" aria-expanded="true">用户信息列表</a></li>
+                        <li id="showtab" class="{if condition="input('tab',1) eq 2"}active{/if}"><a data-toggle="tab" href="#tab-2" style="{if condition="input('tab',1) neq 2"}display:none{/if}" aria-expanded="false">查看用户信息</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane {if condition="input('tab',1) eq 1"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="" data-type="ajax">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th width="">ID</th>
+                                                    <th width="">性名</th>
+                                                    <th width="">联系电话</th>
+                                                    <th width="">出生日期</th>
+                                                    <th width="">身高</th>
+                                                    <th width="">体重</th>
+                                                    <th width="">身份证号码</th>
+                                                    <th width="">性别</th>
+                                                    <th width="">婚姻状况</th>
+                                                    <th width="">生育状况</th>
+                                                    <th width="">体检中心</th>
+                                                    <th width="">体检日期</th>
+                                                    <th width="">单位名称</th>
+                                                    <th width="">创建时间</th>
+                                                    <th width="">修改时间</th>
+                                                    <th width="">操作</th>
+                                                    <th style="font-size: 18px;"><a href="/exportphpExcel" title="导出"><i class="fa fa-folder-open"></i>导出</a></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {volist name="info" id="vo"}
+                                                    <tr>
+                                                        <td>{$vo.id}</td>
+                                                        <td>{$vo.name}</td>
+                                                        <td>{$vo.tel}</td>
+                                                        <td>{$vo.dateSelectorOne_data_year}-{$vo.dateSelectorOne_data_month}-{$vo.dateSelectorOne_data_day}</td>
+                                                        <td>{$vo.height} cm</td>
+                                                        <td>{$vo.weight} kg</td>
+                                                        <td>{$vo.IDcard}</td>
+                                                        <td>{$vo.sex}</td>
+                                                        <td>{$vo.marry}</td>
+                                                        <td>{$vo.birth}</td>
+                                                        <td>{$vo.center}</td>
+                                                        <td>{$vo.dateSelectorTwo_data_year}-{$vo.dateSelectorTwo_data_month}-{$vo.dateSelectorTwo_data_day}</td>
+                                                        <td>{$vo.company}</td>
+                                                        <td>{$vo.create_time}</td>
+                                                        <td>{$vo.update_time}</td>
+                                                        <td style="font-size: 18px;">
+                                                            <a href="{:url('userinfo',['id'=>$vo.id, 'tab'=>2])}" title="查看"><i class="fa fa-edit text-navy"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {/volist}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>{$page}</div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane {if condition="input('tab',1) eq 2"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="" data-type="ajax">
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">性名：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='name' class="form-control" value="{$infos.name}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">联系电话：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.tel}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">出生日期：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.dateSelectorOne_data_year}-{$infos.dateSelectorOne_data_month}-{$infos.dateSelectorOne_data_day}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">身高：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.height} cm"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">体重：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.weight} kg"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">身份证号码：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.IDcard}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">性别：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.sex}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">婚姻状况：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.marry}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">生育状况：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.birth}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">体检中心：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.center}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">体检日期：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.dateSelectorTwo_data_year}-{$infos.dateSelectorTwo_data_month}-{$infos.dateSelectorTwo_data_day}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">单位名称：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infos.company}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">呼吸系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message1}{$infos.message1},{/if}{$infos.other1}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">循环系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message2}{$infos.message2},{/if}{$infos.other2}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">消化系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message3}{$infos.message3},{/if}{$infos.other3}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">肝胆系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message4}{$infos.message4},{/if}{$infos.other4}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">泌尿系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message5}{$infos.message5},{/if}{$infos.other5}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">骨髓造血系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message6}{$infos.message6},{/if}{$infos.other6}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">内分泌系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message7}{$infos.message7},{/if}{$infos.other7}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">神经系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message8}{$infos.message8},{/if}{$infos.other8}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">骨关节运动系统：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{if $infos.message9}{$infos.message9},{/if}{$infos.other9}"/>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__ADMIN__/js/content.min.js?v=1.0.0"></script>
+    <script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+    <script src="__ADMIN__/js/layer_hplus.js"></script>
+    <script src="__ADMIN__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__ADMIN__/js/plugins/cropper/cropper.min.js"></script>
+    <script src="__ADMIN__/js/demo/form-advanced-demo.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/laydate/laydate.js"></script>
+</body>
+
+</html>

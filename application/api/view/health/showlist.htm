@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>我的报告</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="__SHOW__/css/mui.min.css">
+		<link rel="stylesheet" href="__SHOW__/css/index.css"/>
+	</head>
+	<style>
+		 p{color: #999;line-height: 25px;}
+	    .mui-table-view-cell:after{left: 0;}
+	    .mui-table-view .mui-media-object{max-width: 36%;height: auto;}
+	    .mui-ellipsis-t{overflow:hidden;text-overflow:ellipsis;white-space:normal !important;display:-webkit-box;/*将对象作为弹性伸缩盒子模型显示*/ -webkit-line-clamp:3;-webkit-box-orient:vertical;}
+	    .news-time{line-height: 30px;}
+	    .news-title{color: #222222;font-size: 18px;}
+	    img{width: 100%;}
+	    .role{padding: 3px 5px;background: #37a4e5;color: #fff;font-size: 12px;margin-left: 3%;}
+	    
+	    .mui-content{background: #fff;}
+	    .logo {width: 100%;position: fixed; right: 0;top: 0;z-index: 999;padding: 5%;box-sizing: border-box;text-align: right;color: #fff;}
+	    .logo span img {width: 8%;vertical-align: middle;padding-left: 3%;}
+	    .city {display: none;}
+	    .city li{line-height: 30px;padding-right: 8%;}
+	    .mui-table-view{margin-bottom: 50px;}
+        .mui-pull-bottom-pocket{bottom: 50px;}
+	</style>
+	<body>
+		<div id="report">
+			
+			<!--下拉刷新容器-->
+			<div class="">
+				<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll"> 
+						<div class="img"><img src="__SHOW__/picture/30.png" alt="" style="width: 100%;"></div>
+						<!--数据列表-->
+						 <ul class="mui-table-view mui-media" id='list'>
+						 	{if $info}
+							 	{volist name="info" id="vo"}
+									<li class="mui-table-view-cell">
+										<p style="color: #000;font-size: 1em;">体检日期：{$vo.summarydate|mb_substr=0,8,'utf-8'}</p>
+										<p style="color: #000;font-size:1em;">体检编号：{$vo.tjbh}</p>
+										<p style="color: #000;font-size:1em;">检查人：{$vo.name}</p>
+										<p style="color:#777;font-size: 0.7em;">{$vo.orgname}</p>
+										<a href="{:url('showdetail')}?tjbh={$vo.tjbh}" class="view-btn">查看报告</a>
+										{:session('tjbh_'.$vo['tjbh'],$vo['tjbh'])}
+									</li>
+								{/volist}
+							{else /}
+								<p style="text-align: center;font-size: 18px;margin-top:5%;padding-bottom:20%;">暂无体检报告</p>	
+							{/if}
+						</ul>  
+					 </div>
+				</div> 
+			</div>
+			<div class="footer">
+			    <div>咨询电话：<span class="phone">400-920-8393</span></div>
+			    <div style="height: 100%;"><a href="tel:4009208393"><img src="__SHOW__/picture/phone-icon.png" alt="" style="    margin-top: 10px;"></a></div>
+			</div>
+		</div>
+	</body>
+</html>

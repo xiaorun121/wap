@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>预约信息_{$config.title}</title>
+
+{include file="public:header" /}
+{include file="public:public" /}
+<script type="text/javascript" src="__HOME__/js/isLogin.js"></script>
+
+<!-- 时间选择插件 -->
+<script src="__HOME__/js/lCalendar.js"></script>
+<link rel="stylesheet" href="__HOME__/css/lCalendar.css">
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+ 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>预约信息</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+
+<div class="yuyuexinxi">
+    <ul>
+          <li>
+                <h4>预约日期</h4>
+                <div class="yuyuexinxi-1">
+                     <input id="appointmentDate" type="text" readonly="" name="input_date" placeholder="请选择日期 年 月 日" data-lcalendar="2012-01-1,2028-12-31" />
+                     <em>></em> 
+                </a>
+          </li>
+          <li>
+                <h4>预约时段</h4>
+                <div class="yuyuexinxi-1">
+                      <select id="appointmentHour">
+                        <option>请选择</option>
+                        <option value="08:00 - 10:00">08:00 - 10:00</option>
+                        <option value="10:00 - 12:00">10:00 - 12:00</option>
+                        <option value="14:00 - 16:00">14:00 - 16:00</option>
+                        <option value="16:00 - 18:00">16:00 - 18:00</option>
+                      </select>
+                      <em>></em> 
+                </div>
+          </li>
+          <li>
+                <h4>真实姓名</h4>
+                <p><input type="text" name="" id="checkRealName" placeholder="请输入真实姓名" onclick="javascript:if(this.value=='请输入真实姓名'){this.value='';}" required/></p>
+          </li>
+          <li>
+                <h4>身份证号</h4>
+                <p><input type="text" name="" id="checkCardNo" placeholder="请输入身份证号" onclick="javascript:if(this.value=='请输入身份证号'){this.value='';}" required/></p>
+          </li>
+          <li>
+                <h4>联系方式</h4>
+                <p><input type="text" name="" id="checkPhone" placeholder="请输入手机号" onclick="javascript:if(this.value=='请输入手机号'){this.value='';}" required/></p>
+          </li>
+          <li>
+                <h4>性      别</h4>
+                <a class="yuyuexinxi-xb1">
+                     <span id="checkSex">请选择性别</span>
+                     <em>></em> 
+                </a>
+                <div class="yuyuexinxi-xb2">
+                    <span>男</span><span>女</span>
+                    <h5 id="yuyuexinxi-xb-2">确定</h5>
+                </div>
+          </li>
+          <li>
+                <h4>婚姻状况</h4>
+                <a class="yuyuexinxi-hy1">
+                     <span id="checkMarriage">请选择婚姻状况</span>
+                     <em>></em> 
+                </a>
+                <div class="yuyuexinxi-hy2">
+                    <span>未婚</span><span>已婚</span>
+                    <h5 id="yuyuexinxi-hy-2">确定</h5>
+                </div>
+          </li>
+          <li>
+                <h4>其它说明</h4>
+                <p style="height: 3rem;"><textarea id="remark" name="remark" placeholder="请填写说明信息"></textarea></p>
+          </li>
+    </ul>
+    <div class="yy-bg"></div>
+    <input type="hidden" value="{$orderID}" id="orderID" />
+    <input type="hidden" value="{$orderType}" id="orderType" />
+    <input type="submit" value="立即预约" id="yuyuexinxi-sub" />
+</div>
+
+<!--公共底部-->
+
+
+<script type="text/javascript">
+      $(function(){
+            // 性别
+            $(".yuyuexinxi-xb1").click(function() {
+                  $(".yuyuexinxi-xb2").show();
+                  $(".yy-bg").show();
+            });
+            $(".yuyuexinxi-xb2 span").click(function() {
+                  $(this).addClass('on').siblings().removeClass('on');
+            })
+            $("#yuyuexinxi-xb-2").click(function() {
+                  $("#checkSex").html($(".yuyuexinxi-xb2").find('span.on').html());
+                   $(".yuyuexinxi-xb2").hide();
+                   $(".yy-bg").hide();
+              })
+
+            // 婚姻
+            $(".yuyuexinxi-hy1").click(function() {
+                  $(".yuyuexinxi-hy2").show();
+                  $(".yy-bg").show();
+            });
+            $(".yuyuexinxi-hy2 span").click(function() {
+                  $(this).addClass('on').siblings().removeClass('on');
+            })
+            $("#yuyuexinxi-hy-2").click(function() {
+                  $("#checkMarriage").html($(".yuyuexinxi-hy2").find('span.on').html());
+                  $(".yuyuexinxi-hy2").hide();
+                  $(".yy-bg").hide();
+            })
+
+            $('#yuyuexinxi-sub').click(function(){
+                var appointmentDate = $('#appointmentDate').val();
+                if(appointmentDate == ''){
+                    layer.msg('预约日期必须填写', {
+                         icon: 2,
+                         time: 1500
+                    }, function(){});
+                    return false;
+                }
+
+                var appointmentHour = $('#appointmentHour').val();
+                if(appointmentHour == '' || appointmentHour == '请选择'){
+                    layer.msg('预约时段必须填写', {
+                         icon: 2,
+                         time: 1500
+                    }, function(){});
+                    return false;
+                }
+
+                var checkRealName   = $('#checkRealName').val();
+                if(checkRealName == ''){
+                    layer.msg('真实姓名必须填写', {
+                         icon: 2,
+                         time: 1500
+                    }, function(){});
+                    return false;
+                }
+
+                var checkCardNo     = $('#checkCardNo').val();
+                if(checkCardNo == ''){
+                    layer.msg('身份证号必须填写', {
+                         icon: 2,
+                         time: 1500
+                    }, function(){});
+                    return false;
+                }
+
+                var checkPhone      = $('#checkPhone').val();
+                if(checkPhone == ''){
+                    layer.msg('联系方式必须填写', {
+                         icon: 2,
+                         time: 1500
+                    }, function(){});
+                    return false;
+                }
+
+                var checkSex        = document.getElementById('checkSex').innerHTML;
+                if(checkSex == '' || checkSex == '请选择性别'){
+                    layer.msg('性别必须填写', {
+                         icon: 2,
+                         time: 1500
+                    }, function(){});
+                    return false;
+                }
+
+                var checkMarriage   = document.getElementById('checkMarriage').innerHTML;
+                if(checkMarriage == '' || checkMarriage == '请选择婚姻状况'){
+                    layer.msg('婚姻状况必须填写', {
+                         icon: 2,
+                         time: 1500
+                    }, function(){});
+                    return false;
+                }
+
+                var physucalId         = $('#orderID').val();   //所属体检方案id
+
+                var orderType         = $('#orderType').val();     //预约类型
+
+                var remark          = $('#remark').val(); 
+
+                var token = getToken('token');
+
+                var source = 'shwap';  //来源
+
+                var companyId = 1;    //所属中心id
+
+                var values = ["token","companyId","orderType","physucalId","appointmentDate","appointmentHour","checkRealName","checkSex","checkCardNo","checkMarriage","checkPhone","remark","source","timestamp"];
+
+                var datas = {
+                    "token":token,
+                    "companyId":companyId,
+                    "orderType":orderType,
+                    "physucalId":physucalId,
+                    "appointmentDate":appointmentDate,
+                    "appointmentHour":appointmentHour,
+                    "checkRealName":checkRealName,
+                    "checkSex":checkSex,
+                    "checkCardNo":checkCardNo,
+                    "checkMarriage":checkMarriage,
+                    "checkPhone":checkPhone,
+                    "remark":remark,
+                    "source":source,
+                    "timestamp":timestamp
+                };
+
+                var sign = doSign(values,datas);
+
+                $.ajax({
+                    url:'/app/physucalOrder/add',
+                    data:{sign:sign,token:token,companyId:companyId,orderType:orderType,physucalId:physucalId,appointmentDate:appointmentDate,appointmentHour:appointmentHour,checkRealName:checkRealName,checkSex:checkSex,checkCardNo:checkCardNo,checkMarriage:checkMarriage,checkPhone:checkPhone,remark:remark,source:source,key:key,timestamp:timestamp},
+                    type:'POST',
+                    dataType:'json',
+                    success:function(data){
+                        if(data.success == true){
+                            layer.msg('预约成功', {
+                                 icon: 1,
+                                 time: 1500
+                            }, function(){
+                                window.localtion.href = '';
+                            });
+                        }else{
+                            layer.msg('预约失败', {
+                                 icon: 2,
+                                 time: 1500
+                            }, function(){});
+                        }
+                    }
+                })
+
+            })
+      })
+
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+
+      var calendar = new lCalendar();
+      calendar.init({
+        'trigger': '#appointmentDate',
+        'type': 'date'
+      });
+</script>
+</div>
+<!--全局结束--> 
+<script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+<script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+</body>
+</html>

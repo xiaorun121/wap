@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>图像修改_{$config.title}</title>
+
+{include file="public:header" /}
+<script type="text/javascript" src="__HOME__/js/isLogin.js"></script>
+{include file="public:public" /}
+<!-- 时间选择插件 -->
+<link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+<!-- <script src="__ADMIN__/js/ajaxfileupload.js"></script> -->
+<script src="__HOME__/js/jquery.form.js"></script>
+
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top" style="padding-bottom: 36px;">
+      <h2 style="margin-top: 0px;">修改图像</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+<script type="text/javascript">
+      var token = getToken('token');
+
+      var values = ["token", "timestamp"];
+      var datas = {
+          "token": token,
+          "timestamp": timestamp,
+      };
+      var sign  = doSign(values, datas);
+
+
+      $.ajax({
+            url:'/app/accoutInfo/getInfo',
+            data:{sign:sign,token:token},
+            type:'POST',
+            dataType:'json',
+            success:function(data){
+              if(data.success == true){
+                  if(data.info['headImg']){
+                      $('#img').attr('src','http://app.uvclinic.cn/'+data.info['headImg']);
+                  }
+              }
+            }
+      })
+</script>
+
+<div class="xinxiwanshan" style="display: block;">
+      <form id="fileForm" action="/resource/base/js/plupload/js/upload_json.jsp" method="post" enctype="multipart/form-data">
+          
+          <button id="btn_path" type="button" class="btn btn-white" style="display: block;width: 92%;height: .8rem; margin: 0 auto;background: #00a0e9;font-size: .36rem;line-height: .5rem;color: #fff;text-align: center;margin-top: 10px;">上传图片</button>
+          <input onchange="preview(this)" type="file" name="file" id="file" multiple="multiple" value="" accept="*/*" style="opacity: 0;margin-top: -20px;">
+          <input id="info_path" type="hidden" name='img' class="form-control input-large" value="">
+          <button type="button" id="uploadOk" style="display: block;width: 92%;height: .8rem; margin: 0 auto;background: #00a0e9;font-size: .36rem;line-height: .5rem;color: #fff;text-align: center;margin-top: 10px;bottom: 0px;left: 0px;position: fixed; right: 0;" />保存</button>
+      </form>
+      <div id="userimg">
+          <img src="" style="display: block;width: 92%;height: 3rem; margin: 0 auto;font-size: .36rem;line-height: .5rem;color: #fff;text-align: center;margin-top: 20px;" id="img" />
+      </div>    
+      <script type="text/javascript">
+            $(function(){
+                $("#uploadOk").on("click",function(){
+                    $('#fileForm').ajaxSubmit(function(data) {
+                        var imgup = JSON.parse( data ).url;
+                        $("#userimg").find("img").attr("data-img",imgup);
+                        var values = ["token","headImg", "timestamp"];
+                        var datas = {
+                          "token": token,
+                          "headImg": $("#headerimg").val() || "",
+                          "timestamp": timestamp
+                        };
+                        var sign = doSign(values, datas);
+
+                        $.ajax({
+                            url:'/app/accoutInfo/baseInfo',
+                            data:{token:token,headImg:imgup,sign:sign,timestamp:timestamp},
+                            type:'POST',
+                            dataType:'json',
+                            success:function(data){
+                                if(data.success == true){
+                                    layer.msg('图像修改成功', {
+                                         icon: 1,
+                                         time: 1500
+                                    }, function(){
+                                        window.location.href = "{:url('index/center')}";
+                                    });
+                                }
+                            },
+                            error:function(){
+                                layer.msg('图像修改失败', {
+                                         icon: 2,
+                                         time: 1500
+                                    }, function(){});
+                            }
+                        })
+                        
+                    });
+                });
+            });
+
+            function preview(file) {
+                var prevDiv = document.getElementById('userimg');
+                if (file.files && file.files[0]) {
+                  var reader = new FileReader();
+                  reader.onload = function(evt) {
+                    prevDiv.innerHTML = '<img src="' + evt.target.result + '" style="display: block;width: 92%;height: 3rem; margin: 0 auto;font-size: .36rem;line-height: .5rem;color: #fff;text-align: center;margin-top: 20px;"/>';
+                  }
+                  reader.readAsDataURL(file.files[0]);
+                  
+                } else {
+                  prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+                }
+            }
+      </script>
+      
+</div>
+
+<!--公共底部-->
+</div>
+<!--全局结束--> 
+<script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+<script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+</body>
+</html>

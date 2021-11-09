@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>{$config.title}</title>
+<meta name="description" content="{$config.description}">
+<meta name="keywords" content="{$config.keyword}">
+
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="yes" name="apple-touch-fullscreen" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+<script type="text/javascript" src="__HOME__/js/rem.js"></script>
+<link rel="stylesheet" href="__HOME__/css/swiper-3.4.2.min.css" />
+<link rel="stylesheet" type="text/css" href="__HOME__/css/css.css" />
+
+<script type="text/javascript" src="__HOME__/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="__HOME__/js/swiper-min.js"></script>
+
+</head>
+
+
+<body>
+<!--全局开始--> 
+<div class="web-main">
+<!--头部开始--> 
+<div class="w100 web-top">
+      <span><img src="{$config.top_logo}"></span>
+      <a href="{:url('index/center')}"><img src="__HOME__/images/web-top-r.png"></a>
+</div>
+<!--头部结束-->
+
+<!--banner开始--> 
+<!--首页banner -->
+<div class="w100 swiper-container" id="web-banner">
+      <ul class="swiper-wrapper">
+            {volist name="banner" id="vo"}
+                  <li class="swiper-slide"><a href="{$vo.url}"><img src="{$vo.img}"></a></li>
+            {/volist}
+      </ul>
+<!--小圆点 -->
+      <div class="web-banner-d"></div>
+</div>
+<script> 
+var mySwiper = new Swiper('.swiper-container', {
+      pagination: '.web-banner-d',
+      // paginationClickable: true,
+      loop : true,
+      autoplay : 3000,
+      speed:1000,
+      parallax : true,
+}) 
+</script> 
+<!--banner结束-->  
+<div class="web-content1">
+      <a href="http://m.uvclinic.cn">
+            <img src="__HOME__/images/web-content1-1.png">
+            <p>集团首页</p>
+      </a>
+      <a href="{:url('index/health')}">
+            <img src="__HOME__/images/web-content1-2.png">
+            <p>快速预约</p>
+      </a>
+      <a href="{:url('index/report')}">
+            <img src="__HOME__/images/web-content1-3.png">
+            <p>报告查询</p>
+      </a>
+      <a href="tel:{$config.tel}">
+            <img src="__HOME__/images/web-content1-4.png">
+            <p>在线客服</p>
+      </a>
+</div>
+
+
+<div class="web-content2">
+      <i><img src="{$public[0]['img']}"></i>
+      <a href="{:url('index/health')}"><b>健检方案</b></a>
+      <a href="{:url('index/doctor')}"><b>权威专家</b></a>
+      <a href="{:url('index/images')}"><b>尖端设备</b></a>
+</div>
+
+<div class="web-content3">
+      <h2>{$public[1]['title']}<span>{$public[1]['shorttitle']}</span></h2>
+      <em><img src="{$public[1]['img']}"><em>
+      <ul>  
+      {volist name="health" id="vo"}
+            <li>
+                  <img src="{$vo.img}" onclick="javascript:location.href = '{$vo.url}'">
+                  <h3>{$vo.title}</h3>
+                  <p>{$vo.description|mb_substr=0,18,'utf-8'}</p>
+            </li>
+      {/volist}
+      </ul>
+      <a href="{:url('index/health')}">查看更多</a>
+</div>
+
+<div class="web-content4">
+      <h2>{$public[2]['title']}<span>{$public[2]['shorttitle']}</span></h2>
+      <em><img src="{$public[2]['img']}"><em>
+      <div class="web-content4-1">
+            {volist name="doctor" id="vo"}
+                  <dl>
+                        <dt><img src="{$vo.img}"></dt>
+                        <dd>
+                              <h3>{$vo.title} </h3>
+                              <h4><span>{$vo.doc_job_one}</span><span>{$vo.doc_job_two}</span></h4>
+                              <p>{$vo.description|mb_substr=0,18,'utf-8'}</p>
+                              <a href="{$vo.url}">查看详情</a>
+                        </dd>
+                  </dl>
+            {/volist}
+      </div>
+      <a class="web-content4-a" href="{:url('index/doctor')}">查看更多</a>
+</div>
+
+<div class="web-content5">
+      <h2>{$public[3]['title']}<span>{$public[3]['shorttitle']}</span></h2>
+      <em><img src="{$public[3]['img']}"><em>
+      <ul>  
+            {volist name="equipment" id="vo"}
+                  <li>
+                        <img src="{$vo.img}" onclick="javascript:location.href = '{$vo.url}'">
+                        <h3>{$vo.title}</h3>
+                        <p>{$vo.description}</p>
+                  </li>
+            {/volist}
+      </ul>
+      <a href="{:url('index/images')}">查看更多</a>
+</div>
+<!--中间结束-->
+
+{include file="public:footer" /}
+
+{include file="public:zixun" /}
+
+<!--引用js开始-->
+<!-- <script type="text/javascript" src="js/index.js"></script> -->
+<!--引用js结束-->
+</div>
+<!--全局结束--> 
+
+</body>
+</html>

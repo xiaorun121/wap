@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="apple-mobile-web-app-title" content="">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
+      <meta name="format-detection" content="telephone=no">
+      <meta http-equiv="x-rim-auto-match" content="none">
+
+
+      <title>健康调研问卷</title>
+      <link href="__INDEX__/css/style.a1176454c221a083e224.css" rel="stylesheet">
+      <style type="text/css">
+          html {
+            line-height: 1.15;
+            /* 1 */
+            -ms-text-size-adjust: 100%;
+            /* 2 */
+            -webkit-text-size-adjust: 100%;
+            /* 2 */
+          }
+          .am-list-item.am-input-item {
+              height: 44px;
+              padding-left: 15px;
+          }
+          .am-list-item {
+              position: relative;
+              display: flex;
+              padding-left: 15px;
+              min-height: 44px;
+              background-color: #fff;
+              vertical-align: middle;
+              overflow: hidden;
+              transition: background-color 200ms;
+              align-items: center;
+          }
+          .am-list-item .am-list-line {
+              position: relative;
+              display: flex;
+              flex: 1;
+              align-self: stretch;
+              padding-right: 15px;
+              overflow: hidden;
+          }
+      </style>
+</head>
+
+<body>
+  <script src="__INDEX__/js/jquery-1.10.2.js"></script>
+  <script src="__INDEX__/js/public.js"></script>
+  <div id="a" style="width: 120px;height: 45px;background-color: rgb(166, 195, 195);position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;font-size: 15px;border-radius: 3px;"></div>
+    <div id="app" class="index">
+      <div style="height: 100%;">
+        <div class="questionView">
+          <div>
+            <div class="questionTitle">三、本部分用于了解您的消化系统，如有以下情况，请勾选：</div>
+            <div>
+              {volist name="info" id="vo"}
+                    <div style="display: flex; padding: 10px 0px;" class="okdog">
+                      <img src="__INDEX__/images/chb_{in name='$vo.name' value='$result'}chosen{else/}default{/in}.svg" style="width: 20px; height: 20px;" >
+                      <div class="answer">{$vo.name}</div>
+                    </div>
+              {/volist}
+              <div style="display: flex; padding: 10px 0px;">
+                <img src="__INDEX__/images/chb_{if $other}chosen{else/}default{/if}.svg" style="width: 20px; height: 20px;">
+                <div class="answer">其他</div>
+                <div class="am-list-item am-input-item am-list-item-middle otherInput am-input-focus am-input-android" style="display:{if $other}block{else/}none{/if};">
+                  <div class="am-list-line">
+                    <div class="am-input-control">
+                      <input placeholder="" type="text" value="{$other}" id="other" name="other" status="0">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; padding: 10px 0px;">
+                <img src="__INDEX__/images/chb_{in name='$result' value='以上均无'}chosen{else/}default{/in}.svg" style="width: 20px; height: 20px;" id="allNo" check="no">
+                <div class="answer">以上均无</div>
+              </div>
+            </div>
+            <div style="display: flex;">
+              <div class="backBtn">返回上一题</div>
+              <div class="pageText">3/9</div>
+            </div>
+            <input type="hidden" name="" id="addContent" value="{if $result}{$result},{/if}">
+            <input type="hidden" name="" id="id" value="{$id}">
+            <input type="hidden" name="" id="ids" value="{$id+1}">
+            <input type="hidden" name="" id="tel" value="{$tel}">
+            <button class="btnGo">下一题</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

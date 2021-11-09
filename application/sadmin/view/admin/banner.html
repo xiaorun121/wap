@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广告管理-轮播图</title>
+    <meta name="keywords" content="广告管理-轮播图">
+    <meta name="description" content="广告管理-轮播图">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.min.css" rel="stylesheet">
+    <link href="__ADMIN__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN__/js/ajaxfileupload.js"></script>
+    <link href="__ADMIN__/css/admin.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="{if condition="input('tab',1) eq 1"}active{/if}"><a data-toggle="tab" href="#tab-1" aria-expanded="true">轮播图列表</a></li>
+                        <li class="{if condition="input('tab',1) eq 2"}active{/if}"><a data-toggle="tab" href="#tab-2" aria-expanded="false">添加轮播图</a></li>
+                        <li id="showtab" class="{if condition="input('tab',1) eq 3"}active{/if}"><a data-toggle="tab" href="#tab-3" style="{if condition="input('tab',1) neq 3"}display:none{/if}" aria-expanded="false">编辑轮播图</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane {if condition="input('tab',1) eq 1"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('saveBannerSort')}" data-type="ajax">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th width="10%">排序</th>
+                                                    <th width="20%">标题</th>
+                                                    <th width="15%">广告图片</th>
+                                                    <th width="10%">状态</th>
+                                                    <th width="15%">创建时间</th>
+                                                    <th width="15%">作者</th>
+                                                    <th width="15%">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {volist name="info" id="vo"}
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" name="sort[{$vo.id}]" class="form-control" value="{$vo.sort}">
+                                                        </td>
+                                                        <td>{$vo.title}</td>
+                                                        <td><img src="__UPLOADS__/{$vo.img}" alt="{$vo.title}" width="100"></td>
+                                                        <td>{:ImgStatus($vo.display)}</td>
+                                                        <td>{:date('Y-m-d H:i:s',$vo.create_time)}</td>
+                                                        <td>{$vo.author}</td>
+                                                        <td>
+                                                            <a href="{:url('banner',['id'=>$vo.id, 'tab'=>3])}" title="编辑"><i class="fa fa-edit text-navy"></i></a>&nbsp;&nbsp;
+                                                            <a name="delete" href="{:url('deleteBanner',['id'=>$vo.id])}" title="删除"><i class="fa fa-trash-o text-navy"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {/volist}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>{$page}</div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <button class="btn btn-primary" type="submit">更新排序</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane {if condition="input('tab',1) eq 2"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('addBanner')}" data-type="ajax">
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">标题：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='title' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">图片：</label>
+                                        <div class="col-sm-7">
+                                            <div id="file-pretty">
+                                                <input id="file_path" name="file" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path" type="text" name='img' class="form-control input-large" value="">
+                                                </div>
+                                                <!-- <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 图片尺寸建议：640*360px</span> -->
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path').click(function(){
+                                                        $("#file_path").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path", 'change', function(){
+                                                        var filepath = $("input[name='file']").val();
+                                                        var arr = filepath.split('.');
+                                                        var ext = arr[arr.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(ext)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'file' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path').val(data);
+                                                                   $('#info_path').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">对应文章链接：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='arcurl' class="form-control" value="" placeholder="#">
+                                            <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 友情提示：截取域名后面的地址 (http://xx.xx.com/index/index/show/info/not/id/31.html) /index/index/show/info/not/id/31.html</span>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">排序：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='sort' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">显示？隐藏：</label>
+                                        <div class="col-sm-7">
+                                            <div class="radio i-checks">
+                                                <label><input type="radio" value="1" name="display" checked><i></i> 显示</label>
+                                                <label><input type="radio" value="0" name="display"><i></i> 隐藏</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <button class="btn btn-primary" type="submit">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane {if condition="input('tab',1) eq 3"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('editBanner')}" data-type="ajax">
+                                    <input type="hidden" name="id" value="{$infoEdit.id}">
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">标题：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='title' class="form-control" value="{$infoEdit.title}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">图片：</label>
+                                        <div class="col-sm-7">
+                                            <div id="file-pretty">
+                                                <input id="file_path_edit" name="files" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path_edit" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path_edit" type="text" name='img' class="form-control input-large" value="{$infoEdit.img}">
+                                                </div>
+                                                <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 图片尺寸建议：640*360px</span>
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path_edit').click(function(){
+                                                        $("#file_path_edit").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path_edit", 'change', function(){
+                                                        var filepath = $("input[name='files']").val();
+                                                        var arrs = filepath.split('.');
+                                                        var exts = arrs[arrs.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(exts)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'files' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path_edit',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path_edit').val(data);
+                                                                   $('#info_path_edit').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path_edit').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">对应文章链接：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='arcurl' class="form-control" value="{$infoEdit.arcurl}">
+                                            <span class="help-block m-b-none" style="padding-top: 5px;color: #f00000;"><i class="fa fa-info-circle"></i> 友情提示：截取域名后面的地址 (http://xx.xx.com/index/index/show/info/not/id/31.html) /index/index/show/info/not/id/31.html</span>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">排序：</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name='sort' class="form-control" value="{$infoEdit.sort}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2 control-label">显示？隐藏：</label>
+                                        <div class="col-sm-7">
+                                            <div class="radio i-checks">
+                                                <label><input type="radio" value="1" name="display" {if condition="$infoEdit.display eq 1"}checked{/if}><i></i> 显示</label>
+                                                <label><input type="radio" value="0" name="display" {if condition="$infoEdit.display eq 0"}checked{/if}><i></i> 隐藏</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <button class="btn btn-primary" type="submit">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__ADMIN__/js/content.min.js?v=1.0.0"></script>
+    <script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+    <script src="__ADMIN__/js/layer_hplus.js"></script>
+    <script src="__ADMIN__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__ADMIN__/js/plugins/cropper/cropper.min.js"></script>
+    <script src="__ADMIN__/js/demo/form-advanced-demo.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/laydate/laydate.js"></script>
+</body>
+
+</html>

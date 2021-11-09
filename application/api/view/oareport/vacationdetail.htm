@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/tabs_panels.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:53 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>全景医学医学-休假明细</title>
+    <meta name="keywords" content="全景医学医学-休假明细">
+    <meta name="description" content="全景医学医学-休假明细">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__HOME__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__HOME__/css/style.min863f.css?v=4.1.0" rel="stylesheet">
+    <link href="__HOME__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__HOME__/css/animate.min.css" rel="stylesheet">
+    <script src="__HOME__/js/datePicker.js" charset="utf-8"></script>
+    <style type="text/css">
+        .panel-options ul li{width: 50%}
+        .panel-options ul li .active{    border-bottom: 1px solid red;}
+        .nav-tabs .active{border-bottom: 1px solid #1165ff;}
+        .nav-tabs li{text-align: center;}
+        .alert-warning{
+            color: #2f2d2d;    
+            background-color: #fff;
+            border-color: #f3f3f3;
+            height: 35rem;
+        }
+        .tag-list li>a{border: none;background-color: #fff;}
+        .tag-list li{width: 33%; text-align: center;}
+        .tag-list1 li{width: 100px;height: 100px;border:4px solid #00d0ff;border-radius: 50%;line-height: 80px;text-align: center;float: left;margin: 10px 20px 20px;}
+        .alert-info{  
+            color: #2f2d2d;  
+            background-color: #fff;
+            border-color: #f3f3f3;
+            border-left: 2px solid #f1d404;
+            height: 7rem;
+        }
+        .alert-warnings{
+            color: #2f2d2d;    
+            background-color: #fff;
+            border-color: #f3f3f3;
+            border-left: 2px solid #04f16e;
+            height: 7rem;
+        }
+        .alert span{font-size: 1.5rem;font-weight: bold;}
+    </style>
+</head>
+
+<body class="gray-bg" style="background-color: #fff;">
+    <div class="wrapper wrapper-content animated fadeIn">
+
+        <div class="row">
+
+            <div class="col-sm-12" style="padding-left: 0; padding-right: 0;">
+                <div class="panel blank-panel">
+
+                    <div class="panel-heading">
+                        <div class="panel-options">
+
+                            <ul class="nav nav-tabs" style="border-bottom: none;">
+                                <li class="active"><a data-toggle="tab" href="#tab-4" style="border: none;">休假额度</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-5" style="border: none;">休假明细</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div id="tab-4" class="tab-pane active">
+
+
+                                <!-- 病假 -->
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="getVacation('病假','One')">病假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="One">
+                                            <p><span><strong style="font-size: 2rem;">{$Result1['LeaveItem']}</strong></span><span style="float: right;">剩余 <strong style="font-size: 2rem;">{$Result1['YearLeft']}</strong> {$Result1['Unit']}</span></p>
+                                                <p>起始日期： <strong style="font-size: 1.5rem;">{$Result1['EffectiveDate']}</strong> </p>
+
+                                            <div class="file-manager">
+
+                                                <ul class="tag-list tag-list1" style="padding: 0">
+                                                    <li>
+                                                        <small>当年额度</small> <span><strong style="font-size: 2rem;">{$Result1['Entitlement']}</strong></span>
+                                                    </li>
+                                                    <li style="border:4px solid #dfec13">
+                                                        <small>去年转结</small> <span><strong style="font-size: 2rem;">{$Result1['CarryForward']}</strong></span>
+                                                    </li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </div>
+
+                                            <p><span>申请在途（额度）</span><span style="float: right;"><strong style="font-size: 2rem;">{$Result1['InApplyLimit']}</strong> {$Result1['Unit']}</span></p>
+                                            <p><span>申请在途（转结）</span><span style="float: right;"><strong style="font-size: 2rem;">{$Result1['InApplyTurn']}</strong> {$Result1['Unit']}</span></p>
+                                            <div class="file-manager">
+
+                                                <ul class="tag-list" style="padding: 0">
+                                                    <li>
+                                                        <a href="{:URL('oareport/getPayInfos')}?empCode={$empCode}">
+                                                            <p>额度已使用</p>
+                                                            <p><strong style="font-size: 2rem;">{$Result1['YearUsed']}</strong> {$Result1['Unit']}</p>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{:URL('oareport/getAttendInfos')}?empCode={$empCode}">
+                                                            <p>转结已使用</p>
+                                                            <p><strong style="font-size: 2rem;">{$Result1['YearCarryForwardUsed']}</strong> {$Result1['Unit']}</p>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{:URL('oareport/getVacationInfos')}?empCode={$empCode}">
+                                                            <p>转结已过期</p>
+                                                            <p><strong style="font-size: 2rem;">{$Result1['CarryForwardOverdue']}</strong> {$Result1['Unit']}</p>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </div>    
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 年休假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="getVacation('年休假','Two')">年休假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Two">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 陪产假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" onclick="getVacation('陪产假','Three')">陪产假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Three">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 授乳假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" onclick="getVacation('授乳假','Four')">授乳假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Four">
+
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <!-- 放射假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" onclick="getVacation('放射假','Five')">放射假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseFive" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Five">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 派驻假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" onclick="getVacation('派驻假','Six')">派驻假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseSix" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Six">
+
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <!-- 工伤假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" onclick="getVacation('工伤假','Seven')">工伤假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseSeven" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Seven">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 病假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseEight" onclick="getVacation('病假','Eight')">病假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseEight" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Eight">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 调休 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine" onclick="getVacation('调休','Nine')">调休<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseNine" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Nine">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 丧假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTen" onclick="getVacation('丧假','Ten')">丧假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTen" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Ten">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 婚假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" onclick="getVacation('婚假','Eleven')">婚假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseEleven" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Eleven">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 产假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve" onclick="getVacation('产假','Twelve')">产假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseTwelve" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Twelve">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 产前假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThirteen" onclick="getVacation('产前假','Thirteen')">产前假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseThirteen" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Thirteen">
+
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <!-- 产检假 -->    
+                                <div class="panel panel-default ibox float-e-margins" style="border-color: #fff;">
+                                    <div class="panel-heading" style="height: 36px;border: #01d0ff solid 1px;">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFourteen" onclick="getVacation('产检假','Fourteen')">产检假<span style="float: right;color: #23c6c8;font-size: 1.5rem;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h4>
+                                    </div>
+                                    <div id="collapseFourteen" class="panel-collapse collapse" style="border-style: none;padding: 0px;background-color: #fff;color: inherit;padding: 15px 20px 0px;border-color: #e7eaec;-webkit-border-image: none;-o-border-image: none;border-image: none;border-style: solid solid none;border-width: 1px 0;border: 1px solid #e6dfe6;">
+
+                                        <div class="One alert alert-warning" style="padding: 0px;border: none;" id="Fourteen">
+
+                                        </div>
+                                    </div>
+                                </div>   
+
+                            </div>
+
+                                
+
+                            <div id="tab-5" class="tab-pane">
+                                <label class="col-sm-3 control-label" style="float: left;text-align: center;width: 30%;margin-top: 8px;margin-left: 50px;">休假项目：</label>
+                                <div class="col-sm-10" style="margin-bottom: 80px;"> 
+                                    <select class="form-control m-b" name="account" id="account" style="float: right;width: 35%;font-size: 14px;margin-right: 60px;">
+                                        {volist name="arrLeaveType" id="vo"}
+                                            <option value="{$vo.Name}">{$vo.Name}</option>
+                                        {/volist}
+                                    </select>
+
+                                </div>
+
+                                
+                                <div class="row-content" style="margin-top: -2rem;">
+                                    {if condition="$arrLeaveList eq ''"}
+                                    <div class="col-sm-10 row-error">
+                                        <p style="text-align:center;letter-spacing: 0.1em;"><i class="fa fa-sign-in big-icon" style="display: flow-root;text-align: center;font-size: 10rem"></i><br>当前<strong style="font-size: 2rem;"> {$arrLeaveType[0]['Name']} </strong>赞无记录</p>
+                                    </div>    
+                                    {else/}
+                                    <div class="col-sm-12 row-success" style="padding-left: 0; padding-right: 0;">
+                                        <div class="ibox float-e-margins">
+                                            
+                                            <div class="ibox-content ibox-contents" id="ibox-work">
+
+                                                {volist name="arrLeaveList" id="vo" mod="2"}
+
+                                                    <div class="alert alert-{eq name="mod" value="1"}info{else/}warnings{/eq}">
+                                                        <p>{$vo.LeaveStartDate} - {$vo.LeaveEndDate}</p>
+                                                        <p><span>{$vo.LeaveName}</span><span style="float: right;">{$vo.LeaveRecordValue} {$vo.LeaveRecordUnit}</span></p>
+                                                    </div>
+
+                                                {/volist}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/if}
+                                </div>    
+                                
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="__HOME__/js/jquery-1.10.1.min.js"></script>  
+    <script src="__HOME__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script language="javascript" type="text/javascript">
+     $(function(){
+        $("#account").change(function () {
+            var account = $('#account').val();
+            $.ajax({
+                url:'/api/oareport/toGetLeaveList',
+                data:{empCode:{$empCode},account:account},
+                type:'POST',
+                dataType:'json',
+                success:function(data){
+                    if(data.status == 'success'){
+                        console.log(data.info)
+                        $('.row-content').html('');
+                        $('.row-content').append('<div class="col-sm-12 row-success" style="padding-left: 0; padding-right: 0;">'+
+                                                    '<div class="ibox float-e-margins">'+
+                                                    '<div class="ibox-content ibox-contents" id="ibox-work">');
+                        var i;
+                        for(i = 0 ; i < data.info.length; i++){
+                            ([i]%2==0) ? a="alert-warnings" : a="alert-info";
+                            $('.ibox-contents').append('<div class="alert '+ a +'">'+
+                                                        '<p>'+ data.info[i].LeaveStartDate +' - '+data.info[i].LeaveEndDate+'</p>'+
+                                                        '<p><span>'+ data.info[i].LeaveName+'</span><span style="float: right;">'+data.info[i].LeaveRecordValue+' '+data.info[i].LeaveRecordUnit+' </span></p>'+
+                                                    '</div>');
+                        }
+                        $('.row-content').append('</div>'+
+                                    '</div>'+
+                                '</div>');
+                    }else{
+                        $('.row-content').html('');
+                        $('.row-content').append('<p style="text-align:center;letter-spacing: 0.1em;"><i class="fa fa-sign-in big-icon" style="display: flow-root;text-align: center;font-size: 10rem"></i><br>当前<strong style="font-size: 2rem;"> '+ data.info +' </strong>赞无记录</p>');
+                    }
+                }
+            });
+        });
+    })
+
+    function getVacation(value,id){
+
+        $.ajax({
+            url:'{:url('getVacation')}',
+            data:{value:value,empCode:{$empCode}},
+            type:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.status == 'success'){
+                    var html = '';
+
+                        html += '<p><span><strong style="font-size: 2rem;">'+data.info.LeaveItem+'</strong></span><span style="float: right;">剩余 <strong style="font-size: 2rem;">'+data.info.YearLeft+'</strong> ';data.info.Unit+'</span></p>';
+                        html +=                        '<p>起始日期： <strong style="font-size: 1.5rem;">'+data.info.EffectiveDate+'</strong> </p>';
+
+                        html +=                    '<div class="file-manager">';
+
+                        html +=                        '<ul class="tag-list tag-list1" style="padding: 0">';
+                        html +=                            '<li>';
+                        html +=                                '<small>当年额度</small> <span><strong style="font-size: 2rem;">'+data.info.Entitlement+'</strong></span>';
+                        html +=                            '</li>';
+                        html +=                            '<li style="border:4px solid #dfec13">';
+                        html +=                                '<small>去年转结</small> <span><strong style="font-size: 2rem;">'+data.info.CarryForward+'</strong></span>';
+                        html +=                            '</li>';
+                        html +=                        '</ul>';
+                        html +=                        '<div class="clearfix"></div>';
+                        html +=                    '</div>';
+
+                        html +=                    '<p><span>申请在途（额度）</span><span style="float: right;"><strong style="font-size: 2rem;">'+data.info.InApplyLimit+'</strong> '+data.info.Unit+'</span></p>';
+                        html +=                    '<p><span>申请在途（转结）</span><span style="float: right;"><strong style="font-size: 2rem;">'+data.info.InApplyTurn+'</strong> '+data.info.Unit+'</span></p>';
+                        html +=                    '<div class="file-manager">';
+
+                        html +=                        '<ul class="tag-list" style="padding: 0">';
+                        html +=                            '<li>';
+                        html +=                                '<a href="{:URL('oareport/getPayInfos')}?empCode={$empCode}">';
+                        html +=                                    '<p>额度已使用</p>';
+                        html +=                                    '<p><strong style="font-size: 2rem;">'+data.info.YearUsed+'</strong> '+data.info.Unit+'</p>';
+                        html +=                                '</a>';
+                        html +=                            '</li>';
+                        html +=                            '<li>';
+                        html +=                                '<a href="{:URL('oareport/getAttendInfos')}?empCode={$empCode}">';
+                        html +=                                    '<p>转结已使用</p>';
+                        html +=                                    '<p><strong style="font-size: 2rem;">'+data.info.YearCarryForwardUsed+'</strong> '+data.info.Unit+'</p>';
+                        html +=                                '</a>';
+                        html +=                            '</li>';
+                        html +=                            '<li>';
+                        html +=                                '<a href="{:URL('oareport/getVacationInfos')}?empCode={$empCode}">';
+                        html +=                                    '<p>转结已过期</p>';
+                        html +=                                    '<p><strong style="font-size: 2rem;">'+data.info.CarryForwardOverdue+'</strong> '+data.info.Unit+'</p>';
+                        html +=                                '</a>';
+                        html +=                            '</li>';
+                        html +=                        '</ul>';
+                        html +=                        '<div class="clearfix"></div>';
+                        html +=                    '</div>';
+                        
+
+                        $('#'+id).html(html); 
+                }else{
+                    $('#'+id).css({'height':'50px'});
+                    $('#'+id).html('');
+                    $('#'+id).append('<p style="text-align:center;letter-spacing: 0.1em;"><br>当前<strong style="font-size: 2rem;"> '+ value +' </strong>赞无记录</p>');
+                }
+            }
+        })
+    }
+             
+</script>
+</body>
+
+
+</html>

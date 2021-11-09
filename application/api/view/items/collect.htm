@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>套餐定制系统收藏</title>
+    <meta name="keywords" content="套餐定制系统收藏">
+    <meta name="description" content="套餐定制系统收藏">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <style type="text/css">
+        /* 定义keyframe动画，命名为blink */
+
+        @keyframes blink{
+          0%{opacity: 1;}
+          50%{opacity: 1;}
+          50.01%{opacity: 0;} /* 注意这里定义50.01%立刻透明度为０，可以设置闪烁效果 */
+          100%{opacity: 0;} 
+        }
+
+        /* 添加兼容性前缀 */
+
+        @-webkit-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-moz-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-ms-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-o-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* 定义blink类*/
+        .blink{
+            animation: blink .75s linear infinite;  
+            /* 其它浏览器兼容性前缀 */
+            -webkit-animation: blink .75s linear infinite;
+            -moz-animation: blink .75s linear infinite;
+            -ms-animation: blink .75s linear infinite;
+            -o-animation: blink .75s linear infinite;
+            color: #dd4814;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+	<div id="a" style="width: 120px;height: 50px;background-color: #23c6c8;position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;    font-size: 16px;">添加成功</div>
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row" style="height: 70px;">
+            
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="border-width:1px">
+                        <h3 style="color: red">*注： <small style="font-size: 1.2rem">点击收藏名前面的按钮，会将合计里面的数据清空掉，并且将收藏名里面的数据添加到合计中</small></h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="padding: 0px;">
+                        <div class="panel-body">
+                            <div class="panel-group" id="accordion">
+
+                                {volist name="info" id="vo" key='k'}
+                                <div class="panel panel-default" style="border-color: #fff;">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">
+                                                <i class="fa fa-plus-square" style="color: #23c6c8;font-size: 2rem;padding: 0 10px 10px 10px;" onclick="addScm('{$vo.scm}')"></i><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne{$k}" onclick="getCollect('{$vo.scm}','One{$k}','1')">{$vo.scm}<span style="float: right;color: #23c6c8;font-size: 1.5rem;margin-top: 10px;"><i class="fa fa-sort-up"></i></span></a>
+                                            </h5>
+                                    </div>
+                                    <div id="collapseOne{$k}" class="panel-collapse collapse">
+                                        <div class="ibox-content One{$k}" style="padding: 0px;" id="One{$k}">
+ 
+					                    </div>
+                                    </div>
+                                </div>
+                                {/volist}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function addScm(scm){
+            $.ajax({
+                url:'{:url('addScmToCar')}',
+                data:{scm:scm},
+                type:'POST',
+                dataType:'json',
+                success:function(data){
+                    if(data.status = 'success'){
+                        $('#a').html('添加成功');
+                        document.getElementById("a").style.display="block";
+                        setTimeout(
+                            function(){
+                                document.getElementById("a").style.display="none";
+                                window.location.href='{:url('collect')}';
+                            }
+                        , 1500);
+                    }
+                }
+            })
+        }
+    </script>
+
+    <div class="gzwy_zixun" style="position: fixed;width: 100%;bottom: 0;z-index: 9999;font-size: 18px;font-family: 微软雅黑;color: #fff;background: #00aff0;text-align: center;height: 50px;line-height: 36px;">
+        <a href="{:url('show')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('show_dx')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">项目</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('show_tc')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">套餐</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('car')}" style="color: #fff; vertical-align: -webkit-baseline-middle;"><i class="fa fa-shopping-cart blink" style="color: #f70707;font-size: 3rem;"></i></a>
+    </div>
+    <script src="__REPORT__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__REPORT__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript">
+    	function addItems(id,xid){
+            $.ajax({
+                data:{id:id,xid:xid},
+                url:'{:url('addItems')}',
+                type:'POST',
+                success:function(){
+                    document.getElementById("a").style.display="block";
+                    setTimeout(function(){document.getElementById("a").style.display="none";}, 2000);
+
+                }
+            })
+        }
+
+    	function getCollect(value,id,xid){
+
+    		$.ajax({
+    			url:'{:url('getCollect')}',
+    			data:{value:value},
+    			type:'POST',
+    			dataType:'json',
+    			success:function(data){
+    				if(data.status == 'success'){
+    					var html = '';
+    					for (var i = 0; i < data.info.length; i++) {
+
+    						html +=     '<div class="alert" style="border-bottom: 1px #e7eaec solid;font-size: 1.5rem;margin-bottom: 0px;">';
+                            html +=           '<span>'+data.info[i].name+'</span><span style="float: right;color:">'+data.info[i].je+' </span>';   
+                            html +=     '</div>';
+                            
+
+                            $('#'+id).html(html); 
+    					}
+    				}
+    			}
+    		})
+    	}
+
+    </script>
+
+</body>
+</html>						                             

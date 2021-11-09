@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+            <title>商标发布 - 名品商标转让网</title>        <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="applicable-device" content="mobile">
+        <script type="text/javascript" src="__INDEX__/js/jquery.min.js"></script>
+    <script>
+		var userInfo;
+		var login_callback_func = [];
+		function addLoginCallbackFunc(func){
+			login_callback_func.push(func);
+		}
+
+	</script>    
+	<script type="text/javascript" src="__INDEX__/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__INDEX__/css/bootstrap.css" type="text/css" />
+    <script type="text/javascript" src="__INDEX__/js/iscroll-probe.js" defer></script>
+    <script type="text/javascript" src="__INDEX__/js/layer.js" defer></script>
+    <link rel="stylesheet" href="__INDEX__/css/layer.css" type="text/css" />
+    <link rel="stylesheet" href="__INDEX__/css/style.css" type="text/css" />
+    <script type="text/javascript" src="__INDEX__/js/common2_6.js" defer></script>
+    <link rel="stylesheet" href="__INDEX__/css/iconfont.css" type="text/css" />
+    <script type="text/javascript">
+        var searchObj = new Object();
+        var layer_success_img = "__INDEX__/mobile/layer_success_img.png?imageslim";
+        var layer_close_img = "__INDEX__/img/layer_close_img.png";
+    </script>
+
+    <style>
+        body{
+            -webkit-text-size-adjust: 100% !important;
+            text-size-adjust: 100% !important;
+            -moz-text-size-adjust: 100% !important;
+        }
+
+        #contact_seller_phone, #login_phone{ background-image: url('__INDEX__/images/login-phone.png') }
+
+        #phone_code{ background-image: url('__INDEX__/images/login-key.png') }
+
+        #dialog_cs_div .note_register_telphone{ background-image: url("__INDEX__/images/a-red.png"); }
+    </style>
+</head>
+<body>
+<div id="body_wrap" class=" ">
+    <div>
+        <div id="body">
+<style>
+#header_log_tg {display: none;}
+</style>
+<div id="header_cont" >
+        <div id="header_logo">
+       <a href="/index"><img src="__INDEX__/img/top1_1.png" /></a>
+                         </div>
+    <!-- tgmp页面头部 -->
+    <div id="header_log_tg">
+        <a href="/index"><img src="__INDEX__/img/logo_w.png" /></a>
+    </div>
+        <!-- 留号码 -->
+    
+            
+    
+    <div style="display: none;">
+        <ul class="dropdown_menu" id="dropdown_menu">
+            <li><a href="/index">返回首页</a></li>
+            <li class="divider"></li>
+            <li><a href="/category">商标分类</a></li>
+            <li class="divider"></li>
+            <li><a href="/carte">我的收藏</a></li>
+            <li class="divider"></li>
+            <li><a data-type="67" class="telphone_hotline" href="tel:400-728-7208">联系名品</a></li>
+        </ul>
+    </div>
+</div>            
+<link rel="stylesheet" href="__INDEX__/css/publish.css" type="text/css" />
+<script>
+var publish_dialog;
+$(function(){
+	$(".input_class").focus(function(){
+		if($(this).attr("placeholder")==$(this).val()){
+			$(this).val("");
+		}
+	}).blur(function(){
+		if(!$(this).val()){
+			$(this).val($(this).attr("placeholder"));
+		}
+	});
+
+	//获取验证码
+	$("body").children().on("click", "#getCode", function(){
+		if($(this).hasClass("selected")){
+			return false;
+		}
+		var v = $("#applicant_tel").val();
+		if(!/^1[0-9]{10}$/.test(v)){
+			dialog_alert("请输入正确的联系电话！");return;
+		}
+		$(this).find("span").html("发送中...");
+		var obj = $(this);
+		$.post("/send_message", {'telphone':v, '_token': csrf_token, 'type':3 }, function(status){
+			if(status==100){
+				var k = 60;
+				obj.addClass("selected");
+				obj.find("span").html(k+"s后重发");
+	    		var to = setInterval(function () {
+					if(k>1){
+						k--;
+						obj.find("span").html(k+"s后重发");
+					}else{
+						obj.find("span").html("获取验证码");
+						obj.removeClass("selected");
+						clearInterval(to);
+					}
+	        	}, 1000);
+			}else if(status==300){
+				dialog_alert("一分钟内不允许多次发送短信！");
+			}
+    	}, 'json')
+		
+	});
+	
+	//点击发布
+	$(".sub_bottom").click(function(){
+		// if(userInfo.status == 0){
+		// 	do_login('', '', 796, 795, 1);
+		// 	return ;
+		// }
+		//先上传商标
+		var reg_nos_obj = $("#reg_nos");
+		var applicant_tel_obj = $("#applicant_tel");
+		var code = $("#qrCode").val();
+		var prices_obj = $("#prices");
+		var category_id = $("#category_id").val();
+
+		if(!reg_nos_obj.val() || reg_nos_obj.val()==reg_nos_obj.attr("placeholder")){
+			dialog_alert("请输入商标注册号！");return;
+		}
+		if(!category_id){
+			dialog_alert("请选择商标类别！");return;
+		}
+		if(!prices_obj.val() || prices_obj.val()==prices_obj.attr("placeholder")){
+			dialog_alert("请输入商标出售价格！");return;
+		}
+		publish_dialog = dialog({
+			title:"系统消息",
+			quickClose: true,
+			content: "<div style='width:100%;min-width:200px; font-size:13px; margin:15px auto 30px; text-align:center'><img src='img/loading.gif' /><br/>商标发布中...</div>",
+			fixed:true
+		}).show();
+		
+		$.post('/publish', {'_token': csrf_token, 'phone':applicant_tel_obj.val(), 
+			'code':code, 'prices':prices_obj.val(), 'reg_nos':reg_nos_obj.val(), 'category_id':category_id}, function(result){
+			if(result.status==1){
+				//商标没有问题，去买付宝支付发布
+				var url = "https://www.maifupay.com/service/buy?service_type=mpsbfb&count=1&mcid="+result.mcid+"&u_goods_id="+result.reg_no;
+				window.location.href = url;
+			}else{
+				var msg = "";
+				if(result.msg){
+					publish_dialog.content("<div style='width:100%; font-size:16px; margin:15px auto 30px; text-align:center'>"+result.msg+"</div>");
+					return;
+				}
+				if(result.reg_warn && result.reg_warn.length>0){
+					$.each(result.reg_warn, function(i, v){
+						if(v.status==-3){
+							msg+=v.reg_no+"：注册号已经发布，不能重复发布；";
+						}else if(v.status==-4){
+							msg+=v.reg_no+"：重复发布；";
+						}else{
+							msg+=v.reg_no+"：注册号错误；";
+						}
+					});
+				}
+				if(result.price_warn && result.price_warn.length>0){
+					if(msg){
+						msg+="<hr style='height:1px;border:none;border-top:1px dashed #0066CC' />";
+					}
+					$.each(result.price_warn, function(i, v){
+						msg+=v+"：错误价格；";
+					});
+				}
+				msg+="<hr style='height:1px;border:none;border-top:1px dashed #0066CC' /><p>商标出售信息不正确，请重新发布！</p>";
+
+				publish_dialog.close();
+			    publish_dialog = dialog({
+					title:"系统消息",
+					quickClose: true,
+					content: "<div style='font-size:14px; color:#444; margin:15px auto 30px; text-align:left'>"+msg+"</div>",
+					fixed:true
+				}).show();
+			}
+		});
+
+	})
+});
+</script>
+<div class="publish_info">
+    <div class="pi_tit">发布商标出售信息！</div>
+    <div class="pi_cont">
+        <div class="input_item">
+            <input type="text" class="input_class" id="reg_nos" name="reg_nos" value="请输入商标注册号（必填）" placeholder="请输入商标注册号（必填）" />
+        </div>
+        <div class="input_item">
+			<select name="category_id" id="category_id" class="input_class" >
+				<option value="" selected="">请选择商标分类</option>
+				{volist name="info" id="vo"}
+					<option value="{$vo.id}">{$vo.name}</option>
+				{/volist}
+				
+			</select>
+		</div>
+        <div class="input_item">
+            <input type="text" class="input_class" id="prices" name="prices" value="出售价格（必填）" placeholder="出售价格（必填）" style="width: 90%" />
+            万
+        </div>
+        <p style="color:#FC9C3B;font-weight: bold;font-size:12px;">
+    	出售费用：600元/件</p>
+        <button class="sub_bottom">立即出售</button>
+    </div>
+</div>
+<div class="publish_note_tit">商标发布条件</div>
+<div class="publish_note_cont">
+	<p>1、请提供真实有效的信息，如提供虚假信息，将追究法律责任，同一件商标请不要重复登记；</p>
+	<p>2、发布商标每件收取600元服务费/1年（<span style="color:#FC9C3B">网站账号需要跟支付网站账号用同一个手机号码注册</span>）</p>
+	<p>3、商标发布状态可登录PC站查看</p>
+	<p>特别提示：</p>
+	<p>1、商标信息出售，需点击"前往付款完成并出售"完成支付后才能发布完成，请您耐心等待审核，审核3个工作日，若您付费后商标未通过审核，我们将给您退款；</p>
+	<p>2、发布后若商标已出售或联系方式有变动，请及时告知，以免平台继续发布而给您造成不必要的麻烦，客服QQ：2851088052；</p>
+	<p>3、请慎重考虑转让底价，发布后请不要随意涨价，以免影响后期谈判。</p>
+</div>
+        </div>
+                                                <div id="footer_menu">
+	<ul>
+		<li >
+    		<a href="/index">
+    		      		  <img src="__INDEX__/img/home-b.png" />
+    		       		  <p>首页</p>
+    		</a>
+		</li>
+        		<li >
+    		<a href="/search">
+    		      		  <img src="__INDEX__/img/search-b.png" />
+    		       		  <p>找商标</p>
+    		</a>
+		</li>
+        		<li class="ljzx">
+    		<a id="menu_hot_telphone" data-type="66" href="javascript:;"><img src="__INDEX__/img/phone_bottom.png" /></a>
+		</li>
+		<li >
+    		<a href="/carte" id="fixed_bottom_aixin">
+		      <span id="fixed_carte_num"></span>
+		          		  <img src="__INDEX__/img/heart-b.png" />
+    		       		  <p>收藏</p>
+    		</a>
+		</li>
+		<li >
+    		<a href="/about_us">
+    		      		  <img src="__INDEX__/img/mine-b.png" />
+    		       		  <p>关于我们</p>
+    		</a>
+		</li>
+	</ul>
+</div>
+<div id="footer_menu_tgmp">
+    <ul>
+        <li>
+            <a href="/index">
+              <img src="__INDEX__/img/home-gray.png" />
+              <p>首页</p>
+            </a>
+        </li>
+        <li>
+            <a href="/search">
+              <img src="__INDEX__/img/search-gray.png" />
+              <p>搜索</p>
+            </a>
+        </li>
+        <li class="ljzx">
+            <a class="common_ask_btn" click_detail_type="607" detail_type="608" href="javascript:;">
+                <img src="__INDEX__/img/phone01.png" />
+                <p>立即咨询</p>
+            </a>
+        </li>
+        <li>
+            <a href="/carte"  class="" id="fixed_bottom_aixin">
+              <span id="fixed_carte_num"></span>
+              <img src="__INDEX__/img/star-gray.png" />
+              <p>收藏</p>
+            </a>
+        </li>
+        <li>
+            <a href="/about_us">
+              <img src="__INDEX__/img/us-gray.png" />
+              <p>我们</p>
+            </a>
+        </li>
+    </ul>
+</div>
+            </div>
+
+            <div id="fixed_right">
+            <div id="fixed_back_to_top" class="iconfont icon-totop"></div>
+        </div>
+    
+    <link rel="stylesheet" href="__INDEX__/css/ui-dialog.css" type="text/css" />
+<script type="text/javascript" src="__INDEX__/js/dialog-min.js" defer></script>
+<script type="text/javascript" src="__INDEX__/js/clipboard.min.js"></script>
+<script type="text/javascript">
+
+var test_version = 0;
+var layer_timing_img1 = "http://static.mp.cc/image/website/mobile/525test/close.png?imageslim";
+var layer_timing_img2 = "http://static.mp.cc/image/website/mobile/525test/logo.png?imageslim";
+var layer_timing_img3 = "http://static.mp.cc/image/website/pc/525test/person.png?imageslim";
+
+
+var layer_success_img = "http://static.mp.cc/image/website/mobile/layer_success_img.png?imageslim";
+var layer_close_img = "img/layer_close_img.png";
+var list_fav_red = "http://static.mp.cc/image/website/mobile/list_fav_red.png?imageslim";
+var list_fav = "http://static.mp.cc/image/website/mobile/list_fav.png?imageslim";
+var csrf_token = "H1Guybm9hrJqDauhzFYWfHTOr47qz4mKwpfEf5wi";
+
+var request_path = "publish";
+var register_brand_id = "";
+var register_from_view = "";
+var register_detail_type = "";
+var is_sale_view = 0;
+var hot_telphone = "400-728-7208";
+var clipboard = new Clipboard('.do_weixin_copy');
+clipboard.on('success', function(e) {
+    //alert("已复制微信号，现在打开微信加好友");
+    //跳转到微信 待定
+    //window.open("http://weixin.qq.com/r/mNjdxZvE_caGrd_m942K");
+	$(".center_wechat_box").removeClass("active");
+	$("#wechat_box_shadow").hide();
+	layer.open({
+    	move: false,
+    	style: "min-width: 310px; width:90%;max-width:410px;",
+    	skin: "wechat_message",
+    	time: 5,
+    	content:'<div class="left"><img src="__INDEX__/img/success@2x.png" /></div>\
+    	<div class="right">\
+    		<p class="first">已复制成功！</p>\
+    		<p class="sec">请到微信添加好友咨询。</p>\
+    		<p class="last"><span class="wechat_close_span">5</span>秒后自动关闭</p>\
+		</div>'
+    });
+	var new_s = 5;
+	IntervalHittops = setInterval(function () {
+		if(new_s>1){
+			new_s--;
+			$(".wechat_close_span").html(new_s);
+		}else{
+			hideMsg();
+		}
+	}, 1000);
+});
+</script>
+<script type="text/javascript" src="__INDEX__/js/jquery.fly.min.js"></script>
+<script type="text/javascript" src="__INDEX__/js/common.js"></script>
+
+
+<div class="wechat_icon" id="tg_wx_left" detail_type="29"><img src="__INDEX__/img/wechat.png" /></div>
+<div id="wechat_box_shadow"></div>
+<div class="center_wechat_box">
+    <p class="title">添加商标顾问微信<img src="__INDEX__/img/caht_03.jpg" /></p>
+    <span class="close"><img src="__INDEX__/img/layer_close_img.png" /></span>
+    <div id="wechat_content">
+        <a href="tel:400-728-7208" class="wechat_num telphone_hotline" data-type="205">188-6830-6888</a>
+        <p class="do_weixin_copy" data-clipboard-text="188-6830-6888">立即复制</p>
+    </div>
+</div>
+<div id="fixed_liaojie" class="liaojie" style="display:none;">
+    <img src="__INDEX__/img/liaojie.gif">
+</div>
+<a class="tncode" style="opacity: 0;position: absolute;top:-100px;left:-2000px;">验证码</a>
+
+<script type="text/javascript" src="__INDEX__/js/tn_code.js"></script></div>
+</body>
+</html>

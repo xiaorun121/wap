@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>个人资料_{$config.title}</title>
+
+{include file="public:header" /}
+<link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+<script type="text/javascript" src="__HOME__/js/isLogin.js"></script>
+{include file="public:public" /}
+
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>个人资料</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+<script type="text/javascript">
+      $(function(){
+            var token = getToken('token');
+
+            var values = ["token", "timestamp"];
+            var datas = {
+                "token": token,
+                "timestamp": timestamp,
+            };
+            var sign  = doSign(values, datas);
+
+            $.ajax({
+                  url:'/app/accoutInfo/getInfo',
+                  data:{sign:sign,token:token},
+                  type:'POST',
+                  dataType:'json',
+                  success:function(data){
+                    if(data.success == true){
+                        if(data.info['realName']){
+                          document.getElementsByTagName('p')[1].innerHTML = data.info['realName'];
+                        }
+                        
+                        if(data.info['alias']){
+                            document.getElementsByTagName('span')[1].innerHTML = data.info['alias'];
+                        }
+                        if(data.info['cardNo']){
+                            document.getElementsByTagName('span')[2].innerHTML = data.info['cardNo'];
+                        }
+                        if(data.info['birthday']){
+                            var bDate = new Date(data.info['birthday']);
+                            var bYear = bDate.getFullYear();
+
+                            var date = new Date();
+                            var dYear = date.getFullYear();
+
+                            var age = dYear - bYear;
+                            document.getElementsByTagName('span')[3].innerHTML = age;
+                        }
+                        if(data.info['sex']){
+                            document.getElementsByTagName('span')[4].innerHTML = data.info['sex'];
+                        }
+                        if(data.info['phone']){
+                            document.getElementById('phone').innerHTML = data.info['phone'];
+                        }
+                        if(data.info['headImg']){
+                            document.getElementsByTagName('span')[0].innerHTML = "<img src='http://app.uvclinic.cn/"+data.info['headImg']+"'/>";
+                        }
+                    }
+                  }
+            })
+            
+      })
+</script>
+
+<div class="gerenziliao1">
+      <p>头像修改</p>
+      <a href="{:url('index/updateimg')}">
+           <em>></em> 
+           <span><img src="__HOME__/images/gerenziliao-tx.png"></span>
+      </a>   
+</div>
+
+<div class="gerenziliao2">
+      <h3>个人信息</h3> 
+      <ul>
+            <li>
+                  <h4>用户名</h4>
+                  <p></p>
+            </li>
+            <li>
+                  <h4>昵      称</h4>
+                  <a href="{:url('index/updaterealname')}">
+                       <span>未设置</span>
+                       <em>></em> 
+                  </a>
+            </li>
+            <li>
+                  <h4>身份证号</h4>
+                  <a href="{:url('index/updatecardno')}">
+                       <span>未设置</span>
+                       <em>></em> 
+                  </a>
+            </li>
+            <li>
+                  <h4>年龄</h4>
+                  <a href="{:url('index/updatebirthday')}">
+                       <span>78</span>
+                       <em>></em> 
+                  </a>
+            </li>
+            <li>
+                  <h4>性     别</h4>
+                  <a class="gerenziliao2-xb1" href="{:url('index/updatesex')}">
+                       <span id="gerenziliao2-xb-1">请选择性别</span>
+                       <em>></em> 
+                  </a>
+            </li>
+      </ul>
+      <div class="gerenziliao2-1">
+            <h4>密码管理</h4>
+            <a href="{:url('index/pdataupdatepwd')}">
+                 <span>*********</span>
+                 <em>></em> 
+            </a>
+      </div>
+      <div class="gerenziliao2-1">
+            <h4>手机绑定</h4>
+            <a href="{:url('index/updatephone')}">
+                 <span id="phone">xxx</span>
+                 <em>></em> 
+            </a>
+      </div>
+      <div class="yy-bg"></div>
+</div>
+
+</div>
+<!--全局结束--> 
+
+</body>
+</html>

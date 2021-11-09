@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>注册账号_{$config.title}</title>
+
+{include file="public:header" /}
+{include file="public:public" /}
+
+<!-- 时间选择插件 -->
+<script src="__HOME__/js/lCalendar.js"></script>
+<link rel="stylesheet" href="__HOME__/css/lCalendar.css">
+<link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>注册账号</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd onclick="javascript:window.history(-1);">返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+  <div class="zhuce">
+        
+    <p>手机号 <input type="tel" name="tel" id="tel" placeholder="请输入您的手机号" onclick="javascript:if(this.value=='请输入您的手机号'){this.value='';}" required/></p>
+    <p>
+        <input type="tel" name="" id="smsCode" placeholder="请输入右侧验证码" onclick="javascript:if(this.value=='请输入右侧验证码'){this.value='';}" required/>
+        <input type="button" value="获取验证码" id="zhuce-yanz" />
+    </p>
+    <p>密码 <input type="password" name="password" id="password" placeholder="请输入密码" onclick="javascript:if(this.value=='请输入密码'){this.value='';}" required/></p>
+    <p>重复密码 <input type="password" name="repassword" id="repassword" value="" required/></p>
+    <h5><input type="checkbox" name="vehicle" value="bike" id="vehicle" checked="checked" />我已阅读并同意<span>《全景官网服务协议》</span></h5>    
+  </div>
+
+  <div class="xinxiwanshan">
+    
+      <p><span>*</span>真实姓名 <input type="text" name="realName" id="realName" placeholder="请输入您的真实姓名" onclick="javascript:if(this.value=='请输入您的真实姓名'){this.value='';}" required/></p>
+      <p><span>*</span>身份证号 <input type="text" name="cardNo" id="cardNo" placeholder="请输入您的身份证号" onclick="javascript:if(this.value=='请输入您的身份证号'){this.value='';}" required/></p>
+      <p><span>*</span>性别 
+            <a class="xinxiwanshan-xb1">
+                 <span id="xinxiwanshan-xb-1">请选择性别</span>
+                 <em>></em> 
+            </a>
+      </p>
+      <div class="xinxiwanshan-xb2">
+            <span>男</span><span>女</span>
+            <h6 id="xinxiwanshan-xb-2">确定</h6>  
+      </div>
+      <p>生日 
+            <a href="#">
+                 <input type="data" readonly="" id="birthday" name="birthday" value="请选择您的生日" data-lcalendar="1900-01-1,2018-12-31" /> 
+                 <em>></em> 
+            </a>
+      </p>
+      <p>邮箱地址 <input type="text" name="email" id="email" placeholder="请输入您的邮箱地址" onclick="javascript:if(this.value=='请输入您的邮箱地址'){this.value='';}"/></p>
+      <h5>注：带<span>*</span>为必填t选项</h5>
+      
+        
+  </div>
+  <input type="submit" value="下一步" id="zhuce-sub" />
+<div class="yy-bg"></div>
+<!--公共底部-->
+
+<script src="__HOME__/js/register.js"></script>
+
+</div>
+<!--全局结束--> 
+<script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+<script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+</body>
+</html>

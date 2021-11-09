@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>个人中心_{$config.title}</title>
+
+{include file="public:header" /}
+
+<script type="text/javascript" src="__HOME__/js/isLogin.js"></script>
+{include file="public:public" /}
+
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>个人中心</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+<script type="text/javascript">
+$(function(){
+
+      var token = getToken('token');
+
+      var values = ["token", "timestamp"];
+      var datas = {
+          "token": token,
+          "timestamp": timestamp,
+      };
+      var sign  = doSign(values, datas);
+
+      $.ajax({
+            url:'/app/accoutInfo/getInfo',
+            data:{sign:sign,token:token},
+            type:'POST',
+            dataType:'json',
+            success:function(data){
+                  if(data.success == true){
+                        document.getElementsByTagName('p')[0].innerHTML = data.info['realName'];
+                        data.info['headImg'] ? document.getElementsByTagName('h3')[0].innerHTML = "<img src='http://app.uvclinic.cn/"+data.info['headImg']+"'/>" : document.getElementsByTagName('h3')[0].innerHTML = '<img src="__HOME__/images/gerenzhongxin-tx.png">';
+                  }
+            }
+      })
+      
+})
+</script>
+
+<div class="gerenzhongxin1">
+	<img src="__HOME__/images/gerenzhongxin-bg.png">
+      <h3><img src="__HOME__/images/gerenziliao-tx.png"></h3>
+      <p>xxx</p>
+      <a href="#" style="display: none;"></a>
+      <a href="{:url('index/health')}"><img src="__HOME__/images/gerenzhongxin-a.png"></a>
+</div>
+
+<div class="gerenzhongxin2">
+      <a href="{:url('index/order')}">
+            <img src="__HOME__/images/gerenzhongxin-1.png">
+            <p>我的预约</p>
+      </a>
+      <a href="{:url('index/report')}">
+            <img src="__HOME__/images/gerenzhongxin-2.png">
+            <p>报告查询</p>
+      </a>
+      <a href="{:url('index/pdata')}">
+            <img src="__HOME__/images/gerenzhongxin-3.png">
+            <p>个人资料</p>
+      </a>
+      <a href="{:url('index/message')}">
+            <img src="__HOME__/images/gerenzhongxin-4.png">
+            <p>意见反馈</p>
+      </a>
+</div>
+
+
+<!--公共底部-->
+
+</div>
+<!--全局结束--> 
+
+</body>
+</html>

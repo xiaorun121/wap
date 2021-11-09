@@ -1,0 +1,510 @@
+<html><!-- Mirrored from www.zi-han.net/theme/hplus/form_validate.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT --><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>预约</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__REPORT__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__REPORT__/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div id="a" style="width: 50%;height: 45px;background-color: rgb(166, 195, 195);position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;font-size: 15px;border-radius: 3px;"></div>
+    <div class="wrapper wrapper-content animated fadeInRight" style="font-size: 16px;">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="padding: 15px 20px 0px;border-style: none;">
+                        <form class="form-horizontal m-t" id="commentForm" novalidate="novalidate" onsubmit="return false;">
+                            <div class="form-group">
+                                <label class="col-sm-3 "><span style="padding-right: 40px;">姓名：{$validate['hzxm']}</span><span style="padding-right: 40px;">性别：{$validate['sex']}</span><span>年龄：{$validate['nl']}</span></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 "><span>身份证：{$validate['sfzh']}  </span></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 "><span>单位名称：{$validate['dwmc']}  </span></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 "><span>项目名称： </span></label>
+                                <div class="col-sm-3">
+                                    <strong>{$validate['fzmc']}</strong>     
+                                    <span style="color: #0af1bd;text-overflow: ellipsis;white-space: nowrap;line-height: 32px;padding-left: 10px;border-radius: 4px;width: 33px;font-size: 20px;" id="checkImg1" onclick="checkImg(1)"><i class="fa fa-arrow-circle-down" ></i></span> 
+                                    <span style="color: #0af1bd;text-overflow: ellipsis;white-space: nowrap;line-height: 32px;padding-left: 10px;border-radius: 4px;width: 33px;font-size: 20px;display: none;"  id="checkImg2" onclick="checkImg(2)"><i class="fa fa-arrow-circle-up"></i></span>      <!-- fa fa-arrow-circle-up -->
+                                </div>
+                                <div class="col-sm-12" id="content" style="display: none;">
+                                    <div class="ibox-content" style="padding: 0px;border-style:none;">
+
+                                        <table class="table" style="font-size: 16px">
+                                            <thead>
+                                                <tr>
+                                                    <th>序号</th>
+                                                    <th>项目名称</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="font-size: 16px;">
+                                                {volist name="item" id="v" key="k"}
+                                                <tr>
+                                                    <td>{$k}</td>
+                                                    <td>{$v.xmmc}</td>
+                                                </tr>
+                                                {/volist}
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-content" style="margin-top: -30px;padding: 15px 20px 0px;border-style:none;">
+                        <div class="table-responsive">
+                            <table class="table table-striped" style="font-size: 14px;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>预约日期</th>
+                                        <th>可约人数</th>
+                                        <th>已约人数</th>
+                                        <th>状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <?php $weekarray=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];?>
+                                    {if condition="($yydateinfo == $date1) OR ($yydateinfo == $date2) OR ($yydateinfo == $date3) OR ($yydateinfo == $date4) OR ($yydateinfo == $date5) OR ($yydateinfo == $date6) OR ($yydateinfo == $date7) OR ($yydateinfo == $date8) OR ($yydateinfo == $date9) OR ($yydateinfo == $date10) OR ($yydateinfo == $date11) OR ($yydateinfo == $date12) OR ($yydateinfo == $date13) OR ($yydateinfo == $date14) OR ($yydateinfo == $date15)"}
+
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date1"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date1))] eq '星期日'"/}disabled readonly {elseif condition="$res[0][num] eq $count[0][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date1; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date1))],-1); ?>)</td>
+                                            <td>{$res[0][num]}</td>
+                                            <td {if condition="$count[0][count] neq 0"} style="color: red;"{/if}>{$count[0][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date1"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate1" value="<?php echo $date1; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date2"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date2))] eq '星期日'"/}disabled readonly {elseif condition="$res[1][num] eq $count[1][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date2; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date2))],-1); ?>)</td>
+                                            <td>{$res[1][num]}</td>
+                                            <td {if condition="$count[1][count] neq 0"} style="color: red;"{/if}>{$count[1][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date2"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate2" value="<?php echo $date2; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date3"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date3))] eq '星期日'"/}disabled readonly {elseif condition="$res[2][num] eq $count[2][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date3; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date3))],-1); ?>)</td>
+                                            <td>{$res[2][num]}</td>
+                                            <td {if condition="$count[2][count] neq 0"} style="color: red;"{/if}>{$count[2][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date3"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate3" value="<?php echo $date3; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date4"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date4))] eq '星期日'"/}disabled readonly {elseif condition="$res[3][num] eq $count[3][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date4; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date4))],-1); ?>)</td>
+                                            <td>{$res[3][num]}</td>
+                                            <td {if condition="$count[3][count] neq 0"} style="color: red;"{/if}>{$count[3][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date4"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate4" value="<?php echo $date4; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date5"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date5))] eq '星期日'"/}disabled readonly {elseif condition="$res[4][num] eq $count[4][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date5; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date5))],-1); ?>)</td>
+                                            <td>{$res[4][num]}</td>
+                                            <td {if condition="$count[4][count] neq 0"} style="color: red;"{/if}>{$count[4][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date5"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate5" value="<?php echo $date5; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date6"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date6))] eq '星期日'"/}disabled readonly {elseif condition="$res[5][num] eq $count[5][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date6; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date6))],-1); ?>)</td>
+                                            <td>{$res[5][num]}</td>
+                                            <td {if condition="$count[5][count] neq 0"} style="color: red;"{/if}>{$count[5][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date6"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate6" value="<?php echo $date6; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date7"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date7))] eq '星期日'"/}disabled readonly {elseif condition="$res[6][num] eq $count[6][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date7; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date7))],-1); ?>)</td>
+                                            <td>{$res[6][num]}</td>
+                                            <td {if condition="$count[6][count] neq 0"} style="color: red;"{/if}>{$count[6][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date7"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate7" value="<?php echo $date7; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date8"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date8))] eq '星期日'"/}disabled readonly {elseif condition="$res[7][num] eq $count[7][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date8; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date8))],-1); ?>)</td>
+                                            <td>{$res[7][num]}</td>
+                                            <td {if condition="$count[7][count] neq 0"} style="color: red;"{/if}>{$count[7][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date8"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate8" value="<?php echo $date8; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date9"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date9))] eq '星期日'"/}disabled readonly {elseif condition="$res[8][num] eq $count[8][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date9; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date9))],-1); ?>)</td>
+                                            <td>{$res[8][num]}</td>
+                                            <td {if condition="$count[8][count] neq 0"} style="color: red;"{/if}>{$count[8][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date9"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate9" value="<?php echo $date9; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date10"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date10))] eq '星期日'"/}disabled readonly {elseif condition="$res[9][num] eq $count[9][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date10; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date10))],-1); ?>)</td>
+                                            <td>{$res[9][num]}</td>
+                                            <td {if condition="$count[9][count] neq 0"} style="color: red;"{/if}>{$count[9][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date10"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate10" value="<?php echo $date10; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date11"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date11))] eq '星期日'"/}disabled readonly {elseif condition="$res[10][num] eq $count[10][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date11; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date11))],-1); ?>)</td>
+                                            <td>{$res[10][num]}</td>
+                                            <td {if condition="$count[10][count] neq 0"} style="color: red;"{/if}>{$count[10][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date11"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate11" value="<?php echo $date11; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date12"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date12))] eq '星期日'"/}disabled readonly {elseif condition="$res[11][num] eq $count[11][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date12; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date12))],-1); ?>)</td>
+                                            <td>{$res[11][num]}</td>
+                                            <td {if condition="$count[11][count] neq 0"} style="color: red;"{/if}>{$count[11][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date12"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate12" value="<?php echo $date12; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date13"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date13))] eq '星期日'"/}disabled readonly {elseif condition="$res[12][num] eq $count[12][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date13; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date13))],-1); ?>)</td>
+                                            <td>{$res[12][num]}</td>
+                                            <td {if condition="$count[12][count] neq 0"} style="color: red;"{/if}>{$count[12][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date13"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate13" value="<?php echo $date13; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date14"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date14))] eq '星期日'"/}disabled readonly {elseif condition="$res[13][num] eq $count[13][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date14; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date14))],-1); ?>)</td>
+                                            <td>{$res[13][num]}</td>
+                                            <td {if condition="$count[13][count] neq 0"} style="color: red;"{/if}>{$count[13][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date14"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate14" value="<?php echo $date14; ?>">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" {if condition="$yydateinfo eq $date15"} disabled readonly {elseif condition="$weekarray[date('w',strtotime($date15))] eq '星期日'"/}disabled readonly {elseif condition="$res[14][num] eq $count[14][count]" /}disabled readonly{/if} class="i-checks" name="checkbox1">
+                                            </td>
+                                            <td><?php echo $date15; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date15))],-1); ?>)</td>
+                                            <td>{$res[14][num]}</td>
+                                            <td {if condition="$count[14][count] neq 0"} style="color: red;"{/if}>{$count[14][count]}</td>
+                                            <td>{if condition="$yydateinfo eq $date15"}<span style="color: red">已预约</span>{/if}</td>
+                                            <input type="hidden" name="yydate" id="yydate15" value="<?php echo $date15; ?>">
+                                        </tr>
+                                        {else/}
+                                                {if $yydateinfo}
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" disabled readonly class="i-checks" >
+                                                        </td>
+                                                        <td><?php echo $yydateinfo; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($yydateinfo))],-1); ?>)</td>
+                                                        <td>{$qdateinfo}</td>
+                                                        <td {if condition="$countinfo neq 0"} style="color: red;"{/if}>{$countinfo}</td>
+                                                        <td><span style="color: red">已预约</span></td>
+                                                    </tr>
+                                                {/if}
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date1))] eq '星期日'"}disabled readonly {elseif condition="$res[0][num] eq $count[0][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date1; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date1))],-1); ?>)</td>
+                                                <td>{$res[0][num]}</td>
+                                                <td {if condition="$count[0][count] neq 0"} style="color: red;"{/if}>{$count[0][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate1" value="<?php echo $date1; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date2))] eq '星期日'"}disabled readonly {elseif condition="$res[1][num] eq $count[1][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date2; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date2))],-1); ?>)</td>
+                                                <td>{$res[1][num]}</td>
+                                                <td {if condition="$count[1][count] neq 0"} style="color: red;"{/if}>{$count[1][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate2" value="<?php echo $date2; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date3))] eq '星期日'"}disabled readonly {elseif condition="$res[2][num] eq $count[2][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date3; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date3))],-1); ?>)</td>
+                                                <td>{$res[2][num]}</td>
+                                                <td {if condition="$count[2][count] neq 0"} style="color: red;"{/if}>{$count[2][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate3" value="<?php echo $date3; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date4))] eq '星期日'"}disabled readonly {elseif condition="$res[3][num] eq $count[3][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date4; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date4))],-1); ?>)</td>
+                                                <td>{$res[3][num]}</td>
+                                                <td {if condition="$count[3][count] neq 0"} style="color: red;"{/if}>{$count[3][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate4" value="<?php echo $date4; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date5))] eq '星期日'"}disabled readonly {elseif condition="$res[4][num] eq $count[4][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date5; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date5))],-1); ?>)</td>
+                                                <td>{$res[4][num]}</td>
+                                                <td {if condition="$count[4][count] neq 0"} style="color: red;"{/if}>{$count[4][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate5" value="<?php echo $date5; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date6))] eq '星期日'"}disabled readonly {elseif condition="$res[5][num] eq $count[5][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date6; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date6))],-1); ?>)</td>
+                                                <td>{$res[5][num]}</td>
+                                                <td {if condition="$count[5][count] neq 0"} style="color: red;"{/if}>{$count[5][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate6" value="<?php echo $date6; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date7))] eq '星期日'"}disabled readonly {elseif condition="$res[6][num] eq $count[6][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date7; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date7))],-1); ?>)</td>
+                                                <td>{$res[6][num]}</td>
+                                                <td {if condition="$count[6][count] neq 0"} style="color: red;"{/if}>{$count[6][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate7" value="<?php echo $date7; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date8))] eq '星期日'"}disabled readonly {elseif condition="$res[7][num] eq $count[7][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date8; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date8))],-1); ?>)</td>
+                                                <td>{$res[7][num]}</td>
+                                                <td {if condition="$count[7][count] neq 0"} style="color: red;"{/if}>{$count[7][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate8" value="<?php echo $date8; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date9))] eq '星期日'"}disabled readonly {elseif condition="$res[8][num] eq $count[8][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date9; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date9))],-1); ?>)</td>
+                                                <td>{$res[8][num]}</td>
+                                                <td {if condition="$count[8][count] neq 0"} style="color: red;"{/if}>{$count[8][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate9" value="<?php echo $date9; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date10))] eq '星期日'"}disabled readonly {elseif condition="$res[9][num] eq $count[9][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date10; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date10))],-1); ?>)</td>
+                                                <td>{$res[9][num]}</td>
+                                                <td {if condition="$count[9][count] neq 0"} style="color: red;"{/if}>{$count[9][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate10" value="<?php echo $date10; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date11))] eq '星期日'"}disabled readonly {elseif condition="$res[10][num] eq $count[10][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date11; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date11))],-1); ?>)</td>
+                                                <td>{$res[10][num]}</td>
+                                                <td {if condition="$count[10][count] neq 0"} style="color: red;"{/if}>{$count[10][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate11" value="<?php echo $date11; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date12))] eq '星期日'"}disabled readonly {elseif condition="$res[11][num] eq $count[11][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date12; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date12))],-1); ?>)</td>
+                                                <td>{$res[11][num]}</td>
+                                                <td {if condition="$count[11][count] neq 0"} style="color: red;"{/if}>{$count[11][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate12" value="<?php echo $date12; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date13))] eq '星期日'"}disabled readonly {elseif condition="$res[12][num] eq $count[12][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date13; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date13))],-1); ?>)</td>
+                                                <td>{$res[12][num]}</td>
+                                                <td {if condition="$count[12][count] neq 0"} style="color: red;"{/if}>{$count[12][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate13" value="<?php echo $date13; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date14))] eq '星期日'"}disabled readonly {elseif condition="$res[13][num] eq $count[13][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date14; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date14))],-1); ?>)</td>
+                                                <td>{$res[13][num]}</td>
+                                                <td {if condition="$count[13][count] neq 0"} style="color: red;"{/if}>{$count[13][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate14" value="<?php echo $date14; ?>">
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" class="i-checks" {if condition="$weekarray[date('w',strtotime($date15))] eq '星期日'"}disabled readonly {elseif condition="$res[14][num] eq $count[14][count]" /}disabled readonly{/if} name="checkbox1">
+                                                </td>
+                                                <td><?php echo $date15; ?>(<?php echo mb_substr($weekarray[date("w",strtotime($date15))],-1); ?>)</td>
+                                                <td>{$res[14][num]}</td>
+                                                <td {if condition="$count[14][count] neq 0"} style="color: red;"{/if}>{$count[14][count]}</td>
+                                                <td></td>
+                                                <input type="hidden" name="yydate" id="yydate15" value="<?php echo $date15; ?>">
+                                            </tr>
+                                        
+                                    {/if}
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="ccomment" name="comment" class="form-control" style="height: 15rem;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-3">
+                            <button class="btn btn-primary" type="submit" onclick="onSubmit()">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <script src="__REPORT__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__REPORT__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript">
+
+        function checkImg(id){
+            if(id == 1){
+                $('#checkImg1').css('display','none');
+                $('#checkImg2').css('display','initial');
+                $('#content').css('display','block');
+            }else{
+                $('#checkImg1').css('display','initial');
+                $('#checkImg2').css('display','none');
+                $('#content').css('display','none');
+            }
+        }
+
+        function onSubmit(){
+            var xh = "<?php echo input('xh'); ?>";
+            var tel = "<?php echo input('tel') ?>";
+            var comment = $('#ccomment').val();
+
+            var a=document.getElementsByName("checkbox1");
+            for(var i=0;i<a.length;i++){
+                if(a[i].checked==true||a[i].checked=="checked"){
+                    num = i +1;
+                    var yydate = $('#yydate'+num).val();
+                }
+            }
+            var chkbs = document.getElementsByName("checkbox1");
+            var chkNum= 0;
+            for(i=0;i<chkbs.length;i++)
+            {   
+                // var oChkb =  chkbs(i);
+                if(chkbs[i].checked)
+                {
+                   chkNum++; 
+                }
+            }
+            if(chkNum > 1 || chkNum == 0){
+                $('#a').html('预约日期只能选择一个');
+                        document.getElementById("a").style.display="block";
+                        setTimeout(
+                            function(){
+                                document.getElementById("a").style.display="none";
+                            }
+                        , 1500);
+                        return false;
+            }else{
+                $.ajax({
+                    url:'{:url("submitResult")}',
+                    data:{yydate:yydate,xh:xh,tel:tel,tjbh:{$validate['tjbh']},hzxm:"{$validate['hzxm']}",sex:"{$validate['sex']}",sfzh:"{$validate['sfzh']}",dwmc:"{$validate['dwmc']}",fzmc:"{$validate['fzmc']}",comment:comment,sendtype:"index_personal"},
+                    type:'POST',
+                    dataType:'json',
+                    success:function(data){
+                        if(data.code == 200){
+                            $('#a').html(data.msg);
+                            document.getElementById("a").style.display="block";
+                            setTimeout(
+                                function(){
+                                    document.getElementById("a").style.display="none";
+                                    window.location.href = "{:url('show')}?tel="+tel+'&xh='+xh;
+                                }
+                            , 1500);
+                            return false;
+                        }else{
+                            $('#a').html(data.msg);
+                            document.getElementById("a").style.display="block";
+                            setTimeout(
+                                function(){
+                                    document.getElementById("a").style.display="none";
+                                }
+                            , 1500);
+                            location.reload();
+                            return false;
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>性别修改_{$config.title}</title>
+
+{include file="public:header" /}
+<script type="text/javascript" src="__HOME__/js/isLogin.js"></script>
+{include file="public:public" /}
+
+<!-- 时间选择插件 -->
+<link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+
+
+
+</head>
+
+<body style=" background: #f7fafb;">
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top" style="padding-bottom: 36px;">
+      <h2 style="margin-top: 0px;">修改性别</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+<script type="text/javascript">
+      var token = getToken('token');
+
+      var values = ["token", "timestamp"];
+      var datas = {
+          "token": token,
+          "timestamp": timestamp,
+      };
+      var sign  = doSign(values, datas);
+
+      $(function(){
+          $.ajax({
+              url:'/app/accoutInfo/getInfo',
+              data:{sign:sign,token:token},
+              type:'POST',
+              dataType:'json',
+              success:function(data){
+                if(data.success == true){
+                    if(data.info['sex']){
+                        document.getElementById('xinxiwanshan-xb-1').innerHTML = data.info['sex'];
+                    }
+                }
+              }
+        })
+      })
+</script>
+
+<div class="xinxiwanshan" style="display: block;">
+      <p>性别
+            <a class="xinxiwanshan-xb1">
+                 <span id="xinxiwanshan-xb-1"></span>
+                 <em>></em>
+            </a>
+      </p>
+      <div class="xinxiwanshan-xb2">      
+            <span>男</span><span>女</span>
+            <h6 id="xinxiwanshan-xb-2">确定</h6>  
+      </div>
+      <div class="yy-bg"></div>
+      <script type="text/javascript">
+            $(function(){
+                  
+                  $('#Gname-sub').click(function(){
+                        var sex = document.getElementById('xinxiwanshan-xb-1').innerHTML;
+                        var value = ["sex", "token", "timestamp"];
+                        var data = {
+                            "sex":sex,
+                            "token": token,
+                            "timestamp": timestamp,
+                        };
+                        var signs  = doSign(value, data);
+
+                        $.ajax({
+                              url:'/app/accoutInfo/baseInfo',
+                              data:{birthday:'',realName:'',sex:sex,marrige:'',cardNo:'',health:'',sign:signs,token:token,key:key,timestamp:timestamp},
+                              type:'POST',
+                              dataType:'json',
+                              success:function(data){
+                                    if(data.success == true){
+                                          layer.msg('性别修改成功', {
+                                               icon: 1,
+                                               time: 3000
+                                          }, function(){
+                                               window.location.href ='/index/index/pdata';
+                                          });
+                                    }
+                              }
+                        })
+                  })
+            })
+            
+      </script>    
+      <input type="submit" value="保存" id="Gname-sub" />
+</div>
+<script type="text/javascript">
+            
+
+      $(function(){
+           // 性别
+            $(".xinxiwanshan-xb1").click(function() {
+                  $(".xinxiwanshan-xb2").show();
+                  $(".yy-bg").show();
+            });
+            $(".xinxiwanshan-xb2 span").click(function() {
+                  $(this).addClass('on').siblings().removeClass('on');
+            })
+            $("#xinxiwanshan-xb-2").click(function() {
+                  $("#xinxiwanshan-xb-1").html($(".xinxiwanshan-xb2").find('span.on').html());
+                  $(".xinxiwanshan-xb2").hide();
+                  $(".yy-bg").hide();
+            })  
+      })
+     
+</script>
+<!--公共底部-->
+</div>
+<!--全局结束--> 
+<script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+<script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+</body>
+</html>

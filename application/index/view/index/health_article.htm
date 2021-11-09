@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>健康体检_{$config.title}</title>
+{include file="public:header" /}
+<script type="text/javascript" src="__HOME__/js/public.js"></script>
+</head>
+
+<body>
+<!--全局开始--> 
+<div class="web-main">
+
+<div class="public-top">
+      <h2>健康体检</h2>
+      <dl class="fanh">
+            <dt><img src="__HOME__/images/fanh.png"></dt>
+            <dd>返回</dd>
+      </dl>
+</div>
+<!--公共头部结束-->
+
+<div class="fangan-xq">
+	<img src="__UPLOADS__/{$healthInfo.img}">
+      <h3>{$healthInfo.title}</h3>
+      <ul class="fangan-xq-1">
+          {$infoPrice}  
+      </ul>
+      <ul class="fangan-xq-2">
+            {$infoName}
+      </ul>
+      {$healthInfo.content}
+      <a href="{:url('index/addOrder',['orderID'=>$healthInfo.orderID,'orderType'=>1])}">立即预约</a>
+</div>
+
+<!--公共底部-->
+
+
+
+<!--引用js开始-->
+<script type="text/javascript">
+      $(function(){
+            $(".fangan-xq-2 li").click(function() {
+                  $(this).addClass('on').siblings().removeClass('on');
+                  $(".fangan-xq-1 li").eq($(this).index()).addClass('on').siblings().removeClass('on');
+            });
+      })
+
+
+</script>
+
+<script type="text/javascript">
+      $(function(){
+            var id = {$healthInfo.id};
+            $.ajax({
+            url:"{:url('index/click')}",
+            data:{id:id},
+            type:'post',
+            dataType:'json',
+        })
+      })
+</script>
+<!--引用js结束-->
+</div>
+<!--全局结束--> 
+
+</body>
+</html>

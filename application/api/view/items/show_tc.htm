@@ -1,0 +1,131 @@
+
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>全景医学影像诊断诊断中心</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min9814.css?v=4.1.0" rel="stylesheet">
+    <style type="text/css">
+        /* 定义keyframe动画，命名为blink */
+
+        @keyframes blink{
+          0%{opacity: 1;}
+          50%{opacity: 1;}
+          50.01%{opacity: 0;} /* 注意这里定义50.01%立刻透明度为０，可以设置闪烁效果 */
+          100%{opacity: 0;} 
+        }
+
+        /* 添加兼容性前缀 */
+
+        @-webkit-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-moz-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-ms-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @-o-keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 1; }
+            50.01% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* 定义blink类*/
+        .blink{
+            animation: blink .75s linear infinite;  
+            /* 其它浏览器兼容性前缀 */
+            -webkit-animation: blink .75s linear infinite;
+            -moz-animation: blink .75s linear infinite;
+            -ms-animation: blink .75s linear infinite;
+            -o-animation: blink .75s linear infinite;
+            color: #dd4814;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div id="a" style="width: 120px;height: 50px;background-color: #23c6c8;position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;    font-size: 16px;">添加合计成功</div>
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="background: #23c6c8;color: #fff;text-align: center;">
+                        <h5 style="float: none;font-size: 15px;">组合套餐<span style="float: right;"> <i class="fa fa-shopping-cart" style="color: #23c6c8;font-size: 2rem;"></i> </span> </h5>
+                    </div>
+                    <div class="ibox-title" style="text-align: center;">
+                        <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search" style="width:100%;font-weight: bold;font-size: 16px;">
+                    </div>
+                    <div class="ibox-content">
+                        {volist name="result" id="vo"}
+                            <div class="alert" style="border-bottom: 1px #e7eaec solid;font-size: 1.5rem;margin-bottom: 0px;">
+                                <span><a href="{:url('showlist')}?id={$vo.ID}" style="color: #333">{$vo.NAME}</a></span><span style="float: right;"> <i class="fa fa-shopping-cart" style="color: #23c6c8;font-size: 2rem;" onclick="addSfxm('{$vo.ID}')"></i> </span> 
+                            </div>
+                            
+                        {/volist}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="gzwy_zixun" style="position: fixed;width: 100%;bottom: 0;z-index: 9999;font-size: 18px;font-family: 微软雅黑;color: #fff;background: #00aff0;text-align: center;height: 50px;line-height: 36px;">
+        <a href="{:url('show')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('show_dx')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">项目</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('show_tc')}" style="color: #fff; vertical-align: -webkit-baseline-middle;">套餐</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:url('car')}" style="color: #fff; vertical-align: -webkit-baseline-middle;"><i class="fa fa-shopping-cart blink" style="color: #f70707;font-size: 3rem;"></i></a>
+    </div>
+
+    <script src="__REPORT__/js/jquery.min.js?v=2.1.4"></script>
+    <script type="text/javascript">
+        function addSfxm(id){
+            $.ajax({
+                url:'{:url('addSfxm')}',
+                data:{id:id},
+                type:'POST',
+                success:function(){
+                    document.getElementById("a").style.display="block";
+                    setTimeout(function(){document.getElementById("a").style.display="none";}, 2000);
+
+                }
+            })
+        }
+
+        $(document).ready(function(){
+            $("#top-search").keyup(function(){
+
+                // console.log($(this).val());
+
+                $(".ibox-content .alert").hide().filter(":contains('"+($(this).val())+"')").show();
+            });
+        })
+    </script>
+</body>
+</html>

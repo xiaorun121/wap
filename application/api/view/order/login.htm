@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="margin: 0 auto;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" /><meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="__HOME__/login/css/kyreport_style-20190905.css" />
+    <title>全景医学影像诊断中心</title>
+    <script src="__HOME__/login/js/jquery-3.3.1.min.js"></script>
+    <link href="__HOME__/login/css/showbo.css" rel="stylesheet" />
+    <link href="__HOME__/login/css/loading.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="a" style="width: 180px;height: 45px;background-color: rgb(166, 195, 195);position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;font-size: 15px;border-radius: 3px;"></div>
+        <div style="text-align: center; ">
+            <img style="margin-top: 10px;" src="__HOME__/login/picture/全景logo.png" alt="" />
+        </div>
+        <div class="headbox hidden">
+            <div class="title">单位人员预约</div>
+        </div>
+
+
+        <div class="checkBox">
+            <div class="checkContent">
+
+                <div class="checkRow">
+                    <img src="__HOME__/login/picture/xh.png" />
+                    <input name="xh" type="text" id="xh" class="inputStyle" value="{$xh}" placeholder="请输入单位序号" {if $xh} readonly="true"{/if}/>
+                </div>
+                <div class="checkRow">
+                    <img src="__HOME__/login/picture/icon19.png" />
+                    <input name="inputphone" type="text" id="tel" class="inputStyle" placeholder="请输入手机号码" />
+                </div>
+                <div class="checkRow">
+                    <img src="__HOME__/login/picture/icon18.png" />
+                    <input name="txtCode" type="text" id="txtCode" class="inputStyle " placeholder="请输入您的验证码" />
+                    <input id="message" type="button" class="sendbtn" value="获取验证码" />
+                </div>
+                <div style="padding: 10px 0;text-align:center;">
+                    <input type="button" value="预约进入" id="okbtn" class="apply_sub" />
+                </div>
+            </div>
+        </div>
+
+        <div class="attention">
+            <span class="tit">注意事项：</span>
+            <p>请输入真实有效的数据，系统将为您呈现已审核检查报告，欢迎您的使用。</p>
+        </div>
+
+        <div class="footer">
+            <div>咨询电话：<span class="phone">400-920-8393</span></div>
+            <div>
+                <a href="tel:400-920-8393">
+                    <img src="__HOME__/login/picture/phone-icon.png" alt=""></a>
+            </div>
+        </div>
+    </form>
+<script type='text/javascript' src='__API__/static/js/jquery.min.js'></script>
+<script type="text/javascript">
+
+    $(function(){
+
+        /*
+        *  获取验证码
+        */
+        $('#message').click(function(){
+            // var xh  = $('#xh').val();
+            var tel = $('#tel').val();
+            var partten       = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
+
+            // if(xh == ''){
+            //     $('#a').html('请填写序号');
+            //     document.getElementById("a").style.display="block";
+            //     setTimeout(
+            //         function(){
+            //             document.getElementById("a").style.display="none";
+            //         }
+            //     , 1500);
+            //     return false;
+            // }else if(isNaN(xh) == true){
+            //     $('#a').html('序号必须为数字');
+            //     document.getElementById("a").style.display="block";
+            //     setTimeout(
+            //         function(){
+            //             document.getElementById("a").style.display="none";
+            //         }
+            //     , 1500);
+            //     return false;
+            // }
+
+            if(tel == ''){
+                $('#a').html('请填写手机号');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }else if(!partten.test(tel)){
+                $('#a').html('手机号错误');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }
+
+            $.ajax({
+                url:"{:url('smsCode')}",
+                type:'POST',
+                dataType:'json',
+                data:{'tel':tel},
+                success:function(data){
+                    if(data.msg == 200){
+                        $('#a').html(data.info);
+                        document.getElementById("a").style.display="block";
+                        setTimeout(
+                            function(){
+                                document.getElementById("a").style.display="none";
+                            }
+                        , 1500);
+                        var timeNum = 60;
+                        timers = setInterval(function(){
+                            if(timeNum > 0){
+                              timeNum --;
+                              $('#message').val('重新发送(' +　timeNum + 's)');
+                              $('#message').attr('disabled', "disabled");
+                            }else if(timeNum === 0){
+                              clearInterval(timers);
+                              $('#message').val('获取验证码');
+                              $('#message').removeAttr('disabled');
+                            }
+                        },1500) 
+                    }else{
+                        $('#a').html('验证码发送错误');
+                        document.getElementById("a").style.display="block";
+                        setTimeout(
+                            function(){
+                                document.getElementById("a").style.display="none";
+                            }
+                        , 1500);
+                    }
+                }
+            })
+        })
+
+        /*
+        *  获取报告
+        */
+        $('#okbtn').click(function(){
+            var xh = $('#xh').val();
+            var tel = $('#tel').val();
+            var smsCode = $('#txtCode').val();
+            var partten = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
+
+            if(xh == ''){
+                $('#a').html('请填写序号');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+
+            }else if(isNaN(xh) == true){
+                $('#a').html('序号必须为数字');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }
+
+            if(tel == ''){
+                $('#a').html('请填写手机号');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }else if(!partten.test(tel)){
+                $('#a').html('手机号不正确');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }
+
+            if(smsCode == ''){
+                $('#a').html('验证码必须填写');
+                document.getElementById("a").style.display="block";
+                setTimeout(
+                    function(){
+                        document.getElementById("a").style.display="none";
+                    }
+                , 1500);
+                return false;
+            }
+
+            /*
+            *  验证码校验
+            */
+            $.ajax({
+                type: "POST",
+                url:"{:url('smsValid')}",
+                data: {"code":smsCode,'tel':tel,'xh':xh},
+                dataType:'json',
+                success:function(data){
+
+                    if(data.code == 1){ 
+
+                        window.location.href = "{:url('show')}?tel="+tel+'&xh='+xh;
+
+                    }else{
+
+                        $('#a').html(data.msg);
+                        document.getElementById("a").style.display="block";
+                        setTimeout(
+                            function(){
+                                document.getElementById("a").style.display="none";
+                            }
+                        , 1500);
+                        return false;
+                    }
+                }
+            })
+
+        })
+    })
+</script>
+</body>
+</html>

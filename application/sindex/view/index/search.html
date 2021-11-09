@@ -1,0 +1,1213 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+            <title>商标超市 - 名品商标转让网</title>        <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="applicable-device" content="mobile">
+        <meta name="keywords" content="商标超市">
+    <meta name="description" content="商标买卖就来名品，我们致力于商标转让综合服务。">
+    <script type="text/javascript" src="__INDEX__/js/jquery.min.js"></script>
+    <script>
+var userInfo;
+var login_callback_func = [];
+function addLoginCallbackFunc(func){
+	login_callback_func.push(func);
+}
+</script>    <script type="text/javascript" src="__INDEX__/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__INDEX__/css/bootstrap.css" type="text/css" />
+    <script type="text/javascript" src="__INDEX__/js/iscroll-probe.js" defer></script>
+    <script type="text/javascript" src="__INDEX__/js/layer.js" defer></script>
+    <link rel="stylesheet" href="__INDEX__/css/layer.css" type="text/css" />
+    <link rel="stylesheet" href="__INDEX__/css/style.css" type="text/css" />
+    <script type="text/javascript" src="__INDEX__/js/common2_6.js" defer></script>
+    <link rel="stylesheet" href="__INDEX__/css/iconfont.css" type="text/css" />
+    <script type="text/javascript">
+        // var searchObj = {"category":2};
+        {if condition="$category eq 0"}
+            var searchObj = new Object();
+        {else/}
+            var searchObj = {"category":{$category}};
+        {/if}
+        var layer_success_img = "__INDEX__/mobile/layer_success_img.png?imageslim";
+        var layer_close_img = "__INDEX__/img/layer_close_img.png";
+    </script>
+
+    <style>
+        body{
+            -webkit-text-size-adjust: 100% !important;
+            text-size-adjust: 100% !important;
+            -moz-text-size-adjust: 100% !important;
+        }
+
+        #contact_seller_phone, #login_phone{ background-image: url('__INDEX__/images/login-phone.png') }
+
+        #phone_code{ background-image: url('__INDEX__/images/login-key.png') }
+
+        #dialog_cs_div .note_register_telphone{ background-image: url("__INDEX__/images/a-red.png"); }
+    </style>
+</head>
+<body>
+<div id="body_wrap" class=" ">
+    <div>
+        <div id="body">
+            <script type="text/javascript">
+var tagAliasArray  = [];
+function tagAlias(i){
+    var r = i;
+    $.each(tagAliasArray, function(k, v){
+        if(i==k){
+            r = v;
+        }
+    });
+    return r;
+}$(function(){
+        $('#top_right_menu').popover({
+        content: $("#dropdown_menu"),
+        html: true,
+        placement: 'bottom'
+    });
+        
+    //顶部搜索
+    $("#header_search_btn, .f_item_search a").click(function(){
+        if($("#top_search_category").length){
+            searchObj[tagAlias('category')] = $("#top_search_category").val();
+        }
+        var url = "/search?";
+        if(request_path=='best2'){//立春精选
+            url = "/best2?";
+        }
+        if(request_path=='sale'){//特价好标
+            url = "/sale?";
+        }
+        if(is_sale_view) {
+            url = "/search?"+tagAlias("attrbute")+"=sale&";
+        }
+        var p = "";
+        $.each(searchObj, function(i, v){
+            if(v && v!='null' && i!=tagAlias("tag") && i!=tagAlias("tag_name") && i!=tagAlias("keyword")){
+                if(p){
+                    p+= "&"+i+"="+encodeURIComponent(v);
+                }else{
+                    p+= i+"="+encodeURIComponent(v);
+                }
+            }
+        });
+        if(searchObj[tagAlias('tag')]){
+           if(p){
+               p+= "&"+tagAlias("keyword")+"="+encodeURIComponent(searchObj[tagAlias('tag')]);
+           }else{
+               p+= tagAlias("keyword")+"="+encodeURIComponent(searchObj[tagAlias('tag')]);
+           }
+        }else if($("#top_search_keyword").val()){
+            if(p){
+                p+= "&"+tagAlias("keyword")+"="+encodeURIComponent($("#top_search_keyword").val());
+            }else{
+                p+= tagAlias("keyword")+"="+encodeURIComponent($("#top_search_keyword").val());
+            }
+        }
+        url = url+p;
+        window.location.href = url;
+    });
+
+    //顶部搜索分类点击
+        $("#header_search .custom-select").click(function(){
+        var html = '<div id="hide_top_search_categorys">\
+            <div class="hide_categorys">\
+        <ul>';
+
+            if(searchObj[tagAlias('category')]){
+                html+='<li class="li_item" onclick="cho_layer_cates()" id="layer_cate_"><label>全部分类<i data-cate="all" class="iconfont icon-radio_xz"></i></label></li>';
+            }else{
+                html+='<li class="li_item" onclick="cho_layer_cates()" id="layer_cate_"><label>全部分类<i data-cate="all" class="iconfont icon-radio4"></i></label></li>';
+            }
+
+            {volist name='info_classify' id='vo'}
+                        html+='<li class="divider"></li>';
+            if(searchObj[tagAlias('category')] && searchObj[tagAlias('category')]=='{$vo.id}'){
+                html+='<li class="li_item" onclick="cho_layer_cates({$vo.id})" id="layer_cate_{$vo.id}"><label>第{$vo.name|mb_substr=0,3,"utf-8"}&nbsp;&nbsp;{$vo.name|mb_substr=4,8,"utf-8"}<i data-cate="{$vo.id}" data-text="{$vo.name|mb_substr=4,8,"utf-8"}" class="iconfont icon-radio4"></i></label></li>';
+            }else{
+                html+='<li class="li_item" onclick="cho_layer_cates({$vo.id})" id="layer_cate_{$vo.id}"><label>第{$vo.name|mb_substr=0,3,"utf-8"}&nbsp;&nbsp;{$vo.name|mb_substr=4,8,"utf-8"}<i data-cate="{$vo.id}" data-text="{$vo.name|mb_substr=4,8,"utf-8"}" class="iconfont icon-radio_xz"></i></label></li>';
+            }
+            {/volist}
+                        
+                    html+='</ul>\
+    </div>\
+</div>';
+            url = ""
+            if(is_sale_view) {
+                url = "&attrbute=sale&";
+            }
+            var p = "";
+            $.each(searchObj, function(i, v){
+                if(v && v!='null'){
+                    p+= "&"+i+"="+v;
+                }
+            });
+            url = encodeURI(url+p);
+            
+            html+='<p class="not_cates"><a href="/brand_category?from='+request_path+url+'">2017最新商标分类表></a></p>';
+        var layer_cates = layer.open({
+            className: "layer_categorys",
+            style: "width: 275px; height: 455px;",
+            content:html
+        });
+    });
+    });
+function cho_layer_cates(id) {
+    
+    if(typeof(id)!="undefined"){
+        var obj = $("#layer_cate_"+id).find("i");
+    }else{
+        var obj = $("#layer_cate_").find("i");
+    }
+    var data = obj.data("cate");
+    if(obj.hasClass("icon-radio4")){
+        
+    }else{
+        $("#hide_top_search_categorys li.li_item .icon-radio4").each(function(){
+            $(this).removeClass("icon-radio4").addClass("icon-radio_xz");;
+        });
+        obj.removeClass("icon-radio_xz").addClass("icon-radio4");
+    }
+    if(data!="all"){
+        searchObj[tagAlias('category')] = data;
+        $("#top_search_select").html(obj.data("text"));
+    }else{
+        searchObj[tagAlias('category')] = null;
+        $("#top_search_select").html("商标分类");
+    }
+    
+    var interval_dialoCategorys = setInterval(function () {
+        layer.closeAll();
+        clearInterval(interval_dialoCategorys);
+        $("#header_search_btn").trigger("click");
+    }, 300);
+}
+</script>
+<style>
+#header_log_tg {display: none;}
+</style>
+<div id="header_cont" >
+        <div id="header_back">
+        <i class="left_back" onclick="history.go(-1)"><img src="__INDEX__/img/top-back.png" /></i>
+        商标搜索
+        <i class="right_menu" id="top_right_menu"><img src="__INDEX__/img/top-menu.png" /></i>
+    </div>
+        <!-- 留号码 -->
+    
+        <div id="header_left_phone">
+        <div id="header_fixed_left_phone">
+            <div class="left_phone_cont">
+                <input class="header_phone" autocomplete="off" type="text" placeholder="请输入您的联系电话" />
+                <a class="call_me" href="javascript:;">快速回电</a>
+                            </div>
+        </div>
+    </div>
+    
+            <div id="header_search">
+        <div class="search_cont">
+            <input name="keyword" value="{$keyword}" id="top_search_keyword" type="text" autocomplete="off" placeholder="请输入产品名、商标名等" />
+                        <div class="custom-select">
+                            <span id="top_search_select">{if $classify_name}{$classify_name|mb_substr=4,8,'utf-8'}{else/}商标分类{/if}</span>
+                            <span class=" iconfont icon-xiala-"></span>
+            </div>
+
+             <div class="search_top_line"></div>
+                        <i class="search_icon iconfont icon-sousuo" id="header_search_btn"></i>
+        </div>
+    </div>
+        
+    
+    <div style="display: none;">
+        <ul class="dropdown_menu" id="dropdown_menu">
+            <li><a href="/index">返回首页</a></li>
+            <li class="divider"></li>
+            <li><a href="/category">商标分类</a></li>
+            <li class="divider"></li>
+            <li><a href="/carte">我的收藏</a></li>
+            <li class="divider"></li>
+            <li><a data-type="67" class="telphone_hotline" href="tel:400-728-7208">联系名品</a></li>
+        </ul>
+    </div>
+</div>            
+    <script type="text/javascript" src="__INDEX__/js/iscroll-probe.js" defer></script>
+    <link rel="stylesheet" href="__INDEX__/css/search_new.css" type="text/css" />
+<script type="text/javascript">
+$(function(){ 
+    var page = '0';
+    var myScroll;
+    var sideScroll;
+    var is_login = '';
+    //类似群组
+    var codes = [];
+    var tags = [];
+    var page = 0;
+    var loading = false;
+    var need_load = true;
+    var end_data = false;
+        var searchUrl = "/search?";
+        var search_type = "search";
+    var need_refresh = false;
+    var categoryArr = {"1":"\u5316\u5b66\u539f\u6599","2":"\u6d82\u6599\u6cb9\u6f06","3":"\u5316\u5986\u65e5\u7528","4":"\u5de5\u4e1a\u6cb9\u8102","5":"\u836f\u54c1\u5236\u5242","6":"\u4e94\u91d1\u5668\u5177","7":"\u673a\u68b0\u673a\u5668","8":"\u624b\u5de5\u7528\u5177","9":"\u7535\u5b50\u7535\u5668","10":"\u533b\u7597\u5668\u68b0","11":"\u706f\u5177\u7a7a\u8c03","12":"\u8fd0\u8f93\u5de5\u5177","13":"\u70df\u82b1\u7206\u7af9","14":"\u73e0\u5b9d\u949f\u8868","15":"\u4e50\u5668\u7bab\u9f13","16":"\u529e\u516c\u7528\u54c1","17":"\u6a61\u80f6\u5236\u54c1","18":"\u76ae\u9769\u76ae\u5177","19":"\u5efa\u7b51\u6750\u6599","20":"\u5bb6\u5177\u7528\u54c1","21":"\u53a8\u623f\u6d01\u5177","22":"\u7ef3\u7f51\u888b\u7bf7","23":"\u7eb1\u7ebf\u7eba\u7ec7","24":"\u5e03\u6599\u5e8a\u5355","25":"\u670d\u88c5\u978b\u5e3d","26":"\u94ae\u6263\u62c9\u94fe","27":"\u5730\u6bef\u5e2d\u57ab","28":"\u5065\u8eab\u5668\u6750","29":"\u98df\u54c1\u9c7c\u8089","30":"\u65b9\u4fbf\u98df\u54c1","31":"\u9972\u6599\u79cd\u5b50","32":"\u5564\u9152\u996e\u6599","33":"\u767d\u9152\u9ec4\u9152","34":"\u70df\u8349\u70df\u5177","35":"\u5e7f\u544a\u9500\u552e","36":"\u91d1\u878d\u7269\u7ba1","37":"\u5efa\u7b51\u4fee\u7406","38":"\u901a\u8baf\u670d\u52a1","39":"\u8fd0\u8f93\u8d2e\u85cf","40":"\u6750\u6599\u52a0\u5de5","41":"\u6559\u80b2\u5a31\u4e50","42":"\u7f51\u7ad9\u670d\u52a1","43":"\u9910\u996e\u4f4f\u5bbf","44":"\u533b\u7597\u56ed\u827a","45":"\u793e\u4f1a\u670d\u52a1"};
+    //侧边栏搜索
+    var sideObj = new Object();
+    var hasBrands = 1;
+    var blank_pic = "http://static.mp.cc/image/website/mobile/blank.png?imageslim";
+    var window_height = $(window).height();
+    var list_fav_red = "http://static.mp.cc/image/website/mobile/list_fav_red.png?imageslim";
+    var list_fav = "http://static.mp.cc/image/website/mobile/list_fav.png?imageslim";
+    var list_phone = "http://static.mp.cc/image/website/mobile/list_phone.png?imageslim";
+    var searchObj = new Object();
+    var old_search_category = 0;
+    if(searchObj[tagAlias('category')]){
+        old_search_category = tagAlias('category');
+    }
+    if(end_data){
+        $("#transition_cont").append($("#footer").show());
+    }
+    //排序选择
+    $("body").children().on("click", ".order_by", function(){
+        var order = $(this).data('order');
+        var order_by = "";
+        var hasSelect = false;
+        //综合排序
+        if(order=='related'){
+            $(".related").each(function(){
+                $(this).siblings().removeClass("selected");
+                if($(this).hasClass("selected")){
+                    hasSelect = true;
+                    return;
+                }else{
+                    $(this).addClass("selected");
+                }
+            });
+            if(hasSelect){
+               return;
+            }
+            order_by = 'related';
+        }
+        //上架时间
+        else if(order=='click'){
+            $(".click").each(function(){
+                $(this).siblings().removeClass("selected");
+                if($(this).hasClass("selected")){
+                     hasSelect = true;
+                     return;
+                }else{
+                    $(this).addClass("selected");
+                }
+            });
+            if(hasSelect){
+               return;
+            }
+            order_by = 'click_desc';
+        }
+        //价格排序 + 人气
+        else{
+            order_by = 'price_asc';
+            $(".price").each(function(){
+                if(!$(this).hasClass("selected")){
+                    $(this).addClass("selected");
+                    $(this).siblings().removeClass('selected');
+                }else{
+                    $(this).toggleClass("desc");
+                    $(this).toggleClass("asc");
+                }
+                if($(this).hasClass('desc')){
+                    order_by = 'price_desc';
+                }
+            });
+        }
+        if(order_by){
+            addType('order_by', order_by);
+        }else{
+            removeType('order_by');
+        }
+        setHtml('replace');
+    });
+    
+    //筛选条件切换  不包括 分类/多类
+    $("body").children().on("change", ".filter-container .custom-select .auto_update", function(){
+       var data_type = $(this).data('name');
+       var val = $(this).val();
+       if(data_type=='category'){
+           return;
+       }
+       if(!val || val==0){//不限
+            removeType(data_type, 'rall');
+            setHtml();
+            return false;
+        }
+       
+        addType(data_type, val);
+        setHtml();
+    });
+    
+    //添加搜索data
+    function addType(k, v, t){
+        if(k=='order_by'){searchObj[tagAlias('order_by')]=v;}
+        if(k=='type'){searchObj[tagAlias('type')]=v;}
+        if(k=='type_len'){searchObj[tagAlias('type_len')]=v;}
+        if(k=='price'){searchObj[tagAlias('price')]=v;}
+        if(k=='year'){searchObj[tagAlias('year')]=v;}
+        if(k=='is_show'){searchObj[tagAlias('is_show')]=v;}
+        if(k=='keyword'){searchObj[tagAlias('keyword')] = v;}
+        if(k=='tag_id'){searchObj[tagAlias('keyword')] = v; searchObj[tagAlias('tag_name')] = null;}
+        if(k=='tag'){searchObj[tagAlias('tag_name')] = v;}
+        if(k=='category'){
+            if(t && t=="update"){
+                searchObj[tagAlias('category')] = searchObj[tagAlias('category')] ? searchObj[tagAlias('category')]+","+v : v;
+            }else{
+                searchObj[tagAlias('category')] = v;
+                searchObj[tagAlias('keyword')] = null;
+                searchObj[tagAlias('tag_name')] = null;
+                searchObj[tagAlias('similar')] = null;
+            }
+        }
+        if(k=='similar'){
+            searchObj[tagAlias('similar')] = searchObj[tagAlias('similar')] ? searchObj[tagAlias('similar')]+","+v : v;
+        }
+    }
+    
+    //根据data 生成url ajax
+    function setHtml(replace){
+        doAjax(searchObj, replace);
+    }
+   
+    //移除搜索data
+    function removeType(k, v){
+        if(k=='order_by'){searchObj[tagAlias('order_by')]=null;}
+        if(k=='type'){searchObj[tagAlias('type')]=null;}
+        if(k=='type_len'){searchObj[tagAlias('type_len')]=null;}
+        if(k=='price'){searchObj[tagAlias('price')]=null;}
+        if(k=='year'){searchObj[tagAlias('year')]=null;}
+        if(k=='is_show'){searchObj[tagAlias('is_show')]=null;}
+        if(k=='keyword'){
+            searchObj[tagAlias('keyword')] = null;
+        }
+        if(k=='tag_id'){searchObj[tagAlias('keyword')] = null; searchObj[tagAlias('tag_name')] = null;}
+        if(k=='tag'){searchObj[tagAlias('tag_name')] = null;}
+        if(k=='similar'){
+            searchObj[tagAlias('similar')] = null;
+            if(v && v!="rall"){
+                $("#list_search .similar li.selected").each(function(){
+                    addType('similar', $(this).attr("data-value"));
+                })
+            }
+        }
+        if(k=='category'){
+            if(typeof(cateTags[keyword]) != "undefined"){////热搜
+                searchObj[tagAlias('keyword')] = null;
+            }
+            searchObj[tagAlias('category')] = null;
+            searchObj[tagAlias('tag_id')] = null;
+            searchObj[tagAlias('tag')] = null;
+            searchObj[tagAlias('similar')] = null;
+            
+            if(v && v!="rall"){
+                $("#list_search .category li.selected").each(function(){
+                    addType('category', $(this).attr("data-value"));
+                })
+            }
+        }
+    }
+    
+    //侧边筛选 start
+    //侧边栏 小栏目 显示隐藏 
+    $(document).on("click", ".layer_filter_title", function(){
+       $(this).parent().toggleClass("sift-row-expand");
+       $(this).find(".iconfont").toggleClass("icon-shang-copy").toggleClass("icon-xia");
+       sideScroll.refresh()
+    });
+    //隐藏侧边筛选
+    $(".cover_filter .layer_bar").click(function(){
+       $(".cover_filter").css({"width":"0px"});
+    });
+    //显示侧边筛选
+    $("body").children().on("click", ".show_more_down, .sift_fix_bar", function(){
+       $(".cover_filter").css({"width":"100%"});
+       var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        if(isiOS){
+            var sideHeight = window.innerHeight-$(".layer_title").height()-$(".layer_bottom").height();
+        }else{
+            var sideHeight = $(window).height()-$(".layer_title").height()-$(".layer_bottom").height();
+        }
+        $("#layer_scroll_cont").css("height", sideHeight);
+        
+        sideScroll = new IScroll('#layer_scroll_cont', {preventDefault:false, probeType: 2});
+        if(isiOS){
+            $(window).resize(function(){
+                var sideHeight = window.innerHeight-$(".layer_title").height()-$(".layer_bottom").height();
+                $("#layer_scroll_cont").css("height", sideHeight);
+                sideScroll = new IScroll('#layer_scroll_cont', {preventDefault:false, probeType: 2});
+            });
+        }
+    });
+    
+    $("body").children().on("click", ".add-filter-container div.add-btn", function(){
+        setMoreCateHtml();
+    });
+    
+    //侧边筛选
+    $("body").children().on("click", ".row-body ul.clearfix li", function(){
+       $(this).siblings().removeClass("sift-item-selected");
+       $(this).toggleClass("sift-item-selected");
+       var data_type = $(this).parent().data("type");
+       //商标类别
+       if(data_type=="category" || data_type=="multiclass_category"){
+           var cat_id = $(this).data("value");
+           var similar_html = hot_keyword_html = "";
+           if(data_type=="category"){
+               var similar = $(".similar_body");
+           }else{
+               var similar = $(this).parents(".sift-row").next();
+           }
+           if(!$(this).hasClass("sift-item-selected")){
+               similar.hide();
+               //hot_keyword
+               if(data_type=="category"){
+                   $(".hot_keyword_ul").parent().parent().hide();
+               }
+               sideScroll.refresh()
+           }else{
+               if(typeof(codes[cat_id])!=='undefined' && typeof(tags[cat_id])!=='undefined'){
+                    $.each(codes[cat_id], function(i, v){
+                        similar_html+='<li data-value="'+v.code+'" class="sift-item">'+v.code+'</li> ';
+                    });
+                    $.each(tags[cat_id], function(i, v){
+                        hot_keyword_html+='<li data-value="'+v.keyword+'" class="sift-item">'+v.keyword+'</li> ';
+                    });
+                    similar.find("ul").html(similar_html);
+                    similar.show();
+                    //hot_keyword
+                    if(data_type=="category"){
+                       $(".hot_keyword_ul").parents(".sift-row").hide();
+                       $(".hot_keyword_ul").html(hot_keyword_html);
+                       $(".hot_keyword_ul").parents(".sift-row").show();
+                    }
+                    sideScroll.refresh()
+               }else{
+                    showLoading();   
+                    $.get("/search/similar_tag/"+cat_id, {}, function(result){
+                        $.each(result.similars, function(i, v){
+                           similar_html+='<li data-value="'+v.code+'" class="sift-item">'+v.code+'</li> ';
+                        });
+                        
+                        $.each(result.tags, function(i, v){
+                            hot_keyword_html+='<li data-value="'+v.keyword+'" class="sift-item">'+v.keyword+'</li> ';
+                        });
+                        codes[cat_id] = result.similars;
+                        tags[cat_id] = result.tags;
+                        similar.find("ul").html(similar_html);
+                        similar.show();
+                        $(".hot_keyword_ul").html(hot_keyword_html);
+                        $(".hot_keyword_ul").parents(".sift-row").show();
+                        hideLoading();
+                        sideScroll.refresh()
+                    }, 'json');
+               }
+               
+           }
+       }
+    });
+    
+    //侧边 重置 按钮
+    $(".layer_reset").click(function(){
+       //移除选中
+       $(".sift-item-selected").removeClass("sift-item-selected");
+       $(".sift-row-expand").removeClass("sift-row-expand");
+       $(".layer_filter_title .icon-xia").removeClass("icon-xia").addClass("icon-shang-copy");
+       sideScroll.refresh()
+    });
+    
+    //侧边 搜索按钮
+    $(".layer_search").click(function(){
+       //遍历选中的属性
+        sideObj = new Object();
+       
+        var keyword_val = $("#top_search_keyword").val();
+        if(keyword_val){
+           sideObj[tagAlias('keyword')] = keyword_val;
+        }
+
+        $(".sift-item-selected").each(function(){
+           var data_type = $(this).parent().data("type");
+           var val = $(this).data("value");
+           addSideData(data_type, val);
+        });
+        //搜索
+        if(typeof(searchUrl) && searchUrl){
+           var url = searchUrl;
+        }else{
+           var url = 'http://m.mp.cc/search?';
+        }
+        
+        var p = "";
+        $.each(sideObj, function(i, v){
+            if(v && v!='null' && i!="keyword" && i!="tag_name"){
+                if(p){
+                    p+= "&"+i+"="+encodeURIComponent(v);
+                }else{
+                    p+= i+"="+encodeURIComponent(v);
+                }
+            }
+        })
+        if(sideObj[tagAlias('category')]==old_search_category){
+            if(sideObj[tagAlias('keyword')]){
+               // if(old_search_category==)
+               if(p){
+                   p+= "&"+tagAlias("keyword")+"="+encodeURIComponent(sideObj[tagAlias('keyword')]);
+               }else{
+                   p+= tagAlias("keyword")+"="+encodeURIComponent(sideObj[tagAlias('keyword')]);
+               }
+               if(sideObj[tagAlias('tag_name')]){
+                   p+= "  "+encodeURIComponent(sideObj[tagAlias('tag_name')]);
+               }
+            }
+        }
+        window.location.href = url+p;
+    });
+    
+    function addSideData(data_type, val){
+       switch(data_type)
+       {
+           case "category":
+               sideObj[tagAlias('category')] = val;
+               break;
+           case "tag_id":
+               sideObj[tagAlias('keyword')] = val; sideObj[tagAlias('tag_name')] = null;
+               break;
+           case "price":
+               sideObj[tagAlias('price')] = val;
+               break;
+           case "type":
+               sideObj[tagAlias('type')] = val;
+               break;
+           case "year":
+               sideObj[tagAlias('year')] = val;
+               break;
+           case "similar":
+               sideObj[tagAlias('similar')] = val;
+               break;
+           case "extra":
+               sideObj[tagAlias('extra')] = val;
+               break;
+       }
+    }
+    //首次页面加载
+    function firstLoadHtml(){
+                var s = new Object();
+                doAjax(s);
+    }
+    var canScrollData = false;
+    window.onload = function(){
+        firstLoadHtml();
+        body_scroll();
+
+        canScrollData = 1;
+        setTimeout("removeAd()", 500);
+    }
+    
+    function doAjax(s, replace){
+        var search_type = "search";
+        if(search_type=="sale") {
+            var url = "ajax_" + request_path + "/1?attrbute=sale&";
+        } else {
+            var url = "ajax_" + request_path + "?category={$category}&keyword={$keyword}&";
+        }
+        page = 0;
+        var p = "";
+        $.each(s, function(i, v){
+            if(v && v!='null' && i!=tagAlias("keyword") && i!=tagAlias("tag_name")){
+                if(p){
+                    p+= "&"+i+"="+encodeURIComponent(v);
+                }else{
+                    p+= i+"="+encodeURIComponent(v);
+                }
+            }
+        });
+        if(searchObj[tagAlias('keyword')]){
+           if(p){
+               p+= "&"+tagAlias('keyword')+"="+encodeURIComponent(searchObj[tagAlias('keyword')]);
+           }else{
+               p+= tagAlias('keyword')+"="+encodeURIComponent(searchObj[tagAlias('keyword')]);
+           }
+           if(searchObj[tagAlias('tag_name')]){
+               p+= "  "+encodeURIComponent(searchObj[tagAlias('tag_name')]);
+           }
+        }
+        url = url+p;
+        if(typeof(replace)!="undefined" && replace){
+           loadPage(url, "replace", s);
+        }else{
+            loadPage(url, "", s);
+        }
+    }
+    
+    $(window).scroll(function(){
+        if(!canScrollData){
+            return;
+        }
+        var $this =$(this),  
+        viewH =window_height,//可见高度  
+        contentH =$("#body_wrap").outerHeight(true),//内容高度  
+        scrollTop =$(this).scrollTop();//滚动高度  
+        if(end_data){
+            return ;
+        }
+        if(contentH - viewH - scrollTop <= 200 && need_load){ //到达底部100px时,加载新内容 
+
+            loading = true;
+            if(search_type=="sale") {
+                var url = "ajax_" + request_path + "/" + page + "?attrbute=sale&";
+            } else {
+                var url = "ajax_" + request_path + "?category={$category}keyword={$keyword}&page=" + page + "&";
+            }
+            
+            var p = "";
+            $.each(searchObj, function(i, v){
+                if(v && v!='null'){
+                    if(p){
+                        p+= "&"+i+"="+encodeURIComponent(v);
+                    }else{
+                        p+= i+"="+encodeURIComponent(v);
+                    }
+                }
+            });
+            url = url+p;
+            loadPage(url);
+        }
+    });
+    
+    //点击确认 发送手机号，客服推荐
+    $("body").on("click", "#nclass_me_back", function(){
+        var phone = $("#nleft_phone").val();
+        var detail_type = "";
+        if(search_type == "best"){
+            detail_type = 18;
+        }else{
+            detail_type = 19;
+        }
+        clickBtn(detail_type);
+        if(!/^1[0-9]{10}$/.test(phone)){
+            HiTipsShow("请输入正确的手机号！");
+            return;
+        }
+        
+        $.post('/leave_phone', {'_token': 'bkqEtBr6HH5vlgsFdn7woeCiHXm5zsDasCGaWWxs', 'email_type':5, 'phone':phone, 'detail_type':detail_type}, function(result){
+            if(result.status==1){
+                clickFrom(phone, detail_type);
+                HiTipsShow("<p class='bold'>消息发送成功</p><p class='f15 mbt2'>商标顾问会尽快和您联系</p><p class='f15'>请保持手机畅通</p>");
+                bdAPI(3);
+            }else{
+                HiTipsShow(result.msg);
+            }
+        });
+    });
+    
+    function loadPage(url, replace, searchObj){
+        $("#no_search_info").hide();
+        $(".no_more_face").show();
+        if(replace){
+             $("#search_container").html("");
+        }
+        $.ajax({
+            // url: '{:url('ajax_search')}/category/{$category}',
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            data:{},
+            success:function(result){
+                var html = "";
+                if(result.data.length>0){
+                    $.each(result.data, function(i, v){
+                        var jump_url = "/brand/detail/"+v.id;
+                        if(search_type=="best"){
+                            html+='<div class="goods_list_item_best">\
+                            <a class="li_img_wap" href="'+jump_url+'" title="'+v.name+'商标">';
+                                if(v.own_img){
+                                    html+='<img class="li_img" src="'+v.own_img+'" alt="'+v.name+'商标" />';
+                                }else{
+                                    html+='<img class="li_img" src="'+v.logo_path+'" alt="'+v.name+'商标" />';
+                                }
+                            html+='</a>\
+                                <div class="li_info" data-reg_no="'+v.data_reg_no+'">\
+                                    <div class="li_name" data-reg_no="'+v.data_reg_no+'">';
+                                        if(v.is_tmall_enter){
+                                        html+= '<span style="color:#f7d58a" class="lii_name">'+v.name+'</span>';
+                                    }else{
+                                        html+= '<span class="lii_name">'+v.name+'</span>';
+                                    }
+                                    html+='<span class="list_phone lii_contact_seller" data-click_detail_type="335" detail_type="15"><img src="'+list_phone+'" /></span>';
+                                    if(v.collected){
+                                        html+='<span class="list_collect_brand_best"><img src="'+list_fav_red+'"/></span>';
+                                    }else{
+                                        html+='<span class="list_collect_brand_best"><img src="'+list_fav+'"/></span>';
+                                    }
+
+                                    html+='</div>\
+                                    <div class="lii_price" data-reg_no="'+v.data_reg_no+'">';
+                                       if(!v.is_login){
+                                        html+='<span class="lii_login" data-click_detail_type="334" data-detail_type="259" data-msg_detail_type="258">免费查价</span>'; 
+                                        html+='<span class="lii_contact_seller" data-click_detail_type="335" detail_type="15">联系卖家</span>';
+                                       }else{
+                                        html+='<span class="lii_show_price">￥&nbsp;'+v.price+'</span>';
+                                        html+='<span class="lii_ask" type="33">询底价</span>';
+                                       }
+                                    html+='</div>\
+                                </div>\
+                            </div>';
+                        }else{
+                            html+='<div class="goods_list_item">\
+                                <div class="li_img_wap">\
+                                    <div class="li_special_icons">';
+                                        if(search_type=="sale"){
+                                            html+='<span class="t_icon_s">特</span>';
+                                        }else if(search_type=="search"){
+                                            if(v.sale){
+                                                html+='<span class="t_icon_s">特</span>';
+                                            }
+                                            if(v.best){
+                                                html+='<span class="j_icon_s">精</span>';
+                                            }
+                                        }
+                                    html+='</div>\
+                                    <a href="'+jump_url+'" title="'+v.title+'商标">\
+                                    <img class="li_img" src="__UPLOADS__/'+v.img+'" alt="'+v.title+'商标">\
+                                    </a>\
+                                </div>\
+                                <div class="li_info" data-reg_no="'+v.data_reg_no+'">\
+                                    <a href="'+jump_url+'" title="'+v.title+'商标">';
+                                    if(v.is_tmall_enter){
+                                        html+= '<div style="color:#f7d58a" class="lii_name">'+v.title+'</div>';
+                                    }else{
+                                        html+= '<div class="lii_name">'+v.title+'</div>';
+                                    }
+                                    html+='<p class="lii_cate">第'+v.classify+'</p>\
+                                    <p class="lii_similars">'+v.range+'</p>\
+                                    </a>\
+                                    <div class="lii_price">';
+                                    if(!v.is_login){
+                                        if(search_type=="sale"){
+                                            html+='<span class="lii_login" data-detail_type="203" data-msg_detail_type="257" data-click_detail_type="336">免费查价</span>';
+                                            html+='<span class="lii_contact_seller" data-click_detail_type="337" detail_type="16">联系卖家</span>';
+                                        }else{
+                                            html+='<span class="lii_login" data-detail_type="203" data-msg_detail_type="257" data-click_detail_type="332">免费查价</span>';
+                                            html+='<span class="lii_contact_seller" data-click_detail_type="333" detail_type="16">联系卖家</span>';
+                                        }
+                                    }else{
+                                        if(test_version){
+                                            html+='<span class="lii_ask" type="33">询底价</span>\
+                                            <span class="lii_show_price test_version">￥&nbsp;'+v.price+'</span>';
+                                        }else{
+                                            html+='<span class="lii_show_price">￥&nbsp;'+v.price+'</span>\
+                                            <span class="lii_ask" type="33">询底价</span>';
+                                        }
+                                    }
+                                    html+='</div>';
+                                    if(v.collected){
+                                    html+='<i class="list_collect_brand iconfont icon-aixin2"></i>';
+                                    }else{
+                                    html+='<i class="list_collect_brand iconfont icon-aixin1" onclick="con_login_fir('+ v.id +')"></i>';
+                                    }
+                                html+='</div>\
+                            </div>';
+                        }
+                        if(page == 1 && i == 9){
+                            html+='<div class="telphone_div">\
+                                <p class="title">找商标太麻烦，找专业顾问快速获取</p>\
+                                <input class="telphone_input" type="tel" name="telphone" placeholder="输入您的联系电话">\
+                                <button class="telphone_button">快速获取商标信息</button>\
+                                <p style="color:#999">客户信息严格保密，请您放心留电</p>\
+                            </div>';
+                        }
+                    });
+                    if(replace){
+                       $("#search_container").html(html);
+                    }else{
+                       $("#search_container").append(html);
+                    }
+                    if(result.endPage){
+                       end_data = true; 
+                       $(".data_loading").hide();
+                       $(".no_more_face").show();
+                       $("#footer").show();
+                    }else{
+                       end_data = false;
+                       $(".no_more_face").hide();
+                       $(".data_loading").show();
+                        page++;
+                        loading = false;
+                        need_load = true;
+                        $("#footer").hide();
+                    }
+                }else{
+                    end_data = true;
+                    $(".data_loading").hide();
+                    $(".no_more_face").show();
+                    $("#footer").show();
+                }
+                if(end_data){
+                    if(!$("#search_container").html()){
+                        $(".no_more_face").hide();
+                        $("#no_search_info").show();
+                    }else{
+                        $("#no_search_info").show();
+                        $("#no_search_info .nsi_p1").hide();
+                    }
+                }
+            },
+            async:false
+        });
+    }
+    
+    document.getElementById("cover_filter").addEventListener('touchmove', function (event) {
+        event.preventDefault();
+    }, false);
+    
+    $(document).on("click", ".telphone_button", function(){
+        var phone = $(this).parent().find(".telphone_input").val();
+        var myreg = /^1[0-9]{10}$/; 
+        var detail_type = 210;
+        clickBtn(detail_type);
+        if(!myreg.test(phone)) 
+        { 
+            alert('请输入有效的手机号码！'); 
+            return false;
+        }
+        $.post("/leave_phone", {"phone":phone, 'email_type':5, '_token': csrf_token, 'detail_type':detail_type}, function(result){
+            if(result.status==1){
+                clickFrom(phone, detail_type);
+                HiTipsShowTest("<p class='redbold'>恭喜您，已提交成功！</p><p>稍后您将收到区号为5073开头的电话，请注意接听，谢谢！</p>", 5000);
+                $(".telphone_input").val("");
+                bdAPI(3);
+            }else{
+                alert("手机号格式不正确！");
+            }
+        }, "json");
+    })
+
+    //页面滚动显示回到顶部
+    var starty;
+ 
+    //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
+    function getDirection(starty, endy) {
+        var angy = endy - starty;
+        var result = 0;
+ 
+        //如果滑动距离太短
+        if (Math.abs(angy) < 2) {
+            return result;
+        }
+        var angle = angy;
+        if (angle < 0) {
+            result = 1;
+        } else if (angle > 0) {
+            result = 2;
+        }
+ 
+        return result;
+    }
+    //手指接触屏幕
+    document.addEventListener("touchstart", function(e) {
+        starty = e.touches[0].pageY;
+    }, false);
+    //手指离开屏幕
+    document.addEventListener("touchend", function(e) {
+        var endy;
+        endy = e.changedTouches[0].pageY;
+        var direction = getDirection(starty, endy);
+        switch (direction) {
+            case 0:
+                break;
+            case 1:
+                hideBack();
+                break;
+            case 2:
+                showBack();
+                break;
+            default:
+        }
+    }, false);
+
+    function showBack(){
+        if($(window).scrollTop()>300){
+            $("#searchBackTop").show();
+        }else{
+            $("#searchBackTop").hide();
+        }
+    }
+
+    function hideBack(){
+        $("#searchBackTop").hide();
+    }
+    $("#searchBackTop").click(function(){
+        $("html,body").animate({scrollTop: 0}, 600, function(){
+            $("#searchBackTop").hide();
+        });
+    })
+}); 
+
+var keyword = "";
+</script>
+<script type="text/javascript" src="__INDEX__/js/cookie.js" defer></script>
+<script type="text/javascript" src="__INDEX__/js/search_record_6.js" defer></script>
+
+<div id="cover_filter" class="cover_filter" >
+    <div class="layer_bar"></div>
+    <div class="layer_filter">
+        <div class="layer_title">筛选</div>
+        <div class="layer_scroll_cont m-sift" id="layer_scroll_cont">
+            <div>
+                <div class="layer_scroll_body">
+                    <div class="sift-row">
+                        <div class="layer_filter_title">
+                            商标类别
+                            <i class="iconfont icon-shang-copy"></i>
+                        </div>
+                        <div class="row-body h100">
+                            <ul class="clearfix" data-type="category" id="filter_category">
+                                {volist name="info_classify" id="vo" key="k"}
+                                    <li data-value="{$vo.id}"
+                                        class="sift-item sift-item-cate {if condition='$k eq $category'}sift-item-selected{/if}">第{$vo.name|mb_substr=0,3,'utf-8'}
+                                        <br/>{$vo.name|mb_substr=4,8,'utf-8'}
+                                    </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sift-row">
+                        <div class="layer_filter_title">
+                            价格
+                            <i class="iconfont icon-shang-copy"></i>
+                        </div>
+                        <div class="row-body">
+                            <ul class="clearfix" data-type="price">
+                                                                    <li class="sift-item "
+                                        data-value="1,3">1-3万</li>
+                                                                    <li class="sift-item "
+                                        data-value="3,6">3-6万</li>
+                                                                    <li class="sift-item "
+                                        data-value="6,10">6-10万</li>
+                                                                    <li class="sift-item "
+                                        data-value="10,20">10-20万</li>
+                                                                    <li class="sift-item "
+                                        data-value="20,9999">20万以上</li>
+                                                            </ul>
+                        </div>
+                    </div>
+                    <div class="sift-row">
+                        <div class="layer_filter_title">
+                            类型
+                            <i class="iconfont icon-shang-copy"></i>
+                        </div>
+                        <div class="row-body h70">
+                            <ul class="clearfix" data-type="type">
+                                                                    <li class="sift-item "
+                                        data-value="cn">中文</li>
+                                                                    <li class="sift-item "
+                                        data-value="en">纯英文(拼音)</li>
+                                                                    <li class="sift-item "
+                                        data-value="pic">纯图形</li>
+                                                                    <li class="sift-item "
+                                        data-value="num">纯数字</li>
+                                                                    <li class="sift-item "
+                                        data-value="en,pic">英文+图形</li>
+                                                                    <li class="sift-item "
+                                        data-value="cn,pic">中文+图形</li>
+                                                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layer_bottom">
+            <div class="layer_reset">重置</div>
+            <div class="layer_search">搜索</div>
+        </div>
+    </div>
+</div>
+<div id="do-filter-fixed" class="filter-bar">
+    <div class="sift sift_fix_bar">
+        <span >筛选<i class="iconfont icon-shaixuan"></i></span>
+    </div>
+    <ul class="sort-tab">
+        <li class="order_by related  selected" data-order="related"><span>综合</span></li>
+        <li class="order_by click " data-order="click"><span>人气</span></li>
+        <li class="order_by price " data-order="price" data-order-type="desc">
+            <span>价格</span><span class="price_order_i"></span>
+        </li>
+    </ul>
+</div>
+<div id="search_container" class="content"></div>
+<div class="no_more_face" style="display:none;">没有更多了</div>
+<div id="no_search_info" class="content">
+    <div class="nsi_p1">
+        <p>很遗憾！</p>
+        <p>没找到您要的商标（＞﹏＜）</p>
+    </div>
+    <div class="nsi_p2">
+        <p class="title">让商标顾问快速推荐！</p>
+        <input id="nleft_phone" type="tel" value="" autocomplete="off" placeholder="请输入您的电话号码" />
+        <a href="javascript:;" id="nclass_me_back">给我回电</a>
+    </div>
+</div>
+<div class="data_loading">加载中。。。</div>
+<img id="searchBackTop" src="__INDEX__/img/back_to_top.png" />
+<style>
+.sort-tab .price .price_order_i { background-image: url('__INDEX__/img/price_sort_default_2.png')}
+.sort-tab .price.selected.asc .price_order_i, .sort-tab .price.selected .price_order_i {
+	background-image: url('__INDEX__/img/p_s_hover.png')
+}
+.sort-tab .price.selected.desc .price_order_i { background-image: url('__INDEX__/img/p_s_down.jpg')}
+</style>
+        </div>
+                                                <div id="footer_menu">
+	<ul>
+		<li >
+    		<a href="/index">
+    		      		  <img src="__INDEX__/img/home-b.png" />
+    		       		  <p>首页</p>
+    		</a>
+		</li>
+        		<li  class="active" >
+    		<a href="/search">
+    		      		  <img src="__INDEX__/img/search@3x.png" />
+    		      		  <p>找商标</p>
+    		</a>
+		</li>
+        		<li class="ljzx">
+    		<a id="menu_hot_telphone" data-type="66" href="javascript:;"><img src="__INDEX__/img/phone_bottom.png" /></a>
+		</li>
+		<li >
+    		<a href="/carte" id="fixed_bottom_aixin">
+		      <span id="fixed_carte_num"></span>
+		          		  <img src="__INDEX__/img/heart-b.png" />
+    		       		  <p>收藏</p>
+    		</a>
+		</li>
+		<li >
+    		<a href="/about_us">
+    		      		  <img src="__INDEX__/img/mine-b.png" />
+    		       		  <p>关于我们</p>
+    		</a>
+		</li>
+	</ul>
+</div>
+<div id="footer_menu_tgmp">
+    <ul>
+        <li>
+            <a href="/index">
+              <img src="__INDEX__/img/home-gray.png" />
+              <p>首页</p>
+            </a>
+        </li>
+        <li>
+            <a href="/search">
+              <img src="__INDEX__/img/search-gray.png" />
+              <p>搜索</p>
+            </a>
+        </li>
+        <li class="ljzx">
+            <a class="common_ask_btn" click_detail_type="607" detail_type="608" href="javascript:;">
+                <img src="__INDEX__/img/phone01.png" />
+                <p>立即咨询</p>
+            </a>
+        </li>
+        <li>
+            <a href="/carte"  class="" id="fixed_bottom_aixin">
+              <span id="fixed_carte_num"></span>
+              <img src="__INDEX__/img/star-gray.png" />
+              <p>收藏</p>
+            </a>
+        </li>
+        <li>
+            <a href="/about_us">
+              <img src="__INDEX__/img/us-gray.png" />
+              <p>我们</p>
+            </a>
+        </li>
+    </ul>
+</div>
+            </div>
+
+            <div id="fixed_right">
+            <div id="fixed_back_to_top" class="iconfont icon-totop"></div>
+        </div>
+    
+    <link rel="stylesheet" href="__INDEX__/css/ui-dialog.css" type="text/css" />
+<script type="text/javascript" src="__INDEX__/js/dialog-min.js" defer></script>
+<script type="text/javascript" src="__INDEX__/js/clipboard.min.js"></script>
+<script type="text/javascript">
+
+var test_version = 0;
+var layer_timing_img1 = "http://static.mp.cc/image/website/mobile/525test/close.png?imageslim";
+var layer_timing_img2 = "http://static.mp.cc/image/website/mobile/525test/logo.png?imageslim";
+var layer_timing_img3 = "http://static.mp.cc/image/website/pc/525test/person.png?imageslim";
+
+
+var layer_success_img = "http://static.mp.cc/image/website/mobile/layer_success_img.png?imageslim";
+var layer_close_img = "__INDEX__/img/layer_close_img.png";
+var list_fav_red = "http://static.mp.cc/image/website/mobile/list_fav_red.png?imageslim";
+var list_fav = "http://static.mp.cc/image/website/mobile/list_fav.png?imageslim";
+var csrf_token = "v8m6emEbduY0HbVvS8gHrYhsbxG6EqFnCe98v6wP";
+
+var request_path = "search";
+var register_brand_id = "";
+var register_from_view = "";
+var register_detail_type = "";
+var is_sale_view = 0;
+var hot_telphone = "400-728-7208";
+var clipboard = new Clipboard('.do_weixin_copy');
+clipboard.on('success', function(e) {
+    //alert("已复制微信号，现在打开微信加好友");
+    //跳转到微信 待定
+    //window.open("http://weixin.qq.com/r/mNjdxZvE_caGrd_m942K");
+	$(".center_wechat_box").removeClass("active");
+	$("#wechat_box_shadow").hide();
+	layer.open({
+    	move: false,
+    	style: "min-width: 310px; width:90%;max-width:410px;",
+    	skin: "wechat_message",
+    	time: 5,
+    	content:'<div class="left"><img src="__INDEX__/img/success@2x.png" /></div>\
+    	<div class="right">\
+    		<p class="first">已复制成功！</p>\
+    		<p class="sec">请到微信添加好友咨询。</p>\
+    		<p class="last"><span class="wechat_close_span">5</span>秒后自动关闭</p>\
+		</div>'
+    });
+	var new_s = 5;
+	IntervalHittops = setInterval(function () {
+		if(new_s>1){
+			new_s--;
+			$(".wechat_close_span").html(new_s);
+		}else{
+			hideMsg();
+		}
+	}, 1000);
+});
+</script>
+<script type="text/javascript" src="__INDEX__/js/jquery.fly.min.js"></script>
+<script type="text/javascript" src="__INDEX__/js/common.js"></script>
+
+
+<div id="wechat_box_shadow"></div>
+<div class="center_wechat_box">
+    <p class="title">添加商标顾问微信<img src="__INDEX__/img/caht_03.jpg" /></p>
+    <span class="close"><img src="__INDEX__/img/layer_close_img.png" /></span>
+    <div id="wechat_content">
+        <a href="tel:400-728-7208" class="wechat_num telphone_hotline" data-type="205">188-6830-6888</a>
+        <p class="do_weixin_copy" data-clipboard-text="188-6830-6888">立即复制</p>
+    </div>
+</div>
+<div id="fixed_liaojie" class="liaojie" style="display:none;">
+    <img src="__INDEX__/img/liaojie.gif">
+</div>
+<a class="tncode" style="opacity: 0;position: absolute;top:-100px;left:-2000px;">验证码</a>
+
+<script type="text/javascript" src="__INDEX__/js/tn_code.js"></script></div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>我的报告</title>
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="__REPORT__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__REPORT__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__REPORT__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__REPORT__/css/animate.min.css" rel="stylesheet">
+    <link href="__REPORT__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <style type="text/css">
+        .footer{
+            background: #37a4e5;
+            position: fixed;
+            z-index: 999;
+            box-sizing: border-box;
+            width: 20px;
+            height: 58px;
+            text-align: center;
+            color: #fff;
+            font-size: 15px;
+            top: 50%;
+        }
+        .footer a{color:#fff;}
+    </style>
+</head>
+
+<body class="gray-bg">
+	<div id="a" style="width: 55%;height: 45px;background-color: rgb(35, 226, 226);position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;z-index: 999999;text-align: center;line-height: 47px;color: #fff;display: none;font-size: 15px;border-radius: 3px;"></div>
+    <div class="">
+        <div class="img"><img src="http://shwap.uvclinic.cn:7439/public/static/home/show/picture/30.png" alt="" style="width: 100%;"></div>
+        <div class="row" style="font-size: 16px;">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>年度</th>
+                                    <th>性名</th>
+                                    <th>体检日期</th>
+                                    <th>查看报告</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	{if $info}
+							 		{volist name="info" id="vo"}
+		                                <tr>
+		                                    <td>{$vo.summarydate|mb_substr=0,4,'utf-8'}</td>
+		                                    <td>{$vo.name}</td>
+		                                    <td>{$vo.summarydate|mb_substr=0,8,'utf-8'}</td>
+		                                    <td class="text-navy" onclick="clickRead('{$vo.tjbh}')"> <i class="fa fa-arrow-circle-right"></i> 查看</td>
+		                                </tr>
+		                            {/volist}
+		                        {/if}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="footer">{if condition="$dateinfo eq 'index'"}<a href="{:url('index')}?xh={$xh}&tel={$tel}">{else/}<a href="{:url('index_personal')}?xh={$xh}&tel={$tel}">{/if}预约</a></div>
+	<script src="__SHOW__/js/jquery-2.2.1.js" type="text/javascript"></script>
+	<script src="__SHOW__/js/mui.min.js"></script>
+	<script type="text/javascript">
+
+		function clickRead(tjbh){
+			$.ajax({
+					url:'{:url('getReportInfo')}',
+					data:{tjbh:tjbh},
+					type:'POST',
+					dataType:'json',
+					success:function(data){
+						if(data.code == 200){
+							window.location.href = data.url;
+						}else{
+							$('#a').html(''+ data.msg);
+			                document.getElementById("a").style.display="block";
+			                setTimeout(
+			                    function(){
+			                        document.getElementById("a").style.display="none";
+			                    }
+			                , 1500);
+			                return false;
+							//alert(data.msg);
+						}
+					}
+				})
+
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>用户登入_{$config.title}</title>
+{include file="public:header" /}
+{include file="public:public" /}
+<link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+<script type="text/javascript" src="__HOME__/js/login.js"></script>
+
+</head>
+
+<body>
+<!--全局开始--> 
+<div class="web-main">
+
+<!--公共头部结束-->
+
+<div class="ZHdengru-1">
+      <a href="#" class="on">帐号登录<span><img src="__HOME__/images/dengru-1.png" width="100%"></span></a>
+      <a href="#">短信登录<span><img src="__HOME__/images/dengru-1.png" width="100%"></span></a>
+      <img src="__HOME__/images/dengru.jpg" width="100%">
+</div>
+
+<div class="dengru">
+      <div class="ZHdengru-2 on">
+            <p><input type="tel" name="tel" id="tel" placeholder="手机号" onclick="javascript:if(this.value=='手机号'){this.value='';}" required/></p>
+            <p><input type="password" name="password" id="password" placeholder="密码" onclick="javascript:if(this.value=='密码'){this.value='';}" required/><a href="{:url('index/forgotpwd')}">忘记密码?</a></p>
+            <p></p>
+            <p><input type="checkbox" name="vehicle" value="bike" id="vehicle" checked="checked" />我已阅读并同意<span onclick="onService();">《全景官网服务协议》</span></p>
+            <input type="button" value="登录" id="ZHdengru-sub" />
+      </div>
+      <div class="DXdengru-2">
+            <p><input type="tel" name="tel" id="dxtel" placeholder="手机号" onclick="javascript:if(this.value=='手机号'){this.value='';}" required/></p>
+            <p>
+                <input type="tel" name="smsCode" id="smsCode" placeholder="验证码" onclick="javascript:if(this.value=='验证码'){this.value='';}" required/>
+                <input type="button" value="获取验证码" id="zhuce-yanz" />
+            </p>
+            <p><input type="checkbox" name="vehicle" value="bike" id="vehicles" checked="checked"/>我已阅读并同意<span onclick="onService();">《全景官网服务协议》</span></p>
+            <input type="submit" value="登录" id="DXdengru-sub" />
+      </div>
+      <p class="error_content">
+        <i class="fa fa-times-circle"></i> <span id="error"></span>
+      </p>
+      <a class="DXdengru-zc" href="{:url('register')}">注册</a>
+</div>
+
+<!--公共底部-->
+</div>
+<!--全局结束--> 
+<script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+<script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+</body>
+</html>

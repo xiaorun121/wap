@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <title>商标转让_中国领先的商标网交易平台-名品商标转让网</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="applicable-device" content="mobile">
+    <meta name="keywords" content="商标转让,商标买卖,商标交易,商标转让网,服装商标转让">
+    <meta name="description" content="名品商标转让网,18年商标品牌转让经验,中国商标网官网代理机构平台,诸多好商标转让资源软文,关于买商标权转让流程价格,商标买卖购买,交易,服装商标转让平台,化妆品,酒类商标等.">
+    <script type="text/javascript" src="__INDEX__/js/jquery.min.js"></script>
+    <script>
+        var userInfo;
+        var login_callback_func = [];
+        function addLoginCallbackFunc(func){
+        	login_callback_func.push(func);
+        }
+    </script>    
+    <script type="text/javascript" src="__INDEX__/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__INDEX__/css/bootstrap.css" type="text/css" />
+    <script type="text/javascript" src="__INDEX__/js/iscroll-probe.js" defer></script>
+    <script type="text/javascript" src="__INDEX__/js/layer.js" defer></script>
+    <link rel="stylesheet" href="__INDEX__/css/layer.css" type="text/css" />
+    <link rel="stylesheet" href="__INDEX__/css/style.css" type="text/css" />
+    <script type="text/javascript" src="__INDEX__/js/common2_6.js" defer></script>
+    <link rel="stylesheet" href="__INDEX__/css/iconfont.css" type="text/css" />
+    <script type="text/javascript">
+        var searchObj = new Object();
+        var layer_success_img = "__INDEX__/mobile/layer_success_img.png?imageslim";
+        var layer_close_img = "__INDEX__/img/layer_close_img.png";
+    </script>
+
+    <style>
+        body{
+            -webkit-text-size-adjust: 100% !important;
+            text-size-adjust: 100% !important;
+            -moz-text-size-adjust: 100% !important;
+        }
+
+        #contact_seller_phone, #login_phone{ background-image: url('__INDEX__/images/login-phone.png') }
+
+        #phone_code{ background-image: url('__INDEX__/images/login-key.png') }
+
+        #dialog_cs_div .note_register_telphone{ background-image: url("__INDEX__/images/a-red.png"); }
+    </style>
+</head>
+<body>
+<div id="body_wrap" class=" ">
+    <div>
+        <div id="body">
+            <script type="text/javascript">
+                var tagAliasArray  = [];
+                function tagAlias(i){
+                	var r = i;
+                	$.each(tagAliasArray, function(k, v){
+                		if(i==k){
+                			r = v;
+                		}
+                	});
+                	return r;
+                }$(function(){
+                		
+                    //顶部搜索
+                    $("#header_search_btn, .f_item_search a").click(function(){
+                        if($("#top_search_category").length){
+                            searchObj[tagAlias('category')] = $("#top_search_category").val();
+                        }
+                        var url = "/search?";
+                        if(request_path=='best2'){//立春精选
+                            url = "/best2?";
+                        }
+                        if(request_path=='sale'){//特价好标
+                            url = "/sale?";
+                        }
+                        if(is_sale_view) {
+                            url = "/search?"+tagAlias("attrbute")+"=sale&";
+                        }
+                        var p = "";
+                        $.each(searchObj, function(i, v){
+                            if(v && v!='null' && i!=tagAlias("tag") && i!=tagAlias("tag_name") && i!=tagAlias("keyword")){
+                                if(p){
+                                    p+= "&"+i+"="+encodeURIComponent(v);
+                                }else{
+                                    p+= i+"="+encodeURIComponent(v);
+                                }
+                            }
+                        });
+                        if(searchObj[tagAlias('tag')]){
+                           if(p){
+                               p+= "&"+tagAlias("keyword")+"="+encodeURIComponent(searchObj[tagAlias('tag')]);
+                           }else{
+                               p+= tagAlias("keyword")+"="+encodeURIComponent(searchObj[tagAlias('tag')]);
+                           }
+                        }else if($("#top_search_keyword").val()){
+                            if(p){
+                                p+= "&"+tagAlias("keyword")+"="+encodeURIComponent($("#top_search_keyword").val());
+                            }else{
+                                p+= tagAlias("keyword")+"="+encodeURIComponent($("#top_search_keyword").val());
+                            }
+                        }
+                        url = url+p;
+                        window.location.href = url;
+                    });
+                    //顶部搜索分类点击
+                    });
+                function cho_layer_cates(id) {
+                	
+                	if(typeof(id)!="undefined"){
+                		var obj = $("#layer_cate_"+id).find("i");
+                	}else{
+                		var obj = $("#layer_cate_").find("i");
+                	}
+                	var data = obj.data("cate");
+                	if(obj.hasClass("icon-radio4")){
+                		
+                	}else{
+                		$("#hide_top_search_categorys li.li_item .icon-radio4").each(function(){
+                			$(this).removeClass("icon-radio4").addClass("icon-radio_xz");;
+                		});
+                		obj.removeClass("icon-radio_xz").addClass("icon-radio4");
+                	}
+                	if(data!="all"){
+                        searchObj[tagAlias('category')] = data;
+                        $("#top_search_select").html(obj.data("text"));
+                    }else{
+                        searchObj[tagAlias('category')] = null;
+                        $("#top_search_select").html("商标分类");
+                    }
+                	
+                	var interval_dialoCategorys = setInterval(function () {
+                		layer.closeAll();
+                		clearInterval(interval_dialoCategorys);
+                		$("#header_search_btn").trigger("click");
+                	}, 300);
+                }
+                </script>
+<style>
+#header_log_tg {display: none;}
+</style>
+<div id="header_cont" >
+        <div id="header_logo">
+       <a href="/index"><img src="{$config.top_logo}" /></a>
+                         </div>
+    <!-- tgmp页面头部 -->
+    <div id="header_log_tg">
+        <a href="/index"><img src="__INDEX__/index/img/logo_w.png" /></a>
+    </div>
+        <!-- 留号码 -->
+    
+        <div id="header_left_phone">
+        <div id="header_fixed_left_phone">
+            <div class="left_phone_cont">
+                <input class="header_phone" autocomplete="off" type="text" placeholder="请输入您的联系电话" />
+                <a class="call_me" href="javascript:;">快速回电</a>
+                            </div>
+        </div>
+    </div>
+    
+            
+    
+    <div style="display: none;">
+        <ul class="dropdown_menu" id="dropdown_menu">
+            <li><a href="/index">返回首页</a></li>
+            <li class="divider"></li>
+            <li><a href="/category">商标分类</a></li>
+            <li class="divider"></li>
+            <li><a href="/carte">我的收藏</a></li>
+            <li class="divider"></li>
+            <li><a data-type="67" class="telphone_hotline" href="tel:400-728-7208">联系名品</a></li>
+        </ul>
+    </div>
+</div>            <link rel="stylesheet" href="__INDEX__/css/index.css" type="text/css" />
+<link href="__INDEX__/css/shake.css" rel="stylesheet" media="all">
+<link rel="stylesheet" href="__INDEX__/css/responsiveslides.css" type="text/css" />
+<style>
+.left_tel_cont{
+	background-image: url('__INDEX__/images/left_tel_bg.png');
+}
+</style>
+<div class="main_visual">
+	<div class="flicking_con">
+        {volist name="bannerInfo" id="vo" key="k"}
+            <a href="#">{$k}</a>
+        {/volist}
+	</div>
+	<div class="main_p_cont">
+		<ul>
+            {volist name="bannerInfo" id="vo"}
+			    <li><a href="{$vo.arcurl}"><img src="__UPLOADS__/{$vo.img}" class="gimg"></a></li>
+            {/volist}
+		</ul>
+		<a href="javascript:;" id="btn_prev"></a>
+		<a href="javascript:;" id="btn_next"></a>
+	</div>
+</div>
+<div class="bg_line"></div>
+<div class="content" id="i_search_cont">
+    <div class="search_op">
+        <form action="/search" method="get" id="i_search_form">
+        <input type="text" readonly="readonly" name="keyword" value="" placeholder="请输入产品名、商标名等" autocomplete="off" />
+	    <span class="hso_select iconfont">商标分类&nbsp;&#xe822;</span>
+        <i id="i_search_form_btn" class="iconfont icon-fangdajing1"></i>
+        </form>
+    </div>
+    <div class="search_hot">
+            	<ul>
+    	   <li>
+    			<a class="hot" href="javascript:;">热搜：</a>
+    		</li>
+    		    		<li>
+    			<a href="/search?category=25&amp;keyword=男装">男装</a>
+    		</li>
+    		    		<li>
+    			<a href="/search?category=25&amp;keyword=女装">女装</a>
+    		</li>
+    		    		<li>
+    			<a href="/search?category=33">酒</a>
+    		</li>
+    		    		<li>
+    			<a href="/search?category=43">餐饮</a>
+    		</li>
+    		    		<li>
+    			<a href="/search?category=29">食品</a>
+    		</li>
+    		    	</ul>
+    	    </div>
+</div>
+<div class="bg_line"></div>
+<div id="roll_nav">
+    <div id="roll_scroller">
+        <a class="roll_slide_a" href="/best2">
+            <div class="roll_img"><img src="__INDEX__/index/img/01-a.png" /><p>精品好标</p></div>
+        </a>
+        <a class="roll_slide_a" href="/search">
+            <div class="roll_img"><img src="__INDEX__/index/img/02-a.png" /><p>商标超市</p></div>
+        </a>
+        <a class="roll_slide_a" href="/publish">
+            <div class="roll_img"><img src="__INDEX__/index/img/05-a.png" /><p>我要卖标</p></div>
+        </a>
+        <a class="roll_slide_a" href="/integrated">
+            <div class="roll_img"><img src="__INDEX__/index/img/04-a.png" /><p>综合服务</p></div>
+        </a>
+    </div>
+</div>
+<div class="bg_line"></div>
+<div class="content" id="hot_categorys">
+    <div class="com_tit">
+        <div class="red_line"></div>
+        <div class="red_tit">热门分类</div>
+        <a class="cate_jump iconfont" href="/category">45类分类大全&nbsp;<span>&#xe61e;</span></a>
+    </div>
+    <div class="cates">
+        <table cellpadding="0" cellspacing="0">
+            
+			<tr>
+                {volist name="classifyInfo" id="vo"}
+            	<td>
+                    <a href="/search?category={$vo.id}">
+                        <img src="__UPLOADS__/{$vo.img}" /><br />
+                    {$vo.name}
+                    </a>
+                </td>
+                {/volist}
+			</tr>
+            
+		</table>
+    </div>
+</div>
+<div class="bg_line"></div>
+<div class="content mp_new">
+    <i class="iconfont icon-laba"></i>
+    <a href="/articles_list" title="商标新闻"><img class="zzd" src="__INDEX__/index/img/zaoshidao.png" /></a>
+    <div class="one_news">
+        <div class="one_news_cont">
+            <ul>
+                {volist name="newsInfo" id="vo"}
+                    <li><a href="/articles/id/{$vo.id}">{$vo.title}</a></li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="bg_line"></div>
+<div class="content i_flow">
+    <div class="com_tit">
+        <div class="red_line"></div>
+        <div class="red_tit">交易流程</div>
+    </div>
+    <div class="i_flow_s" onclick="window.location.href='/process'">
+        <ul>
+            <li>
+                <div><img src="__INDEX__/index/img/01search.png" /></div>
+                <p class="tit">1.挑选商标</p>
+                <p class="sub_tit">CHOSE LOGO</p>
+            </li>
+            <li class="fx"><div><img src="__INDEX__/index/img/arrow_gray.png" /></div></li>
+            <li>
+                <div><img src="__INDEX__/index/img/02contract.png" /></div>
+                <p class="tit">2.签订合同</p>
+                <p class="sub_tit">THE CONTRACT</p>
+            </li>
+            <li class="fx"><div><img src="__INDEX__/index/img/arrow_gray.png" /></div></li>
+            <li>
+                <div><img src="__INDEX__/index/img/03stamp2.png" /></div>
+                <p class="tit">3.确认资料</p>
+                <p class="sub_tit">CONFIRM</p>
+            </li>
+            <li class="fx"><div><img src="__INDEX__/index/img/arrow_gray.png" /></div></li>
+            <li>
+                <div><img src="__INDEX__/index/img/04postal2.png" /></div>
+                <p class="tit">4.支付余款</p>
+                <p class="sub_tit">POSTAL MATTER</p>
+            </li>
+            <li class="fx"><div><img src="__INDEX__/index/img/arrow_gray.png" /></div></li>
+            <li class="last">
+                <div><img src="__INDEX__/index/img/05finish.png" /></div>
+                <p class="tit">5.办理过户</p>
+                <p class="sub_tit">LOGO REPORT</p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="bg_line"></div>
+<div class="" id="employee_list">
+    <div class="content">
+        <div class="com_tit">
+            <div class="red_line"></div>
+            <div class="red_tit">商标顾问</div>
+            <a class="cate_jump iconfont" href="/employee">更多&nbsp;<span>&#xe61e;</span></a>
+        </div>
+        <div class="el_title">专业团队一对一服务，助您迈出品牌第一步！</div>
+    </div>
+    <div id="scroll_employee_body">
+        <div id="scroll_employee" class="swiper-container">
+            <ul class="swiper-wrapper">
+                {volist name="teamInfo" id="vo"}
+                    <li class="swiper-slide">
+                        <div class="e_cont">
+                            <div class="el_left">
+                                <div class="portrait_cont" style="background-image:url('__UPLOADS__/{$vo.img}')"></div>
+                                <div ename="高级商标代理人{$vo.name}" class="contact">找我推荐</div>
+                            </div>
+                            <div class="el_right">
+                                <div class="el_right_cont">
+                                    <div class="el_tit">{$vo.name}<span class="el_job">{$vo.subtitle}</span></div>
+                                    <div class="el_info">{$vo.description}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {/volist}
+            </ul>
+            <a href="javascript:;" id="btn_prev_employee" class="iconfont icon-xiangzuo"></a>
+            <a href="javascript:;" id="btn_next_employee" class="iconfont icon-xiangyou"></a>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="__INDEX__/css/scroll_employees.css" type="text/css" />
+<script type="text/javascript">
+    $(function(){
+        /** employee  **/
+        /** employee **/
+        $("#employee_list").show();
+        var mySwiper = new Swiper('#scroll_employee',{
+            //pagination: '.pagination',
+            loop:true,
+            grabCursor: true,
+            //autoplay: 5000,
+            loopAdditionalSlides: 5,
+            initialSlide: 1,
+            paginationClickable: true
+        })
+        $('#btn_prev_employee').on('click', function(e){
+            e.preventDefault()
+            mySwiper.swipePrev()
+        })
+        $('#btn_next_employee').on('click', function(e){
+            e.preventDefault()
+            mySwiper.swipeNext()
+        })
+        function sum (m,n){
+        　　return Math.floor(Math.random()*(m - n) + n);
+        }
+
+        $(".contact").click(function(){
+            var click_detail_type = 324;
+            var detail_type = 207;//241
+            if(test_version){
+                click_detail_type = 330;
+            }
+            var path = "/";
+            var msgs = [
+                "找我咨询，能让您选的商标更优秀。",
+                "选好商标，等于成功了一半。",
+                "买商标不简单，但是咨询我，很简单。",
+                "您想要的商标，都值得我努力寻找。",
+                "知识产权这条路，我走了很久，只为了等你。"
+            ];
+                        clickBtn(click_detail_type);
+            layer.open({
+                style: "min-width: 310px; width:90%;max-width:410px;",
+                move: false,
+                skin: 'dialog_cs_div',
+                content: '<div class="title">\
+                        <p class="t3">我要咨询顾问</p>\
+                    </div>\
+                    <a class="dialog_cs_close" href="javascript:;" onclick="hideMsg()"><img src="'+layer_close_img+'" /></a>\
+                    <div id="dialog_cs_div">\
+                    <p class="cs_note">'+msgs[sum(0, 5)]+'</p>\
+                    <input id="contact_seller_phone" type="tel" placeholder="请输入您的电话号码"/>\
+                    <div id="do_dialog_cs" onclick="contact_employee('+detail_type+')">我要咨询</div>\
+                </div>'
+            });
+        })
+        
+    })
+    function contact_employee(detail_type){
+		var phone = $("#contact_seller_phone").val();
+		var myreg = /^1[0-9]{10}$/; 
+		clickBtn(detail_type)
+		if(!myreg.test(phone)) 
+		{ 
+			alert('请输入有效的手机号码！'); 
+			return false;
+		}
+		$.post("/leave_phone", {"phone":phone, 'email_type':5, '_token': csrf_token, 'detail_type':detail_type}, function(result){
+			if(result.status==1){
+				clickFrom(phone, detail_type);
+               
+				layer.closeAll();
+				HiTipsShowTest("<p class='redbold'>恭喜您，已提交成功！</p><p>稍后您将收到商标顾问的电话，请注意接听，谢谢！</p>", 5000);
+                 bdAPI(3);
+			}else{
+				alert("手机号格式不正确！");
+			}
+		}, "json");
+	}
+</script><div class="bg_line"></div>
+<div class="content" id="goods_list">
+    <div class="com_tit">
+        <div class="red_line"></div>
+        <div class="red_tit">精选推荐</div>
+        <a class="cate_jump iconfont" href="/best2">更多&nbsp;<span>&#xe61e;</span></a>
+    </div>
+
+    {volist name="brandInfo" id="vo" key="k"}
+    <div class="goods_list_item  {if condition='$k eq 1'}top_border{/if} ">
+        <a href="/brand/detail/{$vo.id}">
+            <div class="li_img_wap">
+                <img class="li_img" src="__UPLOADS__/{$vo.img}" alt="{$vo.title}" />
+            </div>
+        </a>
+        <div class="li_info" data-reg_no="{$vo.id}">
+            <a href="/brand/detail/{$vo.id}">
+                <div class="lii_name">{$vo.title}</div>
+                <p class="lii_cate">第{$vo.classify|mb_substr=0,3,'utf-8'}&nbsp;{$vo.classify|mb_substr=4,8,'utf-8'}</p>
+                <p class="lii_similars">{$vo.range}</p>
+            </a>
+            <div class="lii_price price_unlogin">
+                <span class="lii_login" data-click_detail_type="327" data-detail_type="269" data-msg_detail_type="268">免费查价</span> 
+                <span class="lii_contact_seller" data-click_detail_type="328" detail_type="13">联系卖家</span>
+            </div>
+            <div class="lii_price price_login">
+                <span class="lii_show_price">￥&nbsp;3-6万</span>
+                <span class="lii_ask" type="34">询底价</span>
+            </div>
+            <i class="list_collect_brand iconfont icon-aixin1" reg_no="{$vo.id}"></i>
+        </div>
+    </div>
+    {/volist}
+        <div class="no_more_face red_underline"><a href="/best2">查看更多>></a></div>
+</div>
+<div id="about" >
+    <div class="com_tit" style="width: 95%;margin:0 auto;padding-top:10px;border-bottom:1px solid #ccc;">
+        <div class="red_line"></div>
+        <div class="red_tit">关于名品</div>
+    </div>
+    <div id="about_d1">
+        <div class="clear"></div>
+        <p style="line-height: 22px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$config.about}
+        </p>
+    </div>
+    <a href="/success_recommend">
+    <img id="success" src="__INDEX__/index/img/cases.png" />
+    </a>
+    <div id="about_buttons">
+        <button id="about_more">
+            更多成功案例
+        </button>
+        <button id="about_recommand">
+            专业商标推荐
+        </button>
+        <div class="clear"></div>
+    </div>
+    <img id="banner_bottom" src="__INDEX__/index/img/banner_bottom.png" />
+</div>
+<script type="text/javascript" src="__INDEX__/js/responsiveslides.min.js" defer></script>
+<script type="text/javascript" src="__INDEX__/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="__INDEX__/js/jquery.touchslider.js"></script>
+<script type="text/javascript" src="__INDEX__/js/idangerous.swiper2.7.6.min.js"></script>
+<script type="text/javascript" src="__INDEX__/js/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="__INDEX__/js/index.js"></script>
+        </div>
+                                                <div id="footer_menu">
+	<ul>
+		<li  class="active" >
+    		<a href="/index">
+    		      		  <img src="__INDEX__/index/img/home@3x.png" />
+    		      		  <p>首页</p>
+    		</a>
+		</li>
+        		<li >
+    		<a href="/search">
+    		      		  <img src="__INDEX__/index/img/search-b.png" />
+    		       		  <p>找商标</p>
+    		</a>
+		</li>
+        		<li class="ljzx">
+    		<a id="menu_hot_telphone" data-type="66" href="javascript:;"><img src="__INDEX__/index/img/phone_bottom.png" /></a>
+		</li>
+		<li >
+    		<a href="/carte" id="fixed_bottom_aixin">
+		      <span id="fixed_carte_num">3</span>
+		          		  <img src="__INDEX__/index/img/heart-b.png" />
+    		       		  <p>收藏</p>
+    		</a>
+		</li>
+		<li >
+    		<a href="/about_us">
+    		      		  <img src="__INDEX__/index/img/mine-b.png" />
+    		       		  <p>关于我们</p>
+    		</a>
+		</li>
+	</ul>
+</div>
+<div id="footer_menu_tgmp">
+    <ul>
+        <li>
+            <a href="/index">
+              <img src="__INDEX__/index/img/home-gray.png" />
+              <p>首页</p>
+            </a>
+        </li>
+        <li>
+            <a href="/search">
+              <img src="__INDEX__/index/img/search-gray.png" />
+              <p>搜索</p>
+            </a>
+        </li>
+        <li class="ljzx">
+            <a class="common_ask_btn" click_detail_type="607" detail_type="608" href="javascript:;">
+                <img src="__INDEX__/index/img/phone01.png" />
+                <p>立即咨询</p>
+            </a>
+        </li>
+        <li>
+            <a href="/carte"  class="" id="fixed_bottom_aixin">
+              <span id="fixed_carte_num"></span>
+              <img src="__INDEX__/index/img/star-gray.png" />
+              <p>收藏</p>
+            </a>
+        </li>
+        <li>
+            <a href="/about_us">
+              <img src="__INDEX__/index/img/us-gray.png" />
+              <p>我们</p>
+            </a>
+        </li>
+    </ul>
+</div>
+            </div>
+
+            <div id="fixed_right">
+            <div id="fixed_back_to_top" class="iconfont icon-totop"></div>
+        </div>
+    
+    <link rel="stylesheet" href="__INDEX__/css/ui-dialog.css" type="text/css" />
+<script type="text/javascript" src="__INDEX__/js/dialog-min.js" defer></script>
+<script type="text/javascript" src="__INDEX__/js/clipboard.min.js"></script>
+<script type="text/javascript" src="__INDEX__/js/jquery.fly.min.js"></script>
+<script type="text/javascript" src="__INDEX__/js/common.js"></script>
+
+
+<div id="wechat_box_shadow"></div>
+<div class="center_wechat_box">
+    <p class="title">添加商标顾问微信<img src="__INDEX__/index/img/caht_03.jpg" /></p>
+    <span class="close"><img src="__INDEX__/index/img/layer_close_img.png" /></span>
+    <div id="wechat_content">
+        <a href="tel:400-728-7208" class="wechat_num telphone_hotline" data-type="205">188-6830-6888</a>
+        <p class="do_weixin_copy" data-clipboard-text="188-6830-6888">立即复制</p>
+    </div>
+</div>
+<div id="fixed_liaojie" class="liaojie" style="display:none;">
+    <img src="__INDEX__/index/img/liaojie.gif">
+</div>
+<a class="tncode" style="opacity: 0;position: absolute;top:-100px;left:-2000px;">验证码</a>
+
+<script type="text/javascript" src="__INDEX__/js/tn_code.js"></script></div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>体检须知</title>
+    <meta name="keywords" content="体检须知">
+    <meta name="description" content="体检须知">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__ADMIN__/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__ADMIN__/css/animate.min.css" rel="stylesheet">
+    <link href="__ADMIN__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__ADMIN__/js/ajaxfileupload.js"></script>
+    <script src="__ADMIN__/plugins/ueditor/ueditor.config.js"></script>
+    <script src="__ADMIN__/plugins/ueditor/ueditor.all.min.js"></script>
+    <link href="__ADMIN__/css/admin.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-02">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="{if condition="input('tab',1) eq 1"}active{/if}"><a data-toggle="tab" href="#tab-1" aria-expanded="true">体检须知列表</a></li>
+                        <li class="{if condition="input('tab',1) eq 2"}active{/if}"><a data-toggle="tab" href="#tab-2" aria-expanded="false">添加体检须知</a></li>
+                        <li id="showtab" class="{if condition="input('tab',1) eq 3"}active{/if}"><a data-toggle="tab" href="#tab-3" style="{if condition="input('tab',1) neq 3"}display:none{/if}" aria-expanded="false">编辑体检须知</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane {if condition="input('tab',1) eq 1"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('notice')}" data-type="ajax">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%">排序</th>
+                                                    <th width="5%">ID</th>
+                                                    <th width="10%">标题</th>
+                                                    <th width="10%">图片</th>
+                                                    <th width="20%">描述</th>
+                                                    <th width="10%">是否显示</th>
+                                                    <th width="15%">创建时间</th>
+                                                    <th width="10%">作者</th>
+                                                    <th width="10%">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {volist name="info" id="vo"}
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" name="sort[{$vo.id}]" class="form-control" value="{$vo.sort}">
+                                                        </td>
+                                                        <td>{$vo.id}</td>
+                                                        <td>{$vo.title}</td>
+                                                        <td><img src="{:Images($vo.img)}" alt="{$vo.title}" width="100"></td>
+                                                        <td>{$vo.description}</td>
+                                                        <td>{:ArticleDisplay($vo.display)}</td>
+                                                        <td>{:date('Y-m-d H:i:s',$vo.create_time)}</td>
+                                                        <td>{$vo.author}</td>
+                                                        <td>
+                                                            <a href="{:url('notice',['id'=>$vo.id, 'tab'=>3])}" title="编辑"><i class="fa fa-edit text-navy"></i></a>&nbsp;&nbsp;
+                                                            <a name="delete" href="{:url('deleteNotice',['id'=>$vo.id])}" title="删除"><i class="fa fa-trash-o text-navy"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {/volist}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>{$page}</div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <button class="btn btn-primary" type="submit">更新排序</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane {if condition="input('tab',1) eq 2"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('addNotice')}" data-type="ajax">
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">标题：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='title' class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">图片：</label>
+                                        <div class="col-sm-9">
+                                            <div id="file-pretty">
+                                                <input id="file_path" name="file" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path" type="text" name='img' class="form-control input-large" value="">
+                                                </div>
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path').click(function(){
+                                                        $("#file_path").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path", 'change', function(){
+                                                        var filepath = $("input[name='file']").val();
+                                                        var arr = filepath.split('.');
+                                                        var ext = arr[arr.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(ext)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'file' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path').val(data);
+                                                                   $('#info_path').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">描述：</label>
+                                        <div class="col-sm-9">
+                                            <textarea name='description' rows="3" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">排序：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">显示？隐藏：</label>
+                                        <div class="col-sm-9">
+                                            <div class="radio i-checks">
+                                                <label><input type="radio" value="1" name="display" checked><i></i> 显示</label>
+                                                <label><input type="radio" value="0" name="display"><i></i> 隐藏</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">内容：</label>
+                                        <div class="col-sm-9">
+                                            <textarea id="content" name="content"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <input type="hidden" name="status" value="5"/>
+                                            <button class="btn btn-primary" type="submit">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane {if condition="input('tab',1) eq 3"}active{/if}">
+                            <div class="panel-body">
+                                <form method="post" class="form-horizontal" action="{:url('editNotice')}" data-type="ajax">
+                                    <input type="hidden" name="id" value="{$infoEdit.id}">
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">标题：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='title' class="form-control" value="{$infoEdit.title}">
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">图片：</label>
+                                        <div class="col-sm-9">
+                                            <div id="file-pretty">
+                                                <input id="file_path_edit" name="files" type="file" class="form-control" style="display:none">
+                                                <div class="input-append input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btn_path_edit" type="button" class="btn btn-white">上传图片</button>
+                                                    </span>
+                                                    <input id="info_path_edit" type="text" name='img' class="form-control input-large" value="{$infoEdit.img}">
+                                                </div>
+                                            </div>
+                                            <script type="text/javascript">
+                                                $(function(){
+                                                    $('#btn_path_edit').click(function(){
+                                                        $("#file_path_edit").click();
+                                                    });
+
+                                                    //异步上传
+                                                    $("body").delegate("#file_path_edit", 'change', function(){
+                                                        var filepath = $("input[name='files']").val();
+                                                        var arrs = filepath.split('.');
+                                                        var exts = arrs[arrs.length-1];//图片后缀
+
+                                                        if('gif|jpg|png|bmp'.indexOf(exts)>=0){
+                                                            $.ajaxFileUpload({
+                                                               url: '{:url('upload_image')}',
+                                                               type: 'post',
+                                                               data: { name: 'files' },
+                                                               secureuri: false,
+                                                               fileElementId: 'file_path_edit',
+                                                               dataType: 'json',
+                                                               success: function (data, status) {
+                                                                   $('#info_path_edit').val(data);
+                                                                   $('#info_path_edit').focus();
+                                                               },
+                                                               error: function (data, status, e){
+                                                                   layer.alert('上传失败');
+                                                               }
+                                                            });
+                                                        }else{
+                                                            // 清空file
+                                                            $('#file_path_edit').val('');
+                                                            layer.alert('请上传合适的图片类型');
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">描述：</label>
+                                        <div class="col-sm-9">
+                                            <textarea name='description' rows="3" class="form-control">{$infoEdit.description}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0">
+                                        </div>
+                                        <label class="col-sm-2 control-label">排序：</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name='sort' class="form-control" value="{$infoEdit.sort}" />
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">显示？隐藏：</label>
+                                        <div class="col-sm-9">
+                                            <div class="radio i-checks">
+                                                <label><input type="radio" value="1" name="display" {if condition="$infoEdit.display eq 1"}checked{/if}><i></i> 显示</label>
+                                                <label><input type="radio" value="0" name="display" {if condition="$infoEdit.display eq 0"}checked{/if}><i></i> 隐藏</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-0"></div>
+                                        <label class="col-sm-2 control-label">内容：</label>
+                                        <div class="col-sm-9">
+                                            <textarea id="contents" name="content">{$infoEdit.content}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-2">
+                                            <button class="btn btn-primary" type="submit">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        UE.getEditor('content',{initialFrameHeight:500});
+        UE.getEditor('contents',{initialFrameHeight:500});
+    </script>
+    <script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__ADMIN__/js/content.min.js?v=1.0.0"></script>
+    <script src="__ADMIN__/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/layer.min.js"></script>
+    <script src="__ADMIN__/js/layer_hplus.js"></script>
+    <script src="__ADMIN__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__ADMIN__/js/plugins/cropper/cropper.min.js"></script>
+    <script src="__ADMIN__/js/demo/form-advanced-demo.min.js"></script>
+    <script src="__ADMIN__/js/plugins/layer/laydate/laydate.js"></script>
+</body>
+
+</html>
